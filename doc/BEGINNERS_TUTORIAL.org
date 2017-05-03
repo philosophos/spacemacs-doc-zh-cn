@@ -1,330 +1,237 @@
-#+TITLE: Beginners tutorial
+#+TITLE: 初学者教程
 
-* Beginners tutorial                                      :TOC_4_gh:noexport:
- - [[#why-spacemacs][Why Spacemacs?]]
- - [[#install][Install]]
-   - [[#1-install-emacs][1. Install Emacs]]
-   - [[#2-install-git][2. Install Git]]
-   - [[#3-install-spacemacs][3. Install Spacemacs]]
-     - [[#note-for-windows-users][Note for Windows users]]
-   - [[#4-install-the-default-font][4. Install the default font]]
-   - [[#5-open-spacemacs-and-choose-default-editing-style][5. Open Spacemacs and choose default editing style]]
- - [[#getting-started][Getting started]]
-   - [[#keybinding-notation][Keybinding notation]]
-   - [[#modal-text-editing---why-and-how][Modal text editing - why and how?]]
-   - [[#start-the-vim-tutorial][Start the Vim tutorial]]
-   - [[#using-the-spacebar-to-launch-commands][Using the spacebar to launch commands]]
-   - [[#buffers-windows-and-frames][Buffers, windows and frames]]
-   - [[#accessing-files][Accessing files]]
- - [[#configuring-spacemacs][Configuring Spacemacs]]
-   - [[#adding-language-support-and-other-features-using-layers][Adding language support and other features: using layers]]
-   - [[#changing-the-colour-theme][Changing the colour theme]]
-   - [[#starting-maximized][Starting maximized]]
-   - [[#quitting][Quitting]]
- - [[#additional-features-tips-and-troubleshooting][Additional features, tips and troubleshooting]]
+* 初学者教程                                      :TOC_4_gh:noexport:
+ - [[#为什么要用-spacemacs][为什么要用 Spacemacs?]]
+ - [[#安装][安装]]
+   - [[#1-安装-emacs][1. 安装 EMACS]]
+   - [[#2-安装-git][2. 安装 Git]]
+   - [[#3-安装-spacemacs][3. 安装 Spacemacs]]
+     - [[#windows-用户注意事项][Windows 用户注意事项]]
+   - [[#4-安装默认字体][4. 安装默认字体]]
+   - [[#5-打开-spacemacs-并选择默认编辑风格][5. 打开 Spacemacs 并选择默认编辑风格]]
+ - [[#入门][入门]]
+   - [[#键绑定符号][键绑定符号]]
+   - [[#模式化文本编辑---为什么这样做和如何做][模式化文本编辑 - 为什么这样做和如何做？]]
+   - [[#启动-vim-教程][启动 Vim 教程]]
+   - [[#使用空格键启动命令][使用空格键启动命令]]
+   - [[#缓冲区窗口和页面][缓冲区，窗口和页面]]
+   - [[#访问文件][访问文件]]
+ - [[#配置-spacemacs][配置 Spacemacs]]
+   - [[#添加语言支持和其他功能使用层][添加语言支持和其他功能：使用层]]
+   - [[#更改颜色主题][更改颜色主题]]
+   - [[#开始最大化][开始最大化]]
+   - [[#退出][退出]]
+ - [[#附加功能提示和故障排除][附加功能，提示和故障排除]]
    - [[#org-mode][Org mode]]
-   - [[#version-control---the-intelligent-way][Version control - the intelligent way]]
-   - [[#daemon-mode-and-instant-startup-linux][Daemon mode and instant startup (Linux)]]
-   - [[#swap-caps-lock-and-esc-keys-on-your-keyboard][Swap caps lock and esc keys on your keyboard]]
-   - [[#troubleshooting-and-further-info][Troubleshooting and further info]]
+   - [[#版本控制---智能化方式][版本控制 - 智能化方式]]
+   - [[#守护进程模式和即时启动 linux][守护进程模式和即时启动(Linux)]]
+   - [[#在键盘上交换-caps-lock-和-esc-键][在键盘上交换 caps lock 和 esc 键]]
+   - [[#故障排除和更多信息][故障排除和更多信息]]
 
-* Why Spacemacs?
-- Unparallelled text and structure editing for all types of writing tasks:
-  creative writing, blogging, note-taking, todo-lists, scientific papers...
-- Powerful modes for programming in dozens of programming languages
-- Deeply customizable yet beginner-friendly
+* 为什么要用 Spacemacs?
+- 无与伦比的文字和结构编辑，适用于所有类型的写作任务：创意写作，博客，笔记记录，待办事项清单，科学论文...
+- 数十种编程语言的强大的编程模式
+- 深度定制，但对初学者友好
 
-* Install
- Spacemacs is a beginner-friendly and powerful extension of a popular text
- editor called Emacs. To install Spacemacs you need to first install base Emacs
- and then download the Spacemacs extension files, which is most easily done by
- using a program called Git. The steps are easy and outlined below.
+* 安装
+Spacemacs 是一个对初学者友好的，有强大的扩展的，受欢迎的，叫做 Emacs 的文本编辑器。要安装
+Spacemacs，您需要首先安装基础 Emacs，然后下载 Spacemacs 扩展文件，这最容易通过使用名为 Git
+的程序完成。 这些步骤很容易，并在下面概述。
 
-** 1. [[https://github.com/syl20bnr/spacemacs#prerequisites][Install Emacs]]
+** 1. [[https://github.com/syl20bnr/spacemacs#prerequisites][安装 EMACS]]
 
-** 2. [[https://git-scm.com/downloads][Install Git]]
+** 2. [[https://git-scm.com/downloads][安装 Git]]
 
-** 3. Install Spacemacs
-Open a terminal or command prompt, paste the following code to it:
+** 3. 安装 Spacemacs
+打开终端或命令提示符，粘贴以下代码：
 
-#+BEGIN_SRC sh
-git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+#+BEGIN_SR
+git clone /github.com/syl20bnr/spacemacs ~/.emacs.d
 #+END_SRC
 
-Press enter to execute the code and the program you installed in the previous
-step, Git, will download the Spacemacs extension files.
+按 Enter 键执行代码，在上一步安装的程序，Git，将下载 Spacemacs 扩展文件。
 
-*** Note for Windows users
-If you use windows, you have to modify the git command by inserting the correct
-path to your .emacs.d folder. The dot before the folder means that it is hidden,
-so you'll have to search for hidden files to find the folder. When you have
-found the folder, substitute the original path with the correct one. The proper
-code would look something like this:
+*** Windows 用户注意事项
+如果您使用 Windows，则必须通过将正确的路径插入.emacs.d 文件夹来修改 git 命令。文件夹之前的点
+意味着它被隐藏，所以你必须搜索隐藏的文件来找到文件夹。找到该文件夹后，用正确的路径替换原始路径。
+正确的代码看起来像这样：
 
-#+BEGIN_SRC sh
-git clone https://github.com/syl20bnr/spacemacs /path/to/your/.emacs.d
+#+BEGIN_SR
+git clone /github.com/syl20bnr/spacemacs /path/to/your/.emacs.d
 #+END_SRC
 
-** 4. Install the default font
-The default font used by Spacemacs is Source Code Pro by Adobe. It is
-recommended to [[https://github.com/adobe-fonts/source-code-pro#font-installation-instructions][install]] it on your system to ensure correct visual
-representation. Also a "Fallback font" for nicer-looking symbols in the modeline
-(bottom bar) is recommended. These depend on the system:
+** 4. 安装默认字体
+Spacemacs 使用的默认字体是 Adobe 的 Source Code Pro。建议将其 [[https://github.com/adobe-fonts/source-code-pro#font-installation-instructions][安装]] 在系统上，以确保正确的
+视觉表示。建议在状态栏中使用更好看的符号（底部栏）的“后备字体”。这些依赖于系统：
 
 - gnu/linux: Nanum
 - MacOS: Arial Unicode MS
 - Windows: MS Gothic or Lucida Sans Unicode
 
-If the modeline doesn't look as great as in the pictures, make sure you have the
-correct fallback font installed on your system.
+如果状态栏看起来不如图片那么好，请确保您的系统上安装了正确的后备字体 。
 
-** 5. Open Spacemacs and choose default editing style
-Open Spacemacs by clicking the Emacs icon in your applications menu. The first
-time Spacemacs launches, it will load and install packages and prompt you for
-your preferred editing style. You have two options: Vim ("Among the stars aboard
-the Evil flagship") and Emacs. If you haven't used Emacs before or are unsure
-about the differences of the editing styles, we recommend selecting the default,
-Vim, by pressing enter. Using this configuration is introduced more thoroughly
-in the next section. If you are already familiar with Emacs or do not plan to
-switch into modal editing style, select Emacs with the left and right arrow
-keys. There is also a third option, "Hybrid", for more advanced users willing to
-use both styles. All of these choices can be easily changed later by editing the
-dotspacemacs-editing-style variable in the dotfile (see [[#configuring-spacemacs][Configuring Spacemacs]]),
-so if modal editing does not sweep you away, you can switch to the Emacs style
-later.
+** 5. 打开 Spacemacs 并选择默认编辑风格
+通过单击应用程序菜单中的 Emacs 图标打开 Spacemacs。Spacemacs 第一次启动，它将加载和安装软件包，
+并提示您选择您喜欢的编辑风格。你有两个选择：Vim（“邪恶的旗舰之星”）和 Emacs。如果您以前没有使用
+Emacs，或者不确定编辑风格的差异，建议您按 Enter 键选择默认值 Vim。在下一节中将更详细地介绍使用
+此配置。如果您已经熟悉 Emacs 或者不打算切换到模式编辑风格，请使用左右箭头键选择 Emacs。还有第三
+个选项“混合”，对于更多的高级用户，愿意使用这两种风格。所有这些选择都可以通过编辑 dotfile 中的
+dotspacemacs-editing-style 变量（请参阅 [[#configuring-spacemacs][配置 Spacemacs]]）稍后更改，因此，如果模式编辑不会把
+你裹挟而去，则可以稍后切换到 Emacs 样式。
 
-Next, you will be prompted for the distribution you would like to start with.
-The standard distribution is recommended, press enter to select it.
+接下来，系统将提示您输入您要开始的分发。建议使用标准配置，按回车键选择。
 
-Now Spacemacs will download and install required packages. This will take some
-minutes depending on your connection. After everything is installed (you will
-see the text "n packages loaded in x s" appear in the list under the Spacemacs
-logo), restart Spacemacs.
+现在 Spacemacs 将下载并安装所需的软件包。这将需要几分钟，具体取决于您的连接。安装完所有内容（您
+将看到文本 "n packages loaded in x s" 出现在 Spacemacs 徽标下的列表中），重新启动 Spacemacs。
 
-Now your installation process is complete, congratulations! For troubleshooting,
-see the last section.
+现在您的安装过程已经完成，恭喜！ 有关故障排除，请参阅最后一节。
 
-* Getting started
-** Keybinding notation
-The power of Spacemacs lies in its efficient keybindings. Because it is built on
-Emacs, we will use Emacs conventions for keybinding notation. The most important
-modifier keys are:
+* 入门
+** 键绑定符号
+Spacemacs 的强大力量在于其高效的键绑定。因为它是建立在 Emacs 上的，所以我们将使用 Emacs 约定
+来实现键绑定符号。最重要的修饰键是：
 
-~SPC~ = ~Space~, used as the leader key in Vim editing style.
+~SPC~ = ~Space~, 用作 Vim 编辑风格的前缀键
 ~C-~ = ~Ctrl~
 ~M-~ (for "meta") = ~Alt~
 ~S-~ = ~Shift~
 
-The modifier keys can be used either in a sequence or as key chords by pressing
-two keys at the same time. ~SPC 1~ is notation for a key sequence and means
-pressing ~Space~ first and pressing ~1~ after it. Key chords are notated by
-writing a ~-~ between the keys. Thus ~C-c~ means pressing ~Ctrl~ and the letter
-~c~ simultaneously. Key chords and sequences can also be combined: ~C-c a~ means
-"First press ~Ctrl~ and ~c~ simultaneously, then press ~a~". ~C-c C-a~ means
-"First press ~Ctrl~ and ~c~ simultaneously, then press ~Ctrl~ and ~a~
-simultaneously".
+修饰键可以通过在序列中或作为组合键同时按两个键使用。 ~SPC 1~ 是按键顺序的符号，表示先按 ~空格键~ ，
+然后按 ~1~ 。组合键通过在键之间写一个 ~-~ 符号来表示。因此 ~C-c~ 意味着同时按下 ~Ctrl~ 和字母 ~c~ 。
+组合键和键序列也可以组合： ~C-c a~ 表示“首先同时按下 ~Ctrl~ 和 ~c~ ，然后按 ~a~ ”。 ~C-c C-a~ 
+表示“首先同时按下 ~Ctrl~ 和 ~c~ ，然后同时按 ~Ctrl~ 和 ~a~ ”。
 
-This document assumes you chose the "Vim" editing style and notates accordingly.
-If you chose the Emacs editing style, just substitute ~SPC~ with ~M-m~ in all
-the commands that begin with ~SPC~.
+本文档假定您选择了“Vim”编辑风格，并据此说明。如果您选择了 Emacs 编辑风格，那么只需在 ~SPC~ 开始的
+所有命令中用 ~M-m~ 替换 ~SPC~ 。
 
-(Note: Other modifier keys such as ~Super~, notated with a small-case ~s-~, can
-be set up but this is rarely necessary in Spacemacs).
+（注意：可以设置其他修饰键，例如 Super，以小写 ~s-~ 表示，但这在 Spacemacs 中很少需要）。
 
-** Modal text editing - why and how?
-Writing (or programming) is typically not a simple linear process of adding
-words and lines until finished. At least as important part of the work consists
-of editing the text: deleting and rewriting parts, moving sentences around or
-jumping to an earlier point to fix a discrepancy.
+** 模式化文本编辑 - 为什么这样做和如何做？
+写作（或编程）通常不是添加单词和行直到完成的简单线性过程。至少任务的重要组成部分是编辑文本：删除和
+重写部分，移动句子或跳到较早的一点来修正差异。
 
-The crudest way to, for example, delete a certain line is moving the mouse to
-the line in question, clicking on the line and then deleting it by pressing
-backspace repeatedly. This is slow and inefficient, both because you have to
-take your hands from your keyboard and because repeatedly pressing backspace
-takes time. The more time you spend pressing keys, the more time and energy is
-wasted.
+例如，要删除一行，最简单的方法是，将鼠标移动到相关行，单击该行，然后多次按退格键删除它。 这是缓慢
+而低效的，因为你必须把手从键盘上拿走，因为多次按退格键需要时间。 你花费在按键上的时间越多，浪费的
+时间和精力就越多。
 
-To speed up editing, many editors use key chords for common editing tasks:
-~Control-c~ for copying and so on. However, these types of shortcuts tend to
-have two problems. First, you have to press two keys at the same time, which is
-harder to coordinate and thus slower than pressing keys in a sequence. Second,
-you typically have to use your weakest fingers (pinkies) extensively and bend
-your wrists in unergonomic positions, which is uncomfortable for many and risks
-developing carpal tunnel syndrome in the long run.
+为了加快编辑速度，许多编辑者使用组合键进行普通编辑任务： ~Control-c~ 进行复制等。 但是，这些类型的
+快捷方式往往有两个问题。 首先，您必须同时按两个键，这是比较难以协调的，因此比按序列中的按键慢。 第
+二，您往往必须经常使用最弱的手指（小指），并将手腕弯曲成不符合人体工程学的位置，这对于许多人来说是
+不舒服的，并且从长期来看存在着发展为腕管综合征的风险。
 
-By contrast, Spacemacs uses modal editing. Modal editing means that different
-modes are used for editing and writing text. While this can sound complicated at
-first, in practice it can be learned quickly and once learned is unparallelled
-in speed and ergonomy. Our earlier example of deleting a certain line of text (a
-very common edit task) can be achieved in Spacemacs by simply navigating to the
-line in question with the keys ~j~ and ~k~ (navigation keys) and pressing ~d~
-(for "delete") two times!
+相比之下，Spacemacs 使用模式化编辑。 模态编辑意味着用不同的模式来编辑和写入文本。 虽然这乍一听很
+复杂，但在实践中，它可以被快速学习，而且一旦学到了，在速度和人体工程学方面是无与伦比的。 我们之前
+的删除某一行文本（一个非常常见的编辑任务）的例子可以在 Spacemacs 中通过简单地导航到所涉及的关键
+字 j 和 k（导航键）并两次按 d（对于“删除”）来实现！
 
-You might have noticed that this was achieved entirely without moving your
-fingers from your home row (the row where your fingers lie in rest when
-touch-typing) and without using modifier keys.
+您可能已经注意到，这完全没有从家庭行（在打字时，手指在休息时的行）移动您的手指，不使用修饰键。
 
-** Start the Vim tutorial
-The modal editing features of Spacemacs originate from a text editor called Vi,
-and thus the modal editing tutorial is called eVIl tutor. Press ~SPC h T~ (that
-is, the spacebar followed by ~h~ and ~T~) to familiarize yourself with
-modal editig.
+** 启动 Vim 教程
+Spacemacs 的模式化编辑功能源自一个名为 Vi 的文本编辑器，因此模式化编辑教程被称为 eVIl 教程。按
+~SPC h T~ （即空格键，然后是 ~h~ 和 ~T~ ），以熟悉模式化编辑。
 
-** Using the spacebar to launch commands
-Now that you are familiar with writing and editing text it is time to put the
-"Space" into Spacemacs. Because the spacebar is the most accessible key on the
-keyboard and is pressed by the strongest fingers (the thumbs), it is a natural
-choice for launching commands. You can think of it as the start menu of
-Spacemacs.
+** 使用空格键启动命令
+现在你熟悉编写和编辑文本，那么是时候把“空格键”放入 Spacemacs 了。 因为空格键是键盘上最容易摸到
+的键，而且是被最强的手指（拇指）按下，所以它是启动命令的天然的选择。 您可以将其视为 Spacemacs 的
+开始菜单。
 
-A short instant after the spacebar is pressed a menu pops up. This interactive
-menu shows you what submenus and commands can be accessed by subsequent
-keypresses. Browsing around this menu is a great way of finding new features in
-Spacemacs, so keep on eye on the different options! ~ESC~ usually breaks the
-combination you don't want to use.
+按空格键，一个短暂的瞬间后，弹出一个菜单。 此交互式菜单显示后续按键可以访问哪些子菜单和命令。 浏览
+这个菜单是在 Spacemacs 中找到新功能的好方法，所以请留意不同的选项！ ~ESC~ 通常中断您不想使用的组合。
 
-** Buffers, windows and frames
-Because Emacs (the extension of which Spacemacs is) was developed in the 80's
-before the advent of modern graphical user interfaces, Emacs has
-a different name of what we normally call "windows": in Emacs these are
-called "frames". A frame is what pops up when you launch Spacemacs from your
-desktop shortcut. A frame contains windows and buffers.
+** 缓冲区，窗口和页面
+因为 Emacs（Spacemacs 所扩展的那个）是在现代图形用户界面出现之前的 80 年代开发的，所以 Emacs
+具有与我们通常称为“windows（窗口）”不同的名称：在 Emacs 中，这些称为“frames（页面）”。 当您从
+桌面快捷方式启动 Spacemacs 时，会弹出一个页面。 一个页面包含窗口和缓冲区。
 
-Windows are the visual spaces a frame is divided into. The default
-is one, but windows can be split to allow editing multiple files in one frame.
-Let's try this. Press ~SPC~ to bring up the menu. You can see different letters
-having different submenus associated with them, usually with a mnemonic for
-easier recall. The letter w is assigned for "windows": press it. A new menu
-opens with further options. Write the character / to split the currently active
-window vertically into two.
+窗口是一个页面分成的视觉空间。 窗口默认为一个，但可以被拆分，以允许在一个页面中编辑多个文件。 我们
+来试试看吧。 按 ~SPC~ 调出菜单。 你可以看到不同的字母有关联的不同的子菜单，为了更容易回忆通常用助记
+符。 字母 w 被分配给“windows（窗口）”：按下它， 将打开一个有更多选项的新菜单。 输入字符/将当前
+活动的窗口垂直地分割成两个。
 
-Now you should see two windows of this tutorial, and the one on the left should
-be active, as can be seen from the modeline in the bottom or by moving the
-cursor around using the navigation keys. This isn't very useful, as we
-would probably want to see a different file on the right.
+现在您应该看到本教程的两个窗口，左侧的窗口应该处于活动状态，从底部的状态栏或者使用导航键移动光标可以看
+出来。 这不是很有用，因为我们可能想要在右边看到一个不同的文件。
 
-First, activate the window on the right with ~SPC 2~. Now that the window on the
-right is active, we can open a different buffer for a different file. We'll use
-the scratch buffer, which can be used like a notepad. Be warned, unlike other
-buffers it doesn't prompt you whether you want to save the changes you've made
-when quitting the program! Press ~SPC b~ to open the buffers menu and then
-switch to the scratch buffer by pressing s. Now you have two different buffers
-in two different windows open, great! You can write something on the scratch
-buffer, and when you're done, make sure that the scratch window is active and
-close it by pressing ~SPC w d~.
+首先，使用 ~SPC 2~ 激活右侧的窗口。现在右侧的窗口处于活动状态，我们可以为一个不同的文件打开一个不同的
+缓冲区。 我们将使用临时缓冲区，它可以像记事本一样使用。 请注意，与其他缓冲区不同，它不会在退出程序
+时提示您是否要保存所做的更改！ 按 ~SPC b~ 打开缓冲区菜单，然后按 s 切换到临时(scratch)缓冲区。 
+现在你有两个不同的缓冲区在两个不同的窗口打开，太好了！ 您可以在临时缓冲区上写一些东西，完成后，确保
+暂存窗口处于活动状态，然后按 ~SPC w d~ 关闭它。
 
-Now the tutorial window fills the whole frame. But you only closed the window,
-not the scratch buffer, so the buffer is still open beneath the surface. You can
-quickly switch between the current buffer and the last with ~SPC TAB~: use this
-a couple of times to switch between the tutorial and the scratch buffer. ~SPC b~
-has more options for switching between buffers, for example ~SPC b b~ opens a
-searchable list of all currently open buffers and ~SPC b d~ closes the current
-buffer.
+现在教程窗口填满整个页面。 但是因为你只关闭窗口，而不是临时缓冲区，所以缓冲区仍然在界面下打开。 您
+可以使用 ~SPC TAB~ 在当前缓冲区和上一个缓冲区之间快速切换：在教程和临时缓冲区之间切换几次。 ~SPC b~
+有更多的选项用于在缓冲区之间切换，例如 ~SPC b b~ 打开所有当前打开的缓冲区的可搜索列表，并且 ~SPC b d~
+关闭当前缓冲区。
 
-** Accessing files
-Files can be accessed under the ~SPC f~ mnemonic. You can navigate to any file
-with ~SPC f f~ and open it by pressing enter. Accessing recently opened files is
-a very common task and is done with ~SPC f r~. An edited file is saved with
-~SPC f s~.
-
-* Configuring Spacemacs
+** 访问文件
+可以在 ~SPC f~ 助记符下访问文件。您可以导航到具有 ~SPC f f~ 的任何文件，然后按 Enter 键打开它。访问
+最近打开的文件是一个非常常见的任务，使用 ~SPC f r~ 完成。使用 ~SPC f s~ 保存编辑过的文件。
+ 
+* 配置 Spacemacs
 :PROPERTIES:
 :CUSTOM_ID: configuring-spacemacs
 :END:
-** Adding language support and other features: using layers
-Spacemacs divides its configuration into self-contained units called
-configuration layers. These layers are stacked on top of each other to achieve a
-custom configuration.
+** 添加语言支持和其他功能：使用层
+Spacemacs 将其配置划分为称为配置层的独立单元。这些层堆叠在彼此的顶部以实现定制配置。
 
-By default Spacemacs uses a dotfile called ~/.spacemacs to control which layers
-to load. Within this file you can also configure certain features. First, split
-the window vertically to view both this tutorial and the dotfile simultaneously
-(~SPC w /~). Open the dotfile by pressing ~SPC f e d~. Navigate to the line
-starting with "dotspacemacs-configuration-layers". The following lines have
-further instructions: uncomment org and git layers if you want to be
-familiarized with them. More layers for different languages and tools can be
-found on [[https://github.com/syl20bnr/spacemacs/tree/master/layers][github]] or by pressing ~SPC h SPC~. The added layers will be installed
-upon restart of Spacemacs.
+默认情况下，Spacemacs 使用名为 ~/.spacemacs~ 的点文件来控制要加载的层。 在此文件中，您还可以
+配置某些功能。 首先，垂直分割窗口以同时查看本教程和点文件（ ~SPC w /~ ）。 按 ~SPC f e d~ 键打开
+点文件。 导航到以“dotspacemacs-configuration-layers”开始的行。 以下行有进一步的说明：如果
+您想要熟悉它们，请取消注释 org 和 git 层。 可以在 [[https://github.com/syl20bnr/spacemacs/tree/master/layers][github ]]上或通过按 ~SPC h SPC~ 找到更多不同
+语言和工具的图层。 添加的层将在重新启动 Spacemacs 时安装。
 
-Mac users: add the osx layer to use the OS X keybindings!
+Mac 用户：添加 osx 层以使用 OS X 键绑定！
 
-** Changing the colour theme
-You can toggle the theme by ~SPC T n~. This cycles between currently
-activated themes. You can find more by adding the themes-megapack layer and
-activate them by writing their names in the dotspacemacs-themes list.
+** 更改颜色主题
+您可以通过 ~SPC T n~ 切换主题。这在当前激活的主题之间循环。您可以通过添加 themes-megapack 层找到
+更多内容，并通过在 dotspacemacs-themes 列表中写入它们的名字来激活它们。
 
-** Starting maximized
-Editing the dotspacemacs-maximized-at-startup variable from nil to t will start
-Spacemacs maximized.
+** 开始最大化
+将 dotspacemacs-maximized-at-startup 变量从 nil 编辑为 t 将以最大化形式启动 Spacemacs。
 
-** Quitting
-Save the changes you've made to the dotfile with ~SPC f s~ and then quit emacs
-by ~SPC q q~. You can return to this tutorial by clicking it on the home screen!
+** 退出
+使用 ~SPC f s~ 保存对点文件的更改，然后通过 ~SPC q q~ 退出 emacs。您可以通过在主屏幕上单击来返回本教程！
 
-* Additional features, tips and troubleshooting
+* 附加功能，提示和故障排除
 ** Org mode
-Org mode is one of the best features of Spacemacs and enough reason to warrant
-its use. Org mode's official description tells that it is "for keeping notes,
-maintaining todo lists, planning projects, and authoring documents with a fast
-and effective plain-text system", but this gives only a small inkling of its
-versatility. If you do any kind of writing at all, chances are that Org mode
-will make it easier and more fun. This tutorial was written in Org mode.
+Org mode（组织模式）是 Spacemacs 的最佳功能之一，有足够的理由保证其使用。Org mode 的官方描述
+表明，“使用快速有效的纯文本系统来保存笔记，维护待办事项列表，规划项目和创作文档”，但这仅仅是其多
+功能性的一小部分。 如果你做任何一种写作，有机会用 Org mode 将使它更容易和更有趣。 本教程是用
+Org mode 编写的。
 
-Install the Org layer and open this tutorial. Press ~S-TAB~ repeatedly and
-observe that this cycles the visibility of the contents of different headlines.
-Press t in normal mode and observe that you can add TODO tags on headlines.
-Press ~M-k~ or ~M-j~ in normal mode and see how you can quickly move parts of
-the document around.
+安装 Org 层并打开本教程。 反复按 ~S-TAB~ ，并观察到这会循环显示不同标题的内容。 在正常模式下按 t，
+观察到您可以在标题上添加 TODO 标签。 在正常模式下按 ~M-k~ 或 ~M-j~ ，看看如何快速移动文档的一部分。
 
-This is not even scratching the surface of Org mode, so you should look into its
-[[https://github.com/syl20bnr/spacemacs/blob/master/layers/%252Bemacs/org/README.org][documentation]] for more information. Googling for Org mode tutorials is also very
-helpful in finding out the most useful features of it!
+这甚至不会涉及 Org mode 的表面，因此您应该查看其[[https://github.com/syl20bnr/spacemacs/blob/master/layers/%252Bemacs/org/README.org][文档 ]]以获取更多信息。 谷歌搜索 Org mode 教程也
+非常有助于找出最有用的功能！
 
-** Version control - the intelligent way
-Version control means keeping track of the changes and edits you have made to
-your document. Often version control is done by saving different versions of the
-document with different names, such as "document version 13" and so on. This is
-crude in many ways: if you want to, for example, re-add something you deleted,
-you have to manually open several past versions of the document to find the one
-with the deleted part, and then copy-paste it to the most recent file. More
-complicated edits will be harder still. Fortunately, there is a much better way.
-Git is the most popular version control system for programmers, but it can be as
-useful for people that are writing school or scientific papers, fiction or blog
-posts as well.
+** 版本控制 - 智能化方式
+版本控制意味着跟踪您对文档所做的更改和编辑。 通常，通过使用不同的名称保存不同版本的文档（例如“文档
+版本 13”等）来完成版本控制。 这在很多方面是粗糙的：例如，如果要重新添加删除的内容，则必须手动打开
+多个过去的文档版本，以找到具有已删除部分的文档，然后将其复制粘贴到最近的文件。 更复杂的编辑将更难。 
+幸运的是，有一个更好的方法。Git 是最受程序员欢迎的版本控制系统，但它也可以用于写作学校或科学论文，
+小说或博客文章的人。
 
-Install the git layer, restart Spacemacs and open a file you want to version
-control. You can check the status of your file by pressing ~SPC g s~. Select the
-folder your file is in. You will be prompted whether you want to create a
-repository in the folder. Select yes. You will see a list of "Untracked files":
-navigate to the file you want to track and press s to "stage changes". You might
-be prompted to save the file: save it if necessary. Now the new file needs to be
-commited: press c and c again. Two windows pop up: one showing the changes
-you've made since the last edit (in this case, the whole document) and another
-prompting for a commit message. Write "Initial commit", press ESC to exit back
-to normal mode and press ~, c~ confirm and quit the commit
-message. To abort, press ~, a~.
+安装 git 层，重启 Spacemacs 并打开要进行版本控制的文件。 您可以通过按 ~SPC g s~ 检查文件的状态。 
+选择文件所在的文件夹。系统将提示您是否要在文件夹中创建存储库。 选择是。 您将看到“未跟踪文件”的列表：
+导航到要跟踪的文件，然后按 s 进行“暂存更改”。 可能会提示您保存文件：必要时保存。 现在需要提交新的
+文件：按 c 两次。 弹出两个窗口：一个显示自上次编辑以来所做的更改（在本例中为整个文档），另一个显示
+提交信息。 写“初始提交”，按 ESC 退出正常模式，按 ~, c~ 确认并退出提交信息。 要放弃，按 ~, a~ 。
 
-Now you know how to make a commit. The commits are saved in
-the (hidden) .git folder in the same folder the tracked file(s) are in. You can
-make further commits the same way.
+现在你知道如何提交。提交保存在跟踪文件所在的同一文件夹中的（隐藏）.git 文件夹中。您可以以相同的
+方式进一步提交。
 
-** Daemon mode and instant startup (Linux)
-Emacs can be used in daemon mode: a daemon runs in the background and launches
-clients. This way new frames launch instantly without delay. [[https://www.emacswiki.org/emacs/EmacsAsDaemon][Emacswiki]] tells
-more about the daemon and how to set it to launch automatically on startup.
+** 守护进程模式和即时启动(Linux)
+Emacs 可以在守护进程模式下使用：守护程序在后台运行并启动客户端。这样新的页面立即启动，没有延迟。 
+ [[https://www.emacswiki.org/emacs/EmacsAsDaemon][Emacswiki]] 提供更多关于守护进程，以及如何将其设置为在启动时自动启动的信息。
 
-** Swap caps lock and esc keys on your keyboard
-This is useful outside of Spacemacs as well!
+** 在键盘上交换 caps lock 和 esc 键
+这在 Spacemacs 之外也很有用！
 
-** Troubleshooting and further info
-~SPC ?~ shows you the keybindings in the current major mode, which is often
-helpful. For troubleshooting, please refer to the FAQ by pressing ~SPC f e f~ or
-[[https://github.com/syl20bnr/spacemacs/blob/master/doc/FAQ.org][online]]. More help is found under ~SPC h~, and with ~SPC h ~SPC~ you can access
-the comprehensive Spacemacs documentation, including this tutorial and the layer
-documents.
+** 故障排除和更多信息
+~SPC ?~ 显示当前主模式的键绑定，这通常是有帮助的。 有关故障排除，请通过按 ~SPC f e f~ 或[[https://github.com/syl20bnr/spacemacs/blob/master/doc/FAQ.org][联机方式 ]]
+来参考常见问题(FAQ)。 在 ~SPC h~ 下找到更多帮助， ~SPC h SPC~ 可以访问全面的 Spacemacs 文档，
+包括本教程和层文档。
 
-The [[https://gitter.im/syl20bnr/spacemacs][Gitter chat]] can be used to ask questions if the answer cannot be found in
-the documentation. For a detailed review of Spacemacs' features one can also
-watch the [[https://www.youtube.com/playlist?list=PLrJ2YN5y27KLhd3yNs2dR8_inqtEiEweE][Spacemacs ABC series]] by Eivind Fonn on Youtube. Some of the
-keybindings have changed since the videos were uploaded but seeing someone in
-action helps spot helpful tricks that would otherwise be missed.
+如果在文档中找不到答案， [[https://gitter.im/syl20bnr/spacemacs][Gitter 聊天室]]可以用来提问。 有关 Spacemacs 功能的详细回顾，还可以在
+YouTube 上观看 Eivind Fonn 的 [[https://www.youtube.com/playlist?list=PLrJ2YN5y27KLhd3yNs2dR8_inqtEiEweE][Spacemacs ABC 系列]]。 自上传视频以来，一些键绑定已经改变，但
+看到有人操作有助于找出的有用的技巧，否则会被遗漏。
