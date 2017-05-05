@@ -15,14 +15,11 @@
  - [[#how-tos][How-To's]]
 
 * 配置层
-Spacemacs 将其配置划分为称为 =配置层= 的独立单元。这些层堆叠在彼此的顶部以实现配
-置。
+Spacemacs 将其配置划分为称为 =配置层= 的独立单元。这些层堆叠在彼此的顶部以实现配置。
 
-默认情况下，Spacemacs 使用名为 =~/.spacemacs= 的[[https://luolei.org/dotfiles-tutorial/][点文件]] 来控制要加载的层。在此文件
-中，您还可以配置某些功能。
+默认情况下，Spacemacs 使用名为 =~/.spacemacs= 的 [[https://luolei.org/dotfiles-tutorial/][点文件]] 来控制要加载的层。在此文件中，您还可以配置某些功能。
 
-配置层是至少包含一个 =packages.el= 文件的目录，它使用 Emacs 的内置功能来定义和配
-置要从 Emacs 软件包存储库下载的软件包。
+配置层是至少包含一个 =packages.el= 文件的目录，它使用 Emacs 的内置功能来定义和配置要从 Emacs 软件包存储库下载的软件包。
 
 如果您已经拥有自己的 =Emacs= 配置，您可以将其移动到自己的层。
 
@@ -34,8 +31,7 @@ Spacemacs 将其配置划分为称为 =配置层= 的独立单元。这些层堆
 
 您创建的任何配置层必须明确加载到 =~/.spacemacs= 中。
 
-注意：为了您的隐私， =private= 目录的内容不受源代码管理。请参阅 [[file:DOCUMENTATION.org][文档]] 中的私有配置
-管理部分。
+注意：为了您的隐私， =private= 目录的内容不受源代码管理。请参阅 [[file:DOCUMENTATION.org][文档]] 中的私有配置管理部分。
 
 * 点文件(.spacemacs)
 如上所述 =.spacemacs= 控制要加载的配置层，也是定制 Spacemacs 的一种手段。
@@ -59,8 +55,7 @@ Spacemacs 将其配置划分为称为 =配置层= 的独立单元。这些层堆
 dotspacemacs-configuration-layers '(auto-completion smex)
 #+END_SRC
 
-一些配置层支持配置变量来暴露对特定于层的功能的粒度控制，git 层就是一个这样的例子。
-变量可以直接在 =dotspacemacs-configuration-layers= 中设置，如下所示：
+一些配置层支持配置变量来暴露对特定于层的功能的粒度控制，git 层就是一个这样的例子。变量可以直接在 =dotspacemacs-configuration-layers= 中设置，如下所示：
 
 #+BEGIN_SRC elisp
 ;; List of configuration layers to load.
@@ -72,58 +67,41 @@ dotspacemacs-configuration-layers '(auto-completion
 
 在任何时候，您可以应用对点文件或层所做的更改，而不必按 ~SPC f e R~ 重新启动 Spacemacs。
 
-[[https://github.com/syl20bnr/spacemacs/blob/master/core/templates/.spacemacs.template][点文件模板 ]]包含有关如何自定义 Spacemacs 的更多信息。有关详细信息，请参阅 [[file:DOCUMENTATION.org::#dotfile-configuration][文档的
-点文件配置部分]]。
+[[https://github.com/syl20bnr/spacemacs/blob/master/core/templates/.spacemacs.template][点文件模板 ]]包含有关如何自定义 Spacemacs 的更多信息。有关详细信息，请参阅 [[file:DOCUMENTATION.org::#dotfile-configuration][文档的点文件配置部分]]。
 
 * 点目录(~/.spacemacs.d)
-像 =Emacs= 一样，Spacemacs 初始化也可以包含在特殊目录 =~/.spacemacs.d= 中的 
-=init.el= 文件中。 然后将点文件的内容复制到 =init.el= 文件中。
+像 =Emacs= 一样，Spacemacs 初始化也可以包含在特殊目录 =~/.spacemacs.d= 中的 =init.el= 文件中。 然后将点文件的内容复制到 =init.el= 文件中。
 
-Emacs 点文件或点目录不被替换，而是由 Spacemacs 的点文件或点目录进行补充。在启动
-过程中，Emacs 仍然使用 =~/.emacs.d/init.el= （或 =~/.emacs= ）进行初始化，而变量 
-=user-emacs-directory= 仍然会指向 =~/.emacs.d/= ，即使 =~/.spacemacs.d= 或 
-=~/.spacemacs= 存在。 现在只有 =~/.emacs.d/init.el= 由 Spacemacs 提供（例如，将 
-Spacemacs git repo 克隆到一个空的 =~/.emacs.d/= ）之后，你自己的个人配置进入 
-=~/.spacemacs.d/init.el= （或 =~/.spacemacs= ）。
+Emacs 点文件或点目录不被替换，而是由 Spacemacs 的点文件或点目录进行补充。在启动过程中，Emacs 仍然使用 =~/.emacs.d/init.el= （或 =~/.emacs= ）进行初始化，而变量 =user-emacs-directory= 仍然会指向 =~/.emacs.d/= ，即使 =~/.spacemacs.d= 或 =~/.spacemacs= 存在。 现在只有 =~/.emacs.d/init.el= 由 Spacemacs 提供（例如，将 Spacemacs git repo 克隆到一个空的 =~/.emacs.d/= ）之后，你自己的个人配置进入 =~/.spacemacs.d/init.el= （或 =~/.spacemacs= ）。
 
-查看常见问题解答(FAQ)，来获得简单的解决方案，去维护（您以前的）vanilla Emacs 和
-（您的新的）Spacemacs 配置并行，而不需要重命名和备份 =~/.emacs.d/= 。
+查看常见问题解答(FAQ)，来获得简单的解决方案，去维护（您以前的）vanilla Emacs 和（您的新的）Spacemacs 配置并行，而不需要重命名和备份 =~/.emacs.d/= 。
 
 * 学习 Spacemacs
 ** 编辑风格
-Spacemacs 可以由 Vim 用户或 Emacs 用户通过将在点文件 =~/.spacemacs= 中的 
-=dotspacemacs-editing-style= 变量设置为 =vim= ， =emacs= 甚至 =hybrid= (混合)。
+Spacemacs 可以由 Vim 用户或 Emacs 用户通过将在点文件 =~/.spacemacs= 中的 =dotspacemacs-editing-style= 变量设置为 =vim= ， =emacs= 甚至 =hybrid= (混合)。
 
 ** 前缀键
-Spacemacs 键绑定使用默认绑定到 =vim= 或 =hybrid= 编辑风格中的 ~SPC~ （空格键）的
-前缀键，以及 =emacs= 风格中的 ~M-m~ 。
+Spacemacs 键绑定使用默认绑定到 =vim= 或 =hybrid= 编辑风格中的 ~SPC~ （空格键）的前缀键，以及 =emacs= 风格中的 ~M-m~ 。
 
-如果您使用 =vim= 风格 ，则可以通过设置变量 =dotspacemacs-leader-key= 来更改它；
-如果使用 =emacs= 风格，则可以通过设置变量 =dotspacemacs-emacs-leader-key= 来更改它。
-（这些变量必须在文件 =~/.spacemacs= 中设置）
+如果您使用 =vim= 风格 ，则可以通过设置变量 =dotspacemacs-leader-key= 来更改它；如果使用 =emacs= 风格，则可以通过设置变量 =dotspacemacs-emacs-leader-key= 来更改它。（这些变量必须在文件 =~/.spacemacs= 中设置）
 
 为简单起见，文档始终将前缀键称为 ~SPC~ 。
 
-有一个被称为主模式的前缀键的辅助键，默认设置为 ~,~ 。 该键是 ~SPC m~ 的快捷方式，
-其中所有主模式特定命令都被绑定。
+有一个被称为主模式的前缀键的辅助键，默认设置为 ~,~ 。 该键是 ~SPC m~ 的快捷方式，其中所有主模式特定命令都被绑定。
 
 ** Evil-指导
-如果您愿意学习 Vim 键绑定（强烈推荐，因为即使在 =emacs= 风格中也可以从中受益），
-请按 ~SPC h T~ 开始一个 Evil-adapted 的 Vim 指导。
+如果您愿意学习 Vim 键绑定（强烈推荐，因为即使在 =emacs= 风格中也可以从中受益），请按 ~SPC h T~ 开始一个 Evil-adapted 的 Vim 指导。
 
 ** Universal argument
-在 =vim= 编辑风格中，通用参数默认为 ~SPC u~ 而不是 ~C-u~ ，因为后者用于 Vim 中的
-向上滚动。
+在 =vim= 编辑风格中，通用参数默认为 ~SPC u~ 而不是 ~C-u~ ，因为后者用于 Vim 中的向上滚动。
 
 ** 配置层和包探测
-通过 ~SPC h SPC~ 使用 =helm-spacemacs-help= ，您可以快速搜索一个包，并使用它来
-获取层的名称。
+通过 ~SPC h SPC~ 使用 =helm-spacemacs-help= ，您可以快速搜索一个包，并使用它来获取层的名称。
 
 你也可以轻松地进入一个层的 =README.org= ，或者进入一个包的初始化函数。
 
 ** 键绑定探测
-多亏了[[https://github.com/justbur/emacs-which-key][which-key ]]，每当按下前缀命令（如 ~SPC~ ），一秒钟之后会出现一个缓冲区，列
-出此前缀的可能键。
+多亏了[[https://github.com/justbur/emacs-which-key][which-key ]]，每当按下前缀命令（如 ~SPC~ ），一秒钟之后会出现一个缓冲区，列出此前缀的可能键。
 
 还可以通过按以下组合键来搜索特定的键绑定：
 
@@ -137,12 +115,10 @@ Spacemacs 键绑定使用默认绑定到 =vim= 或 =hybrid= 编辑风格中的 ~
     SPC\ b
 #+END_EXAMPLE
 
-这将列出所有与 =缓冲区= 相关的绑定。注意：您在 /HELM-Descbind/ 提示符下，该模式
-由 6 个字母组成：大写 ~SPC~ ，一个反斜杠，一个实际空格和一个小写字母 ~b~ 。
+这将列出所有与 =缓冲区= 相关的绑定。注意：您在 /HELM-Descbind/ 提示符下，该模式由 6 个字母组成：大写 ~SPC~ ，一个反斜杠，一个实际空格和一个小写字母 ~b~ 。
 
 ** 描述功能
-=Describe functions(描述功能)= 是强大的 Emacs 内省命令，可以用来获取有关函数，变
-量，模式等的信息。这些命令是这样绑定的：
+=Describe functions(描述功能)= 是强大的 Emacs 内省命令，可以用来获取有关函数，变量，模式等的信息。这些命令是这样绑定的：
 
 | 键盘绑定    | 描述     |
 |-------------+----------|
