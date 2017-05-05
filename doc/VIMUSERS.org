@@ -37,53 +37,34 @@
  - [[#其他有用的链接][其他有用的链接]]
 
 * 本文档的目的
- 本文旨在通过跨越 vim 和 Spacemacs 之间的差距，以补充 Spacemacs 文档。虽然有些
- 信息可能被复制 ，但这并不能代替 Spacemacs 文档。建议您阅读这两个文件，充分认识
- Spacemacs。
+ 本文旨在通过跨越 vim 和 Spacemacs 之间的差距，以补充 Spacemacs 文档。虽然有些信息可能被复制 ，但这并不能代替 Spacemacs 文档。建议您阅读这两个文件，充分认识 Spacemacs。
 
 [[file:DOCUMENTATION.org][Spacemacs Documentation]]
 
 * 哲学
- 很多 vim 用户都有的误解是，Spacemacs 是 vim 的 Emacs 克隆。Spacemacs 没有完全
- 模仿 vim 的行为，它只有在编辑的时候才这样。你不能指望每个 vim 指令都可用，尽管
- 很多都是可用的。你不能用 Vimscript 配置 Spacemacs，反正没人喜欢 Vimscript。
- 重要的是，Spacemacs 旨在使用 vim 高级编辑模式以及 Emacs 更好的配置语言来改善
- vim 和 Emacs 两者。
+ 很多 vim 用户都有的误解是，Spacemacs 是 vim 的 Emacs 克隆。Spacemacs 没有完全模仿 vim 的行为，它只有在编辑的时候才这样。你不能指望每个 vim 指令都可用，尽管很多都是可用的。你不能用 Vimscript 配置 Spacemacs，反正没人喜欢 Vimscript。重要的是，Spacemacs 旨在使用 vim 高级编辑模式以及 Emacs 更好的配置语言来改善 vim 和 Emacs 两者。
 
 * 基本介绍
 ** 术语
 Spacemacs 使用与 vim 不同的术语，可能会使新用户感到困惑。本节试图厘清这些困惑。
 
 *** 模式和状态
-在 vim 中，你具有多种编辑模式如 =插入模式= 和 =可视模式= 来处理文本。在 Emacs 中，我们使用的是
-[[file:DOCUMENTATION.org::#states][状态]] 。它们等同于 vim 的模式。例如， =evil-insert-state= 与 vim 中的 =insert-mode= 相同。
+在 vim 中，你具有多种编辑模式如 =插入模式= 和 =可视模式= 来处理文本。在 Emacs 中，我们使用的是 [[file:DOCUMENTATION.org::#states][状态]] 。它们等同于 vim 的模式。例如， =evil-insert-state= 与 vim 中的 =insert-mode= 相同。
 
-Emacs 中的 =minor-mode= 就像是激活一项功能。例如：=aggressive-indent-mode= 就是一个
- =minor-mode= ，它可以在你输入的同时自动缩进代码。需要知道的是，在一个缓冲区中可以激活多个
- =minor-modes= 。许多 Emacs 包通过提供一个 =minor-mode= 进行工作。 =major-mode= 确定
- Emacs 在当前缓冲区的行为。通常每个文件类型对应一个 =major-mode= 。一个 =major-mode= 的例子
-如 =python-mode= ，它对 python 文件提供针对 python 的设置。每个缓冲区只有一个
- =major-mode= 。
+Emacs 中的 =minor-mode= 就像是激活一项功能。例如：=aggressive-indent-mode= 就是一个 =minor-mode= ，它可以在你输入的同时自动缩进代码。需要知道的是，在一个缓冲区中可以激活多个 =minor-modes= 。许多 Emacs 包通过提供一个 =minor-mode= 进行工作。 =major-mode= 确定 Emacs 在当前缓冲区的行为。通常每个文件类型对应一个 =major-mode= 。一个 =major-mode= 的例子如 =python-mode= ，它对 python 文件提供针对 python 的设置。每个缓冲区只有一个 =major-mode= 。
 
 *** 层
-Spacemacs 具有层的概念。层类似于 vim 中的插件。它们提供可以在 Spacemacs 中使用的新功能。但是
-层通常是由数个相互整合良好的包组成。例如， =python= 层包括自动补齐支持，文档查找，测试和其它由
-不同的包提供的功能。这使你不需要考虑安装什么包，只需要考虑你想要什么功能。关于层的更多内容可以参考
-[[#定制][定制]]章节和[[file:DOCUMENTATION.org::#configuration-layers][官方文档]]。 同时还有一个关于编写层的更深入的[[file:LAYERS.org][指南]]。
+Spacemacs 具有层的概念。层类似于 vim 中的插件。它们提供可以在 Spacemacs 中使用的新功能。但是层通常是由数个相互整合良好的包组成。例如， =python= 层包括自动补齐支持，文档查找，测试和其它由不同的包提供的功能。这使你不需要考虑安装什么包，只需要考虑你想要什么功能。关于层的更多内容可以参考[[#定制][定制]]章节和[[file:DOCUMENTATION.org::#configuration-layers][官方文档]]。 同时还有一个关于编写层的更深入的[[file:LAYERS.org][指南]]。
 
 *** 微状态
-Spacemacs 提供一个称为微状态的特殊功能。微状态允许相似的命令连续执行，不需要重复按 ~<Leader>~ 键。微状态通常
-由使用如下模式的键位绑定触发： ~<Leader> <group>~ 这里的 group 是微状态从属的目录。当处于一个
-微状态时，你将会在窗口的底部看到说明文档。要退出微状态，按 ~q~ 键。
+Spacemacs 提供一个称为微状态的特殊功能。微状态允许相似的命令连续执行，不需要重复按 ~<Leader>~ 键。微状态通常由使用如下模式的键位绑定触发： ~<Leader> <group>~ 这里的 group 是微状态从属的目录。当处于一个微状态时，你将会在窗口的底部看到说明文档。要退出微状态，按 ~q~ 键。
 
 #+CAPTION: Transient-state documentation window
 
 [[file:img/spacemacs-scale-transient-state.png]]
 
 ** 键位绑定约定
-Spacemacs 使用 ~SPC~ 作为它的 ~<Leader>~ 键。本文档也使用 ~SPC~ 作为 ~<Leader>~ 键。所有
-的键位绑定都采用助记方式，并由 ~<Leader>~ 键组织。例如，语言指定命令的键位绑定通常使用 ~SPC M~ 
-前缀。Spacemacs 使用的约定在[[file:CONVENTIONS.org][这个列表]]。 注意所有的键位绑定都可以更改。
+Spacemacs 使用 ~SPC~ 作为它的 ~<Leader>~ 键。本文档也使用 ~SPC~ 作为 ~<Leader>~ 键。所有的键位绑定都采用助记方式，并由 ~<Leader>~ 键组织。例如，语言指定命令的键位绑定通常使用 ~SPC M~ 前缀。Spacemacs 使用的约定在[[file:CONVENTIONS.org][这个列表]]。 注意所有的键位绑定都可以更改。
 
 Spacemacs 在一个延迟之后使用 [[https://github.com/justbur/emacs-which-key][which-key]] 来显示可用的键位绑定：
 
@@ -92,8 +73,7 @@ Spacemacs 在一个延迟之后使用 [[https://github.com/justbur/emacs-which-k
 [[file:img/which-key.png]]
 
 ** 运行命令
-可以使用 ~SPC SPC~ 运行 Emacs 命令。这将会弹出一个使用 [[https://github.com/emacs-helm/helm][Helm]] 的缓冲区。这个缓冲区中可以运行
-任意的 Emacs 命令。你同样可以使用 ~:~ 运行许多外部命令，就跟 vim 中一样。
+可以使用 ~SPC SPC~ 运行 Emacs 命令。这将会弹出一个使用 [[https://github.com/emacs-helm/helm][Helm]] 的缓冲区。这个缓冲区中可以运行任意的 Emacs 命令。你同样可以使用 ~:~ 运行许多外部命令，就跟 vim 中一样。
 
 注意：你可以使用 ~:~ 运行 Emacs 交互命令，但是不能使用 ~SPC SPC~ 运行外部命令。
 
@@ -116,8 +96,7 @@ Spacemacs 在一个延迟之后使用 [[https://github.com/justbur/emacs-which-k
 :PROPERTIES:
 :CUSTOM_ID: special-buffers
 :END:
-Emacs 默认会创建大量缓冲区，这些缓冲区很多人从来都不会使用到，就像 =*Messages*= 。Spacemacs 
-会在使用这些快捷键时自动忽略这些缓冲区。可以在[[file:DOCUMENTATION.org::#special-buffers][这里]] 找到更多相关信息。
+Emacs 默认会创建大量缓冲区，这些缓冲区很多人从来都不会使用到，就像 =*Messages*= 。Spacemacs 会在使用这些快捷键时自动忽略这些缓冲区。可以在[[file:DOCUMENTATION.org::#special-buffers][这里]] 找到更多相关信息。
 
 *** 窗口
 窗口就像 vim 中的 splits。它们在一次编辑多个文件时相当有用。所有的快捷键都有 ~SPC w~ 前缀。
@@ -142,9 +121,7 @@ Spacemacs 中所有文件命令都有 ~SPC f~ 前缀。
 | ~:e <file>~       | 打开 =<file>=                          |
 
 ** 帮助系统
-Emacs 具有一个可扩展的帮助系统。所有的快捷键都有 ~SPC h d~ 前缀，以允许便捷地访问帮助系统。最
-重要的快捷键是 ~SPC h d f~, ~SPC h d k~, 和 ~SPC h d v~ 。同样还有 ~SPC <f1>~ 允许用户
-搜索文档。
+Emacs 具有一个可扩展的帮助系统。所有的快捷键都有 ~SPC h d~ 前缀，以允许便捷地访问帮助系统。最重要的快捷键是 ~SPC h d f~, ~SPC h d k~, 和 ~SPC h d v~ 。同样还有 ~SPC <f1>~ 允许用户搜索文档。
 
 | 快捷键      | 功能                                           |
 |-------------+------------------------------------------------|
@@ -156,8 +133,7 @@ Emacs 具有一个可扩展的帮助系统。所有的快捷键都有 ~SPC h d~ 
 不论何时，你遇到怪异的行为或想知道是什么东西做的，这些功能是你应该首先查阅的。
 
 ** 探索
-有几种方式可以探索 Spacemacs 的功能。一个是阅读 Github 上的[[https://github.com/syl20bnr/spacemacs][源代码 ]]。你可以开始了解 Emacs
- Lisp，并能知道 Spacemacs 是怎样工作的。你还能通过如下快捷键来探索：
+有几种方式可以探索 Spacemacs 的功能。一个是阅读 Github 上的[[https://github.com/syl20bnr/spacemacs][源代码 ]]。你可以开始了解 Emacs Lisp，并能知道 Spacemacs 是怎样工作的。你还能通过如下快捷键来探索：
 
 | 快捷键      | 功能                               |
 |-------------+------------------------------------|
@@ -169,15 +145,12 @@ Emacs 具有一个可扩展的帮助系统。所有的快捷键都有 ~SPC h d~ 
 :CUSTOM_ID: customization
 :END:
 ** .spacemacs 文件
-首次启动 spacemacs 时，会提示你选择编辑样式。如果你现在正读到这里，你可能会选择 vim 样式。这样
-将会使用选择的相应样式创建一个 =.spacemacs= 文件。大多数琐碎的配置都在这个文件中。
+首次启动 spacemacs 时，会提示你选择编辑样式。如果你现在正读到这里，你可能会选择 vim 样式。这样将会使用选择的相应样式创建一个 =.spacemacs= 文件。大多数琐碎的配置都在这个文件中。
 
-在这个文件中有四个顶级函数： =dotspacemacs/layers=, =dotspacemacs/init=,
-=dotspacemacs/user-init= 和 =dotspacemacs/user-config= 。
+在这个文件中有四个顶级函数： =dotspacemacs/layers=, =dotspacemacs/init=, =dotspacemacs/user-init= 和 =dotspacemacs/user-config= 。
 
 =Dotspacemacs/layers= 函数仅用于启用和禁用层和包。
-=Dotspacemacs/init=  函数是在启动过程中，在其他东西运行前运行，并且包含  Spacemacs  设置。
-除非你需要更改默认 Spacemacs 设置，否则你不用动这个函数。
+=Dotspacemacs/init=  函数是在启动过程中，在其他东西运行前运行，并且包含  Spacemacs  设置。除非你需要更改默认 Spacemacs 设置，否则你不用动这个函数。
 =Dotspacemacs/user-init= 函数也是在其他程序运行前运行，并包含用户特定配置。
 =Dotspacemacs/user-config= 函数是你用到最多的函数。 在这里，你可以定义任何用户配置。
 
@@ -187,9 +160,7 @@ Emacs 具有一个可扩展的帮助系统。所有的快捷键都有 ~SPC h d~ 
 | ~SPC f e D~ | 使用 diff 通过默认模版手动更新你的 =.spacemacs= |
 
 ** Emacs Lisp
-这个部分介绍几个配置 Spacemacs 需要的 emacs lisp 函数。如需详细了解这个语言，请查看
-[[https://learnxinyminutes.com/docs/zh-cn/elisp-cn/][learn-emacs-lisp-zh.el]]。 如果你很想了解 emacs lisp 的一切，请使用 ~SPC h i elisp RET~ 
-上的信息页面。
+这个部分介绍几个配置 Spacemacs 需要的 emacs lisp 函数。如需详细了解这个语言，请查看 [[https://learnxinyminutes.com/docs/zh-cn/elisp-cn/][learn-emacs-lisp-zh.el]]。 如果你很想了解 emacs lisp 的一切，请使用 ~SPC h i elisp RET~ 上的信息页面。
 
 *** 变量
 设置变量是定制 Spacemacs 行为最常见的方式。语法很简单：
@@ -213,8 +184,7 @@ Emacs 具有一个可扩展的帮助系统。所有的快捷键都有 ~SPC h d~ 
   (define-key evil-normal-state-map (kbd "H") (kbd "^")) ; H goes to beginning of the line
 #+end_src
 
-map 是你想要绑定键位到的 keymap。大多数情况下你会使用 =evil-<state-name>-state-map= 。其
-对应不同的 =evil-mode= 状态。例如，使用 =evil-insert-state-map= 映射用于插入模式的快捷键。
+map 是你想要绑定键位到的 keymap。大多数情况下你会使用 =evil-<state-name>-state-map= 。其对应不同的 =evil-mode= 状态。例如，使用 =evil-insert-state-map= 映射用于插入模式的快捷键。
 
 使用 =evil-leader/set-key= 函数来映射 ~<Leader>~ 快捷键。
 
@@ -262,8 +232,7 @@ map 是你想要绑定键位到的 keymap。大多数情况下你会使用 =evil
 :PROPERTIES:
 :CUSTOM_ID: activating-a-layer
 :END:
-正如上文术语那段所说，层提供一个简单的方式来添加特性。可在 =.spacemacs= 文件中激活一个层。在
-文件中找到 =dotspacemacs-configuration-layers= 变量，默认情况下，它看起来应该是这样的：
+正如上文术语那段所说，层提供一个简单的方式来添加特性。可在 =.spacemacs= 文件中激活一个层。在文件中找到 =dotspacemacs-configuration-layers= 变量，默认情况下，它看起来应该是这样的：
 
 #+begin_src emacs-lisp
   (defun dotspacemacs/layers ()
@@ -280,13 +249,10 @@ map 是你想要绑定键位到的 keymap。大多数情况下你会使用 =evil
                                          )))
 #+end_src
 
-你可以通过删除分号来取消注释这些建议的层，开箱即用。要添加一个层，就把它的名字添加到列表中并重启 
-Emacs 或按 ~SPC f e R~ 。使用 ~SPC h SPC~ 来显示所有的层和他们的文档。
+你可以通过删除分号来取消注释这些建议的层，开箱即用。要添加一个层，就把它的名字添加到列表中并重启 Emacs 或按 ~SPC f e R~ 。使用 ~SPC h SPC~ 来显示所有的层和他们的文档。
 
 ** 创建一个层
-为了将配置分组或当配置与你的 =.spacemacs= 文件之间不匹配时，你可以创建一个配置层。Spacemacs 
-提供了一个内建命令用于生成层的样板文件： ~SPC SPC configuration-layer/create-layer~ 。
-这条命令将会生成一个如下的文件夹：
+为了将配置分组或当配置与你的 =.spacemacs= 文件之间不匹配时，你可以创建一个配置层。Spacemacs 提供了一个内建命令用于生成层的样板文件： ~SPC SPC configuration-layer/create-layer~ 。这条命令将会生成一个如下的文件夹：
 
 #+BEGIN_EXAMPLE
     [layer-name]
@@ -303,11 +269,7 @@ Emacs 或按 ~SPC f e R~ 。使用 ~SPC h SPC~ 来显示所有的层和他们的
     * = not created by the command
 #+END_EXAMPLE
 
-=Packages.el= 文件包含你可以在 =<layer-name>-packages= 变量中安装的包的列表。所有 [[http://melpa.org/][MELPA]] 
-仓库中的包都可以添加到这个列表中。还可以使用 =:excluded t= 特性将包包含在列表中。
-每个包都需要一个函数来初始化。这个函数必须以这种模式命名： =<layer-name>/init-<package-name>= 。
-这个函数包含了包的配置。同时还有一个 =pre/post-init= 函数来在包加载之前或之后运行代码。它看起来
-像这个样子：
+=Packages.el= 文件包含你可以在 =<layer-name>-packages= 变量中安装的包的列表。所有 [[http://melpa.org/][MELPA]] 仓库中的包都可以添加到这个列表中。还可以使用 =:excluded t= 特性将包包含在列表中。每个包都需要一个函数来初始化。这个函数必须以这种模式命名： =<layer-name>/init-<package-name>= 。这个函数包含了包的配置。同时还有一个 =pre/post-init= 函数来在包加载之前或之后运行代码。它看起来像这个样子：
 
 #+begin_src emacs-lisp
   (setq layer-name-packages '(example-package
@@ -324,8 +286,7 @@ Emacs 或按 ~SPC f e R~ 。使用 ~SPC h SPC~ 来显示所有的层和他们的
     )
 #+end_src
 
-**注意**：只有一个层可以具有一个对于包的 =init= 函数。如果你想覆盖另一个层对一个包的配置，请使用
- [[file:LAYERS.org::#use-package-hooks][use-package hooks]] 中的 =<layer-name>/pre-init= 函数。
+**注意**：只有一个层可以具有一个对于包的 =init= 函数。如果你想覆盖另一个层对一个包的配置，请使用 [[file:LAYERS.org::#use-package-hooks][use-package hooks]] 中的 =<layer-name>/pre-init= 函数。
 
 如果 MELPA 中没有你想要的包，你必须是由一个本地包或一个包源。关于此的更多信息可以从 [[file:LAYERS.org::#anatomy-of-a-layer][层的剖析]] 处获得。
 
@@ -334,17 +295,13 @@ Emacs 或按 ~SPC f e R~ 。使用 ~SPC h SPC~ 来显示所有的层和他们的
 关于层的加载过程和层的工作原理的详细描述可以参考 [[file:LAYERS.org][LAYERS.org]]。
 
 ** 安装一个单独的包
-有时创建一个层会有点大材小用了，也许你仅仅想要一个包而不想维持整个层。Spacemacs 在 =.spacemacs= 
-文件中的 =dotspacemacs/layers= 函数里提供了一个叫做 =dotspacemacs-additional-packages= 
-的变量，只要在列表中添加一个包名，它就会在你重启的时候被安装。[[#加载包][下一段]]来说明如何加载这个包。
+有时创建一个层会有点大材小用了，也许你仅仅想要一个包而不想维持整个层。Spacemacs 在 =.spacemacs= 文件中的 =dotspacemacs/layers= 函数里提供了一个叫做 =dotspacemacs-additional-packages= 的变量，只要在列表中添加一个包名，它就会在你重启的时候被安装。[[#加载包][下一段]]来说明如何加载这个包。
 
 ** 加载包
 :PROPERTIES:
 :CUSTOM_ID: loading-packages
 :END:
-有没有想过 Spacemacs 如何可以在仅仅几秒钟之内加载超过 100 个包呢？如此低的加载时间必须需要某种
-难以理解的黑魔法吧。还好这不是真的，多亏有了 =use-package= 。它是一个可以轻松实现对包进行延迟
-加载和配置的包。以下是它的基础用法：
+有没有想过 Spacemacs 如何可以在仅仅几秒钟之内加载超过 100 个包呢？如此低的加载时间必须需要某种难以理解的黑魔法吧。还好这不是真的，多亏有了 =use-package= 。它是一个可以轻松实现对包进行延迟加载和配置的包。以下是它的基础用法：
 
 #+begin_src emacs-lisp
   ;; Basic form of use-package declaration. The :defer t tells use-package to
@@ -374,16 +331,13 @@ Emacs 或按 ~SPC f e R~ 。使用 ~SPC h SPC~ 来显示所有的层和他们的
 :PROPERTIES:
 :CUSTOM_ID: uninstalling-a-package
 :END:
-Spacemacs 在 =.spacemacs= 文件中的 =dotspacemacs/init= 函数里提供了一个叫做 
-=dotspacemacs-excluded-packages= 的变量。只要在列表中添加一个包名，它就会在你重启的时候被卸载。
+Spacemacs 在 =.spacemacs= 文件中的 =dotspacemacs/init= 函数里提供了一个叫做 =dotspacemacs-excluded-packages= 的变量。只要在列表中添加一个包名，它就会在你重启的时候被卸载。
 
 ** 常见调整
-本段是为了想要做更多调整的人所写的。除非另有说明，所有这些设置都去你的 =.spacemacs= 文件中的 
-=dotspacemacs/user-config= 函数里完成。
+本段是为了想要做更多调整的人所写的。除非另有说明，所有这些设置都去你的 =.spacemacs= 文件中的 =dotspacemacs/user-config= 函数里完成。
 
 *** 变更 escape 键
-Spacemacs 使用 [[https://github.com/syl20bnr/evil-escape][evil-escape]] 来允许从许多拥有一个快捷键的 =major-modes= 中跳出。你可以在你的
- =dotspacemacs/user-config= 函数中像这样定制变量：
+Spacemacs 使用 [[https://github.com/syl20bnr/evil-escape][evil-escape]] 来允许从许多拥有一个快捷键的 =major-modes= 中跳出。你可以在你的 =dotspacemacs/user-config= 函数中像这样定制变量：
 
 #+begin_src emacs-lisp
   (defun dotspacemacs/user-config ()
@@ -395,8 +349,7 @@ Spacemacs 使用 [[https://github.com/syl20bnr/evil-escape][evil-escape]] 来允
 更多的文档可以在 =evil-escape= [[https://github.com/syl20bnr/evil-escape/blob/master/README.md][README]] 中找到。
 
 *** 变更配色方案
-=.spacemacs= 文件的 =dotspacemacs/init= 函数中有一个 =dotspacemacs-themes= 变量。这是
-一个可以用 ~SPC T n~ 键循环的主题的列表。列表中的第一个主题是在启动时加载的主题。以下为示例：
+=.spacemacs= 文件的 =dotspacemacs/init= 函数中有一个 =dotspacemacs-themes= 变量。这是一个可以用 ~SPC T n~ 键循环的主题的列表。列表中的第一个主题是在启动时加载的主题。以下为示例：
 
 #+begin_src emacs-lisp
   (defun dotspacemacs/init
@@ -412,19 +365,15 @@ Spacemacs 使用 [[https://github.com/syl20bnr/evil-escape][evil-escape]] 来允
 可以使用 ~SPC T h~ 键列出和选择所有已安装的主题。
 
 *** 非高亮搜索
-Spacemacs 模仿了默认的 vim 行为，会高亮显示搜索结果，尽管你不在它们之间进行导航。你可以使用 
-~SPC s c~ 或 ~:nohlsearch~ 来关闭搜索结果高亮。
+Spacemacs 模仿了默认的 vim 行为，会高亮显示搜索结果，尽管你不在它们之间进行导航。你可以使用 ~SPC s c~ 或 ~:nohlsearch~ 来关闭搜索结果高亮。
 
 若再也不需要自动高亮结果，你可以[[#卸载一个包][卸载]] =evil-search-highlight-persist= 包。
 
 *** 会话
-当你打开 Spacemacs 时，它不会自动恢复窗口和缓冲区。如果你常使用 vim 会话，你可能要在你的 
-=.spacemacs= 文件中的 =dotspacemacs/init= 里把 =dotspacemacs-auto-resume-layouts=
-设置为 =t= 。
+当你打开 Spacemacs 时，它不会自动恢复窗口和缓冲区。如果你常使用 vim 会话，你可能要在你的 =.spacemacs= 文件中的 =dotspacemacs/init= 里把 =dotspacemacs-auto-resume-layouts= 设置为 =t= 。
 
 *** 使用 visual lines 导航
-Spacemacs 使用 vim 默认 actual lines 导航，即使它们被包装了。如果你想要让 ~j~ 和 ~k~ 的行为
-如 ~g j~ 和 ~g k~ 一般，将一下代码添加到你的 =.spacemacs= 文件：
+Spacemacs 使用 vim 默认 actual lines 导航，即使它们被包装了。如果你想要让 ~j~ 和 ~k~ 的行为如 ~g j~ 和 ~g k~ 一般，将一下代码添加到你的 =.spacemacs= 文件：
 
 #+begin_src emacs-lisp
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
