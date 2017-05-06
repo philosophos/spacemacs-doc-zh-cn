@@ -1,93 +1,69 @@
 #+TITLE: Configuration layers
 
-* Configuration Layers                                      :TOC_4_gh:noexport:
- - [[#introduction][Introduction]]
- - [[#nomenclature][Nomenclature]]
- - [[#the-emacs-loading-process][The Emacs loading process]]
-   - [[#emacs-lisp-files][Emacs Lisp files]]
-     - [[#loading-a-file][Loading a file]]
+* 配置层                              :TOC_4_gh:noexport:
+ - [[#介绍][介绍]]
+ - [[#术语][术语]]
+ - [[#emacs-加载过程][Emacs 加载过程]]
+   - [[#emacs-lisp-文件][Emacs Lisp 文件]]
+     - [[#加载文件][加载文件]]
    - [[#features][Features]]
-     - [[#the-load-path][The load path]]
-   - [[#auto-loading][Auto-loading]]
+     - [[#加载路径][加载路径]]
+   - [[#自动加载][自动加载]]
    - [[#eval-after-load][Eval after load]]
    - [[#use-package][Use-package]]
- - [[#anatomy-of-a-layer][Anatomy of a layer]]
+ - [[#层的剖析][层的剖析]]
    - [[#layersel][layers.el]]
    - [[#packagesel][packages.el]]
    - [[#funcsel][funcs.el]]
    - [[#configel][config.el]]
    - [[#keybindingsel][keybindings.el]]
- - [[#the-spacemacs-loading-process][The Spacemacs loading process]]
- - [[#case-study-auto-completion][Case study: auto-completion]]
- - [[#layer-tips-and-tricks][Layer tips and tricks]]
-   - [[#cross-dependencies][Cross-dependencies]]
+ - [[#spacemacs-加载过程][Spacemacs 加载过程]]
+ - [[#案例研究自动补全][案例研究：自动补全]]
+ - [[#层提示和技巧][层提示和技巧]]
+   - [[#交叉依赖][交叉依赖]]
    - [[#use-package-1][Use-package]]
-   - [[#use-package-hooks][Use-package hooks]]
-   - [[#best-practices][Best practices]]
-     - [[#package-ownership][Package ownership]]
-     - [[#localize-your-configuration][Localize your configuration]]
-     - [[#load-ordering][Load ordering]]
-     - [[#no-require][No require]]
-     - [[#auto-load-everything][Auto-load everything]]
+   - [[#use-package-钩子][Use-package 钩子]]
+   - [[#最佳做法][最佳做法]]
+     - [[#包所有权][包所有权]]
+     - [[#本地化您的配置][本地化您的配置]]
+     - [[#顺序加载][顺序加载]]
+     - [[#不要使用-require][不要使用 require]]
+     - [[#自动加载一切][自动加载一切]]
  - [[#how-do-i--idiomatically][How do I ... idiomatically?]]
-   - [[#setup-auto-completion-for-a-major-mode][Setup auto-completion for a major mode]]
+   - [[#为主模式设置自动补全][为主模式设置自动补全]]
 
-* Introduction
-This document is intended as a tutorial for users who are interested in writing
-their first configuration layer, whether for private use or for contributing
-upstream. It should help clear up some confusion regarding how layers work and
-how Spacemacs (and Emacs) loads packages.
+* 介绍
+本文档旨在作为有兴趣撰写其第一个配置层的用户的教程，无论是私人使用还是贡献上游。它应该有助于清除有关层如何工作以及 Spacemacs（和 Emacs）如何加载包的一些困惑。
 
-* Nomenclature
+* 术语
 Layers and packages. What gives?
 
-- Package :: A set of Emacs Lisp files that, taken together, provide some
-     feature. Packages may be available on a package repository, such as ELPA or
-     MELPA or on a third-party service provider (such as github) or even
-     locally on the disk.
-- Layer :: A collected unit of configuration that can be enabled (or disabled)
-     in Spacemacs. A layer typically brings together one or more packages, as
-     well as the glue configuration code required to make them play well with
-     each other and Spacemacs in general.
+- 包 :: 一组集合在一起的 Emacs Lisp 文件，提供了一些功能。软件包可能在软件包存储库中可用，例如 ELPA 或 MELPA 或第三方服务提供商（例如 github），或者甚至本地在磁盘上。
+- 层 :: 可以在 Spacemacs 中启用（或禁用）的收集的配置单元。层通常汇集一个或多个包，以及通常使彼此和 Spacemacs 相互匹配所需的胶水配置代码。
 
-Before writing a layer, it is helpful to consider what you are trying to
-achieve. Is there a package that provides the functionality you are after, and
-you want to integrate it in Spacemacs? If yes, you should write a layer. Are you
-trying to implement a new feature that would be useful for the Emacs community
-at large? In that case, consider whether it wouldn't be more appropriate to
-write a package first, and then a layer that uses your package.
+在写一个层之前，考虑你想要实现的内容是很有帮助的。有没有提供你想要的功能的软件包，您想将其集成到 Spacemacs？如果是的话，你应该写一个层。您是否试图实施对 Emacs 社区有用的新功能？在这种情况下，请考虑首先编写包是否合适，然后再使用一个使用包的层。
 
-* The Emacs loading process
-To understand how to best implement a layer, we have to investigate how Emacs
-loads code.
+* Emacs 加载过程
+要了解如何最好地实现一个层，我们必须研究 Emacs 如何加载代码。
 
-** Emacs Lisp files
-Emacs Lisp files contains code that can be evaluated. When evaluated, the
-functions, macros and modes defined in that file become available to the current
-Emacs session. Henceforth, this will be termed as /loading/ a file.
+** Emacs Lisp 文件
+Emacs Lisp 文件包含可以评估的代码。评估时，该文件中定义的函数，宏和模式可用于当前的 Emacs 会话。此后，这将被称为/加载/文件。
 
-One major problem is to ensure that all the correct files are loaded, and in the
-proper order. Another issue is to ensure that not too many files are loaded
-immediately. This causes startup to take too long. Instead, we want to make sure
-that files are loaded only as needed, and not all at once.
+一个主要的问题是确保所有正确的文件按正确的顺序被加载。另一个问题是确保不会立即加载太多的文件。这导致启动时间太长。相反，我们希望确保仅根据需要加载文件，而不是一次加载文件。
 
-How is this done in Emacs, and how is it done in Spacemacs?
+这在 Emacs 中如何完成，在 Spacemacs 中如何完成？
 
-*** Loading a file
-The simplest way to load a file is to call =load-file=.
+*** 加载文件
+加载文件最简单的方法是调用 =load-file=.
 
 #+begin_src emacs-lisp
 (load-file "~/elisp/foo.el")
 #+end_src
 
-This is as primitive as it comes. The path must be exact, and it does not have
-to be in the Emacs load path (we'll get to that later). It will not look for a
-byte-compiled =.elc= file. It will simply load exactly what you tell it to.
+这是原始的。该路径必须是精确的，并且不必在 Emacs 加载路径中（稍后将介绍）。它不会查找字节编译的 =.elc= 文件。它会简单地加载你所告诉它的。
 
 ** Features
-A better way to load what you need is to use /features/. A feature is a symbol
-that typically has the same name as the file it resides in. Let us say you have
-the following contents in a file called =my-feature.el=.
+加载您需要的更好方法是使用 /features/ 。feature 是通常与其所在文件具有相同名称的符号。假设您在名为 =my-feature.el= 的文件中有以下内容。
 
 #+begin_src emacs-lisp
 ;; Your code goes here ...
@@ -95,72 +71,43 @@ the following contents in a file called =my-feature.el=.
 (provide 'my-feature)
 #+end_src
 
-To have Emacs load this file, call =require=, as such:
+要使 Emacs 加载此文件，请像这样调用 =require= ：
 
 #+begin_src emacs-lisp
 (require 'my-feature)
 #+end_src
 
-This checks whether the feature =my-feature= has already been loaded. If not, it
-looks for a file called =my-feature.el=, =my-feature.elc= or some such. If it
-finds such a file, it will load it. When the call to =provide= is evaluated, the
-feature is added to the list of loaded features, so that subsequent calls to
-=require= will do nothing.
+这将检查 feature =my-feature= 是否已加载。如果没有，它会查找一个名为 =my-feature.el= ， =my-feature.elc= 的文件或其他类似的文件。如果它找到这样的文件，将加载它。当对 =provide= 的调用进行评估时，该功能将添加到已加载 feature 的列表中，以便后续的对 =require= 的调用将不起作用。
 
-This will cause an error if no such file can be found.
+如果没有找到这样的文件，这将导致错误。
 
-The file =my-feature.el= may very well contain other calls to =require=, and in
-fact this is quite a common way to ensure that dependencies are loaded before
-your code runs.
+文件 =my-feature.el= 可能很好地包含其他对 =require= 的调用，实际上，这是确保在代码运行之前加载依赖关系的常用方法。
 
-Package authors should use this technique to make sure that dependencies are
-loaded before their code runs.
+软件包作者应该使用这种技术来确保在代码运行之前加载依赖项。
 
-*** The load path
-When loaded using =require=, Emacs looks for files in its /load path/. This is
-nothing more than a list of paths where elisp files can be found, and you can
-inspect it through ~SPC h d v load-path~ in Spacemacs. To add to the load path,
-simply push to this list, e.g.
+*** 加载路径
+当使用 =require= 加载时，Emacs 在其 /加载路径/ 中查找文件。 这只是可以找到 elisp 文件的路径列表，您可以通过 Spacemacs 中的 ~SPC h d v load-path~ 进行检查。 要添加到加载路径，只需推送到此列表，例如：
 
 #+begin_src emacs-lisp
 (push "/some/path/" load-path)
 #+end_src
 
-** Auto-loading
-Calling =require= is nothing more than a glorified way of calling =load-file=.
-It solves the problem of ensuring that files are loaded in the correct order,
-and to some degree it solved the problem of where to find the files on disk but
-a long list of calls to =require= at startup would still cause Emacs to take for
-ever to load.
+** 自动加载
+调用 =require= 只不过是调用 =load-file= 的一种好的方式。它解决了确保文件以正确的顺序加载的问题，并且在某种程度上解决了在哪里找到磁盘上的文件的问题，但是在启动时一长串对 =require= 的调用仍然会导致 Emacs 花很长时间加载。
 
-Emacs uses auto-loading to solve this problem. When a function is registered as
-auto-loading, an "empty" definition is provided. When that function is called,
-the file that provides the function is immediately loaded (along with all its
-required features). Finally, the "empty" function is substituted with the real
-one and called normally. The end user will see only a slight delay when first
-calling the function, while subsequent calls to that function (or any other
-function loaded as part of the same procedure) will be as quick as normal.
+Emacs 使用自动加载来解决这个问题。当函数注册为自动加载时，提供“空”定义。当调用该函数时，提供函数的文件将立即加载（以及其所有必需的 feature）。最后，“空”函数用实际的那个代替，并被正常调用。首次调用该函数时，最终用户将看到轻微的延迟，而对该函数的后续调用（或作为相同过程的一部分加载的任何其他函数）将会像正常一样快速。
 
-To register a function as auto-loadable, we call =autoload=:
+要将功能注册为自动加载，我们调用 =autoload= ：
 
 #+begin_src emacs-lisp
 (autoload 'some-function "some-file")
 #+end_src
 
-This instructs Emacs that whenever =some-function= is called, load
-=some-file.el= first, and then proceed.
+这指示 Emacs，只要调用 =某个函数= ，首先加载 =some-file.el= ，然后继续。
 
-After evaluating the above code, you can try to inspect =some-function= by doing
-~SPC h d f some-function~. It will say it's an auto-loaded function, and that
-nothing else is known about it until it is loaded. The call to =autoload= can
-optionally include more information, such as a doc-string, whether the function
-can be called interactively, and so on. This provides more information to the
-end-user without her having to actually load the file first.
+评估上述代码后，可以尝试通过执行 ~SPC h d f some-function~ 检查 =某些函数= 。它会说这是一个自动加载的函数，直到它被加载，没有其他被知道。对 =autoload= 的调用可以可选地包括更多的信息，例如文档字符串，该函数是否可以交互式调用，等等。这不需要首先实际加载文件，就可以向最终用户提供更多信息。
 
-Open your =elpa= directory, go to =helm= and look at the file
-=helm-autoloads.el=. This provides all the auto-loads for all the files in Helm.
-However, this file is not written by hand. Instead, it is automatically
-generated from "magic" comments in the source code of Helm. They look like this:
+打开你的 =elpa= 目录，去 =helm= （目录）看看文件 =helm-autoloads.el= 。这为 Helm 中的所有文件提供了所有的自动加载。但是，这个文件不是用手写的。相反，它是由 Helm 源代码中的“魔术”注释自动生成的。他们看起来像这样：
 
 #+begin_src emacs-lisp
 ;;;###autoload
@@ -169,36 +116,25 @@ generated from "magic" comments in the source code of Helm. They look like this:
   )
 #+end_src
 
-The magic comment =;;;###autoload= instructs Emacs that the following definition
-should be auto-loaded. This automatically generates an appropriate call to
-=autoload=.
+魔术注释 =;;;###autoload= 指示 Emacs 应该自动加载以下定义。这将自动生成适当的 =autoload= 调用。
 
-Things that can be auto-loaded generally involve anything "definable", such as
-functions, macros, major or minor modes, groups, classes, and so on.
+可以自动加载的东西通常涉及任何“可定义的”，例如函数、宏、主模式或次模式、组、类等。
 
-Magic comments also work on other things, such as variable definitions
-(=defvar=), but in that case, the definition is just copied verbatim into the
-auto-loading file. For example, this code will load Helm on startup, long before
-your file is actually evaluated, probably not what was intended:
+魔术注释也适用于其他的东西，例如变量定义（ =defvar= ），但是在这种情况下，定义只是逐字复制到自动加载文件中。例如，该代码将在启动时加载 Helm，很久以前您的文件实际上被评估，这可能不是打算要做的：
 
 #+begin_src emacs-lisp
 ;;;###autoload
 (require 'helm)
 #+end_src
 
-It is the responsibility of the package authors to ensure that their package can
-be appropriately auto-loaded, and most packages do this quite well.
+作者的责任是确保他们的包可以适当地自动加载，大多数包都很好地做到了这一点。
 
-Spacemacs makes thorough use of auto-loading. Almost everything in Spacemacs is
-loaded when needed instead of right away.
+Spacemacs 充分利用自动加载功能。在 Spacemacs 里几乎所有东西都在需要时加载，而不是马上加载。
 
 ** Eval after load
-Often, we will want to configure packages after loading them. We may want to set
-some variables or call some functions. This is trivial with =require=, because
-it loads immediately, but it can be tricky with autoloading, because the
-configuration code must also be deferred.
+通常，我们需要在加载包后配置它们。我们可能想设置一些变量或调用一些函数。有了 =require= 这是小事，因为它立即加载，但有自动加载它可能是棘手的，因为配置代码也必须推迟（加载）。
 
-Emacs offers =with-eval-after-load= for this purpose. It can be used like this:
+为了这个目的，Emacs 提供了 =with-eval-after-load= 。它可以像这样使用：
 
 #+begin_src emacs-lisp
 (with-eval-after-load 'helm
@@ -206,35 +142,27 @@ Emacs offers =with-eval-after-load= for this purpose. It can be used like this:
      )
 #+end_src
 
-This arranges for the relevant code to be executed after Helm is loaded (using
-either =require= or an autoload), or if Helm is already loaded, the code is
-executed immediately.
+这将安排在 Helm 加载后（使用 =require= 或 autoload）执行相关代码，或者如果 Helm 已经加载，则代码将立即执行。
 
-Since =with-eval-after-load= is a macro and not a function, its argument does
-not have to be quoted.
+由于 =with-eval-after-load= 是一个宏而不是一个函数，它的参数不必被引用。
 
 ** Use-package
-For /end users/ who are trying to put together an efficient Emacs configuration,
-there is a very useful /package/ called =use-package= that provides a macro
-which is /also/ called =use-package= which does a very good job of streamlining
-the whole process of loading packages.
+对于正在尝试将高效 Emacs 配置放在一起的 /最终用户/ ，有一个非常有用的 /软件包/ ，名为 =use-package= ，它提供了一个 /也/ 被称为 =use-package= 的宏，可以很好地简化整个加载包的过程。
 
-The aspiring layer author is recommended to have a look at the =use-package=
-[[https://github.com/jwiegley/use-package][documentation]]. Some examples follow.
+建议有想写层的作者查看 =use-package= [[https://github.com/jwiegley/use-package][文档]] 。一些例子如下。
 
 #+begin_src emacs-lisp
 (use-package helm)
 #+end_src
 
-This simply loads Helm. It is essentially equivalent to =(require 'helm)=.
+这简单地加载 Helm。它基本上相当于 =(require 'helm)= 。
 
 #+begin_src emacs-lisp
 (use-package helm
   :defer t)
 #+end_src
 
-This defers the loading of Helm using the auto-load facility and the auto-load
-commands provided by the Helm source code. It is, in fact, a no-op.
+这推迟使用自动加载设施和由 Helm 源代码提供的自动加载命令来进行的 Helm 加载。事实上，这是一个空操作。
 
 #+begin_src emacs-lisp
 (use-package helm
@@ -246,75 +174,55 @@ commands provided by the Helm source code. It is, in fact, a no-op.
   )
 #+end_src
 
-This form includes code to execute before and after Helm is loaded. The =:init=
-section can be executed immediately, but since Helm is deferred, the =:config=
-section is not executed until after loading, if ever. It is essentially
-equivalent to simply running the =:init= block, and then adding the =:config=
-block in an =with-eval-after-load=.
+此形式包括在 Helm 加载之前和之后执行的代码。 =:init= 部分可以立即执行，但是由于 Helm 被延迟，所以如果有 =:config= 部分，在加载之后才会执行。它基本上等同于简单地运行 =:init= 块，然后在 =with-eval-after-load= 中添加 =:config= 块。
 
 #+begin_src emacs-lisp
 (use-package helm
   :commands (helm-find-files helm-M-x))
 #+end_src
 
-This creates auto-load references for additional commands, if you find that the
-package author has been slacking.
+如果发现包作者已经懈怠，这将为其他命令创建自动加载引用。
 
 #+begin_src emacs-lisp
 (use-package ruby-mode
   :mode "\\.rb\\'")
 #+end_src
 
-For packages that provide major modes, you can associate file extensions to that
-mode by using the =:mode= keyword. This adds an entry to =auto-mode-alist= and
-an auto-load for =ruby-mode=. Typically this is not required, as =ruby-mode=
-should already be auto-loadable, and the package should associate Ruby files
-with itself already.
+对于提供主模式的软件包，可以使用 =:mode= 关键字将文件扩展名与该模式相关联。这将为 =auto-mode-alist= 添加一个条目，并为 =ruby-mode= 添加一个自动加载。通常这不是必需的，因为 =ruby-mode= 应该已经可以自动加载，并且包应该将 Ruby 文件与自己相关联。
 
-Use-package supports heaps of useful keywords. Look at the [[https://github.com/jwiegley/use-package][documentation]] for
-more.
+Use-package 支持很多有用的关键字。看看[[https://github.com/jwiegley/use-package][ 文档]] 了解更多。
 
-* Anatomy of a layer
+* 层的剖析
 :PROPERTIES:
 :CUSTOM_ID: anatomy-of-a-layer
 :END:
-A layer is simply a folder somewhere in Spacemacs' layer search path that
-usually contains these files (listed in loading order).
+一个层就是 Spacemacs 层搜索路径中的一个文件夹，通常包含这些文件（按加载顺序列出）。
 
-- =layers.el= :: declare additional layers
-- =packages.el= :: the packages list and configuration
-- =funcs.el= :: all functions used in the layer should be declared here
-- =config.el= :: layer specific configuration
-- =keybindings.el= :: general key bindings
+- =layers.el= :: 声明额外的层
+- =packages.el= :: 软件包列表和配置
+- =funcs.el= :: 这里应该声明层中使用的所有函数
+- =config.el= :: 层特定配置
+- =keybindings.el= :: 全局键绑定
 
-Additionally, for each local package (see the next section), there should be a
-folder =<layer>/local/<package>/= containing the source code for that package.
-Before initializing that package, Spacemacs will add this folder to the load
-path for you.
+另外，对于每个本地包（请参阅下一节），应该有一个文件夹 =<layer>/local/<package>/= 包含该包的源代码。在初始化该包之前，Spacemacs 会将此文件夹添加到您的加载路径。
 
 ** layers.el
-This file is the first file to be loaded and this is the place where addtional
-layers can be declared.
+该文件是第一个要加载的文件，这是可以声明附加层的地方。
 
-For instance is layer A depends on some functionality of layer B then in the
-file =layers.el= of layer A we can add:
+例如，层 A 依赖于层 B 的一些功能，然后在层 A 的文件 =layers.el= 中。我们可以添加：
 
 #+begin_src emacs-lisp
 (configuration-layer/declare-layer 'B)
 #+end_src
 
-The effect is that B is considered a used layer and will be loaded as if it
-was added to =dotspacemacs-configuration-layers= variables.
+效果是 B 被认为是一个已使用的层，并且将被加载，就像它被添加到 =dotspacemacs-configuration-layers= 变量一样。
 
 ** packages.el
-It contains this list of packages of the layer and the actual configuration for
-the packages included in the layer.
+它包含该层的包的列表以及层中包含的包的实际配置。
 
-This file is loaded after =layers.el=.
+此文件在 =layers.el= 之后加载。
 
-It must define a variable called =<layer>-packages=, which should be a list of
-all the packages that this layer needs. Some valid package specifications are
-as follows:
+它必须定义一个名为 =<layer>-packages= 的变量，它应该是该层所需的所有包的列表。一些有效的包的规格如下：
 
 #+begin_src emacs-lisp
 (defconst mylayer-packages
@@ -336,38 +244,26 @@ as follows:
     ))
 #+end_src
 
-The =:location= attribute specifies where the package may be found. Spacemacs
-currently supports packages on ELPA compliant repositories, local packages and
-MELPA recipes (through the Quelpa package). Local packages should reside at =<layer>/local/<package>/=. For information about recipes see the [[https://github.com/milkypostman/melpa#recipe-format][MELPA documentation]].
+=:location= 属性指定可以找到包的位置。Spacemacs 目前支持符合 ELPA 标准的包，本地包和 MELPA recipes（通过 Quelpa 包）。本地包应位于 =<layer>/local/<package>/= 。有关 recipes 的信息，请参阅[[https://github.com/milkypostman/melpa#recipe-format][ MELPA 文档]]。
 
-Packages may be /excluded/ by setting the =:excluded= property to true. This
-will prevent the package from being installed even if it is used by another
-layer.
+可以通过将 =:excluded= 属性设置为 true 来 /排除/ 包。这样就可以防止包被安装，即使它被另一个层使用。
 
-For each included package, you may define one or more of the following
-functions, which are called in order by Spacemacs to initialize the package.
+对于每个包含的包，您可以定义一个或多个以下函数，由 Spacemacs 按顺序调用以初始化包。
 
 1. =<layer>/pre-init-<package>=
 2. =<layer>/init-<package>=
 3. =<layer>/post-init-<package>=
 
-It is the responsibility of these functions to load and configure the package in
-question. Spacemacs will do nothing other than download the package and place it
-in the load path for you.
+这些函数的任务是加载和配置相关包。除了下载包并将其放在加载路径中之外，Spacemacs 将不会执行任何操作。
 
-*Note:* A package will not be installed unless at least one layer defines an
-=init= function for it. That is to say, in a certain sense, the =init= function
-does mandatory setup while the =pre-init= and =post-init= functions do optional
-setup. This can be used for managing cross-layer dependencies, which we will
-discuss later.
+*注意：* 除非至少有一个层为包定义了一个 =init= 函数，否则不会安装包。也就是说，在某种意义上， =init= 函数执行强制设置，而 =pre-init= 和 =post-init= 函数执行可选的设置。这可以用于管理跨层依赖关系，稍后我们将讨论这个。
 
 ** funcs.el
-It contains all the defined functions used in the layer.
+它包含层中使用的所有定义的函数。
 
-This file is loaded after  =packages.el= and before =config.el=.
+该文件在 =packages.el= 之后和 =config.el= 之前加载。
 
-It is good practice to guard the definition of functions to make sure a package
-is actually used. For instance:
+保护函数的定义是确保一个包实际使用的好习惯。例如：
 
 #+begin_src emacs-lisp
 (when (configuration-layer/package-usedp 'my-package)
@@ -375,140 +271,87 @@ is actually used. For instance:
   (defun spacemacs/my-package-disable () ...))
 #+end_src
 
-By guarding these functions we avoid to define them in case the package
-`my-package` is not used.
+通过保护这些函数，我们避免定义它们，以防未使用包“my-package”。
 
 ** config.el
-This file configure the layer like declaring layer variables default values
-and setup some other variables related to the layer.
+该文件配置层，如声明层变量默认值，和设置与该层相关的一些其他变量。
 
-This file is loaded after =funcs.el=.
+这个文件是在 =funcs.el= 之后加载的。
 
 ** keybindings.el
-It contains general key bindings.
+它包含全局键绑定。
 
-This is the last file loaded.
+这是加载的最后一个文件。
 
-The word /general/ here means /independent of any package/. Since the end user
-can exclude an arbitrary set of packages, you cannot be sure that, just because
-your layer includes a package, that package will necessarily be loaded. For this
-reason, code in these files must be generally safe, regardless of which packages
-are installed.
+这里的 /全局/ 这个词意味着 /独立于任何包/ 。由于最终用户可以拒绝包的任何设置，因此您无法确定，只是因为您的层包含一个包，因此该包将一定被加载。因此，无论安装哪些软件包，这些文件中的代码一般都是安全的。
 
-More on this in the next section.
+关于这一点更多的在下一节。
 
-* The Spacemacs loading process
-The Spacemacs loading process can be summarized as follows:
+* Spacemacs 加载过程
+Spacemacs 加载过程可以归纳如下：
 
-1. Spacemacs goes through all the enabled layers and evaluates their files.
-   First =layers.el= is loaded to declare layer dependencies. Then =packages.el=
-   and =funcs.el= are loaded, but nothing happens from them since these files
-   only define functions and variables, then the changes introduced by
-   =config.el= are applied.
-2. Spacemacs checks which packages should be downloaded and installed. To be
-   installed, a package must be
-   - included by a layer that the user has enabled,
-   - not be excluded by any other layer that the user has enabled,
-   - not be excluded by the user herself, and
-   - there must be at least one =<layer>/init-<package>= function defined for
-     it.
-   Alternatively, if a package is part of the end user's
-   =dotspacemacs-additional-packages=, it will also be installed.
-3. All packages which should be installed are installed in alphabetical order,
-   =package.el= built-in Emacs library is in charge of implicit dependencies.
-   Installed packages not following the rules of 2. are removed as well as
-   their dependencies if possible. (This last behavior is optional but default.)
-4. The =pre-init=, =init= and =post-init= functions for each installed package
-   are executed in turn.
+1. Spacemacs 遍历所有启用的层，并评估其文件。首先 =layer.el= 被加载以声明层依赖关系。然后 =packages.el= 和 =funcs.el= 被加载，但没有发生任何事情，因为这些文件只定义函数和变量，然后应用 =config.el= 引入更改。
+2. Spacemacs 会检查哪些包应该被下载和安装。一个包要被安装，就一定要
+   - 包含在用户启用的层里
+   - 不被用户启用的任何其他层排除
+   - 不被用户自己排除，而且
+   - 必须至少有一个 =<layer>/init-<package>= 函数被定义
+   或者，如果包是最终用户的 =dotspacemacs-additional-packages= 的一部分，那么它也将被安装。
+3. 应安装的所有软件包按字母顺序安装，内置的 Emacs 库中的 =package.el= 负责隐式依赖。如果可能，不遵循规则 2 的已安装的包以及其依赖关系被删除。（最后一个行为是可选的，但是默认是选中的。）
+4. 依次执行每个安装包的 =pre-init=, =init= 和 =post-init= 函数。
 
-It is step four that interests us. It is very important that a package is not
-installed if no =init= function is defined for it.
+我们感兴趣的是第四步。如果没有为其定义 =init= 函数，则不安装软件包，这是非常重要的。
 
-We say that a layer *owns* a package if it defines an =init= function for it. A
-layer does *not* own a package if it only defines =pre-init= or =post-init=
-functions.
+我们说，如果一个层为一个包定义了一个 =init= 函数，那这个层 *拥有* 这个包。如果一个层只定义了 =pre-init= 或 =post-init= 函数，那么它 *不* 拥有一个包。
 
-Only one layer may own a package. Since layers are processed in order of
-specification in the user's dotfile, it is possible for layers to "seize"
-ownership of a package that was owned by a previously enabled layer.
+只有一个层可能拥有一个包。由于层是按照用户的点文件中的规范进行处理的，因此层可能“夺取”先前启用的层所拥有的包的所有权。
 
-* Case study: auto-completion
-Spacemacs provides a layer called =auto-completion= which provides
-auto-completion features in many modes. It does this using the package
-=company=. This layer owns the =company= package, so it defines a function
-called =auto-completion/init-company=.
+* 案例研究：自动补全
+Spacemacs 提供了一个称为 =auto-completion= 的层，在许多模式中提供自动补全功能。它使用 =company= 包做到這些。该层拥有 =company= 包，因此它定义了一个名为 =auto-completion/init-company= 的函数。
 
-When a user enables the =auto-completion= layer, Spacemacs locates it and finds
-=company= in the list of packages. Provided that =company= is not excluded,
-either by the user or another layer, Spacemacs then locates and runs the =init=
-function for =company=. This function includes a call to =use-package= that sets
-up the basic configuration.
+当用户启用 =auto-completion= 层时，Spacemacs 会找到它，并在包列表中找到 =company= 。只要这个 =company= 不被用户或其他层排除，然后 Spacemacs 定位并运行 =company= 的 =init= 函数。此函数包含一个调用 =use-package= 来设置基本配置。
 
-However, auto-completion is a two-horse game. By its very nature, it is specific
-to the major mode in question. It is pointless to expect the =auto-completion=
-layer to include configuration for each conceivable major mode, and equally
-futile to expect each programming language layer (python, ruby, etc.) to fully
-configure =company= on their own.
+然而，自动补全是一场双马比赛。由于其本质，它是具体的主模式的问题。期望 =auto-completion= 层包含每个可能的主模式的配置是毫无意义的，期待每个编程语言层（python，ruby 等）自己完全配置 =company= 同样没用。
 
-This is solved using the =post-init= functions. The Python layer, for example,
-includes the =company= package and defines a function called
-=python/post-init-company=. This function is called after
-=auto-completion/init-company=, but it is not called if
+这是使用 =post-init= 函数解决的。例如，Python 层包含 =company= 包，并定义了一个名为 =python/post-init-company= 的函数。这个函数在 =auto-completion/init-company= 之后调用，但是如果没有调用
 
-- the =auto-completion= layer is not enabled, in which case no =init= function
-  for =company= will be found, or
-- the =company= package is excluded either by the user or another layer
+- =auto-completion= 层没有启用，在这种情况下不会找到 =company= 的 =init= 函数
+- =company= 包被用户或其他层排除
 
-As such, =python/post-init-company= is the /only/ safe place to put
-configuration related to =company= in Python mode.
+因此， =python/post-init-company= 是将与 =company= 相关联的配置放到 Python 模式下的唯一安全的方法。
 
-If the Python layer had defined an =init= function for =company=, that package
-would have been installed even if the =auto-completion= layer had been disabled,
-which is not what we want.
+如果 Python 层为 =company= 定义了一个 =init= 函数，即使 =auto-completion= 层被禁用，该包也将被安装，这不是我们想要的。
 
-* Layer tips and tricks
+* 层提示和技巧
 
-** Cross-dependencies
-Spacemacs provides a couple of additional useful functions you can use to check
-whether other layers or packages are included.
+** 交叉依赖
+Spacemacs 提供了一些其他有用的函数，可用于检查是否包括其他层或包。
 
-- =configuration-layer/layer-usedp= :: check if a layer is enabled
-- =configuration-layer/package-usedp= :: check if a package is or will be installed
+- =configuration-layer/layer-usedp= :: 检查一个层是否启用
+- =configuration-layer/package-usedp= :: 检查一个包是否将被安装
 
-These are useful in some cases, but usually you can get the desired result just
-by using =post-init= functions.
+这些在某些情况下是有用的，但通常您可以通过只使用 =post-init= 函数获得想要的结果。
 
-For layers that require another layers to be enabled, use the functions
-=configuration-layer/declare-layer= and =configuration-layer/declare-layers= to
-ensure that layers are enabled even if the user has not enabled them explicitly.
-Calls to these functions must go in the =layers.el= file.
+对于需要启用其他层的层，请使用函数 =configuration-layer/declare-layer= 和 =configuration-layer/declare-layers= 来确保即使用户未明确启用层也是如此。调用这些函数必须在 =layers.el= 文件中。
 
 ** Use-package
-In the vast majority of cases, a package =init= function should do nothing but
-call to =use-package=. Again, in the vast majority of cases, all the
-configuration you need to do should be doable within the =:init= or =:config=
-blocks of such a call.
+在绝大多数情况下，包 =init= 函数只能调用 =use-package= 。同样，在绝大多数情况下，您需要做的所有配置应该在这样的调用的 =:init= 或 =:config= 块中可行。
 
+什么地方？因为 =:init= 在加载之前执行，并且在 =:config= 之后，这些规则应用。
 What goes where? Since =:init= is executed before load and =:config= after,
 these rules of thumb apply.
 
-In =:config= should be
-- Anything that requires the package to be already loaded.
-- Anything that takes a long time to run, which would ruin startup performance.
+在 =:config= 里应该
+- 任何需要包已经加载的东西
+- 任何需要很长时间运行的东西，这将破坏启动性能。
 
-The =:init= block should contain setup for the entry points to the package. This
-includes keybindings, if the package should be loaded manually by the user, or
-hooks, if the package should be loaded upon some event. It is not unusual to
-have both!
+=:init= 块应包含针对包的入口点的设置。如果软件包应由用户手动加载，或由钩子加载，如果软件包应在某些事件上加载，这包括键绑定。两个都不常见！
 
-** Use-package hooks
+** Use-package 钩子 
 :PROPERTIES:
 :CUSTOM_ID: use-package-hooks
 :END:
-Spacemacs includes a macro for adding more code to the =:init= or =:config=
-blocks of a call to =use-package=, after the fact. This is useful for =pre-init=
-or =post-init= functions to "inject" code into the =use-package= call of the
-=init= function.
+Spacemacs 包括一个宏，用于在 fact 之后添加更多的代码到调用 =use-package= 的 =:init= 或 =:config= 块。这对于 =pre-init= 或 =post-init= 函数将“注入”代码放入 =init= 函数的 =use-package= 调用很有用。
 
 #+begin_src emacs-lisp
 (spacemacs|use-package-add-hook helm
@@ -523,72 +366,40 @@ or =post-init= functions to "inject" code into the =use-package= call of the
   )
 #+end_src
 
-Since a call to =use-package= may evaluate the =:init= block immediately, any
-function that wants to inject code into this block must run =before= the call to
-=use-package=. Further, since this call to =use-package= typically takes place
-in the =init-<package>= function, calls to =spacemacs|use-package-add-hook=
-typically happen in the =pre-init-<package>= functions, and not in
-=post-init-<package>=. It is quite safe to do this in =pre-init=, so that should
-be the default choice.
+由于对 =use-package= 的调用可能会立即评估 =:init= 块，所以要在该块中注入代码的任何函数都必须在调用 =use-package= =之前= 运行。此外，由于对 =use-package= 的调用通常发生在 =init-<package>= 函数中，对 =spacemacs|use-package-add-hook= 的调用通常发生在 =pre-init-<package>= 函数中，而不是在 =post-init-<package>= 。 在 =pre-init= 里这样做是相当安全的，所以这应该是默认选择。
 
-** Best practices
-If you break any of these rules, you should know what you are doing and have a
-good reason for doing it.
+** 最佳做法
+如果你违反了这些规则，你应该知道你在做什么，并且有很好的理由去做。
 
-*** Package ownership
-Each package should be owned by one layer only. The layer that owns the
-package should define its =init= function. Other layers should rely on
-=pre-init= or =post-init= functions.
+*** 包所有权
+每个包只应该由一个层所拥有。拥有该包的层应该定义其 =init= 函数。其他层应依赖于 =pre-init= 或 =post-init= 函数。
 
-*** Localize your configuration
-*Each function can only assume the existence of one package.* With some
-exceptions, the =pre-init=, =init= and =post-init= functions can /only/
-configure exactly the package they are defined for. Since the user can exclude
-an arbitrary set of packages, there is no /a priori/ safe way to assume that
-another package is included. Use =configuration-layer/package-usedp= if you
-must.
+*** 本地化您的配置
+*每个函数只能假定一个包的存在。* 除了一些例外， =pre-init= ， =init= 和 =post-init= 函数 /只能/ 正确配置它们定义的包。由于用户可以排除一组任意的包，所以没有先天的安全方式来假定另外一个包被包含。如果你必须，使用 =configuration-layer/package-usedp= 。
 
-This can be very challenging, so please take this as a guideline and not
-something that is absolute. It is quite possible for the user to break her
-Spacemacs installation by excluding the wrong packages, and it is not our
-intention to prevent this at all costs.
+这可能是非常具有挑战性的，所以请以此为准则，而没有绝对的东西。用户很可能通过排除错误的软件包来破坏其 Spacemacs 的安装，我们不想不惜一切代价来阻止它。
 
-*** Load ordering
-In Spacemacs, layers are loaded in order of inclusion in the dotfile, and
-packages are loaded in alphabetical order. In the rare cases where you make use
-of this property, you should make sure to document it well. Many will assume
-that layers can be included in arbitrary order (which is true in most cases),
-and that packages can be renamed without problems (which is also in most cases).
+*** 顺序加载
+在 Spacemacs 中，按照包含在点文件中的顺序加载层，并按照字母顺序加载包。在您使用此属性的极少数情况下，您应该确保写好文档。许多人会假定层可以以任意顺序包含（在大多数情况下是正确的），并可以重新命名那些包，（而且在大多数情况下也是正确的）。
 
-Preferably, write your layer so that it is independent of load ordering. The
-=pre=- and =post-init= functions are helpful, together with
-=configuration-layer/package-usedp=.
+最好写层，使其独立于顺序加载。 =pre= 和 =post-init= 函数与 =configuration-layer/package-usedp= 一起是有帮助的。
 
-*** No require
-Do not use require. If you find yourself using =require=, you are almost
-certainly doing something wrong. Packages in Spacemacs should be loaded through
-auto-loading, and not explicitly by you. Calls to =require= in package init
-functions will cause a package to be loaded upon startup. Code in an =:init=
-block of =use-package= should not cause anything to be loaded, either. If you
-need a =require= in a =:config= block, that is a sign that some other package is
-missing appropriate auto-loads.
+*** 不要使用 require
+不要使用 =require= 。如果你发现自己需要使用，你几乎肯定会做错事。Spacemacs 中的包应该通过自动加载来加载，而不是通过您明确的加载。 在包初始化函数中调用 =require= 将在启动时加载一个包。在一个 =use-package= 的 =:init= 块中的代码也不应该导致任何东西被加载。 如果您在一个 =:config= 块中需要 =require= ，那就是其他一些包缺少适当的自动加载的标志。
 
-*** Auto-load everything
-Defer everything. You should have a very good reason not to defer the loading
-of a package.
+*** 自动加载一切
+推迟一切。你应该有一个非常好的理由不推迟加载一个包。
 
 * How do I ... idiomatically?
 
-** Setup auto-completion for a major mode
-In your layer's =config.el=, call =spacemacs|defvar-company-backends=.
+** 为主模式设置自动补全
+在你的层的 =config.el= ，调用 =spacemacs|defvar-company-backends= 。
 
 #+begin_src emacs-lisp
 (spacemacs|defvar-company-backends yoyo-mode)
 #+end_src
 
-This creates a variable called =company-backends-yoyo-mode=. In the package
-=init= functions, you should push backends to this variable. But of course, only
-if the =auto-completion= layer is enabled.
+这将创建一个名为 =company-backends-yoyo-mode= 的变量。在包 =init= 函数中，应该将后端推送到这个变量。但是，当然只有如果 =auto-completion= 层启用时（才这样做）。
 
 #+begin_src emacs-lisp
 (defconst yoyo-packages '(
@@ -606,8 +417,7 @@ if the =auto-completion= layer is enabled.
         (push 'some-weird-backend company-backends-yoyo-mode))))
 #+end_src
 
-Finally, we must make sure company is started when we enter =yoyo-mode=, but
-again only if the =auto-completion= layer is enabled.
+最后，当我们进入 =yoyo 模式= 时，我们必须确保 company 启动，但是只有在 =auto-completion= 层被启用的情况下才会重新启动。
 
 #+begin_src emacs-lisp
 (defconst yoyo-packages '(
