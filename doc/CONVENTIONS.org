@@ -1,378 +1,340 @@
 #+TITLE: Spacemacs Conventions
 
-* Spacemacs conventions                                     :TOC_4_gh:noexport:
- - [[#code-guidelines][Code guidelines]]
-   - [[#spacemacs-core-and-layer][Spacemacs core and layer]]
-   - [[#all-layers][All layers]]
+* Spacemacs 公约                                          :TOC_4_gh:noexport:
+ - [[#代码指南][代码指南]]
+   - [[#spacemacs-核心和层][Spacemacs 核心和层]]
+   - [[#所有的层][所有的层]]
    - [[#use-package][Use-package]]
- - [[#key-bindings-conventions][Key bindings conventions]]
-   - [[#reserved-prefix][Reserved prefix]]
-     - [[#user-prefix][User prefix]]
-     - [[#major-mode-prefix][Major mode prefix]]
-     - [[#transient-state][Transient-state]]
-   - [[#evilified-buffers][Evilified buffers]]
-   - [[#navigation][Navigation]]
-     - [[#n-and-n][n and N]]
-     - [[#code-navigation][Code Navigation]]
-     - [[#insert-state-buffers][=insert state= buffers]]
-   - [[#confirm-and-abort][Confirm and Abort]]
-   - [[#evaluation][Evaluation]]
+ - [[#键绑定约定][键绑定约定]]
+   - [[#保留的前缀][保留的前缀]]
+     - [[#用户前缀][用户前缀]]
+     - [[#主模式前缀][主模式前缀]]
+     - [[#瞬态状态][瞬态状态]]
+   - [[#evilified-缓冲区][Evilified 缓冲区]]
+   - [[#导航][导航]]
+     - [[#n-和-n][n 和 N]]
+     - [[#代码导航][代码导航]]
+     - [[#插入状态-缓冲区][=插入状态= 缓冲区]]
+   - [[#确认和放弃][确认和放弃]]
+   - [[#评估][评估]]
    - [[#repls][REPLs]]
-     - [[#send-code][Send code]]
-     - [[#in-terminal][In terminal]]
-   - [[#building-and-compilation][Building and Compilation]]
-   - [[#debugging][Debugging]]
-   - [[#plain-text-markup-languages][Plain Text Markup Languages]]
-     - [[#headers][Headers]]
-     - [[#insertion-of-common-elements][Insertion of common elements]]
-     - [[#text-manipulation][Text manipulation]]
-     - [[#movement-in-normal-mode][Movement in normal mode]]
-     - [[#promotion-demotion-and-element-movement][Promotion, Demotion and element movement]]
-     - [[#table-editing][Table editing]]
-   - [[#tests][Tests]]
-     - [[#all-languages][All languages]]
-     - [[#language-specific][Language specific]]
-   - [[#toggles][Toggles]]
-   - [[#refactoring][Refactoring]]
-   - [[#code-formatting][Code Formatting]]
-   - [[#help-or-documentation][Help or Documentation]]
- - [[#writing-documentation][Writing documentation]]
-   - [[#spacing-in-documentation][Spacing in documentation]]
+     - [[#发送代码][发送代码]]
+     - [[#在终端里][在终端里]]
+   - [[#编译与汇编][编译与汇编]]
+   - [[#调试][调试]]
+   - [[#纯文本标记语言][纯文本标记语言]]
+     - [[#标题][标题]]
+     - [[#插入普通元素][插入普通元素]]
+     - [[#文本操纵][文本操纵]]
+     - [[#普通模式下移动][普通模式下移动]]
+     - [[#升级降级和元素移动][升级，降级和元素移动]]
+     - [[#表格编辑][表格编辑]]
+   - [[#测试][测试]]
+     - [[#所有语言][所有语言]]
+     - [[#特定语言][特定语言]]
+   - [[#切换][切换]]
+   - [[#重构][重构]]
+   - [[#代码格式化][代码格式化]]
+   - [[#帮助或文档][帮助或文档]]
+ - [[#写文档][写文档]]
+   - [[#文档中的间距][文档中的间距]]
 
-* Code guidelines
-** Spacemacs core and layer
-Function names follow these conventions:
-  - =spacemacs/xxx= is an interactive function called =xxx=
-  - =spacemacs//xxx= is a private function called =xxx= (implementation details)
-  - =spacemacs|xxx= is a /macro/ called =xxx=
+* 代码指南
+** Spacemacs 核心和层
+函数名称遵循這些约定：
+  - =spacemacs/xxx= 是一个叫做 =xxx= 的交互式函数
+  - =spacemacs//xxx= 是一个叫做 =xxx= 的私有函数（实施细节）
+  - =spacemacs|xxx= 是一个叫做 =xxx= 的 /宏/
 
-Variables follow these conventions:
-  - =spacemacs-xxx= is a variable
-  - =spacemacs--xxx= is a private variable (implementation details)
+变量遵循這些约定：
+  - =spacemacs-xxx= 是一个变量
+  - =spacemacs--xxx= 是一个私有变量（实施细节）
 
-** All layers
-A package is initialized in a function with name =<layer>/init-xxx= where:
-  - =<layer>= is the layer name
-  - =xxx= is the package name
+** 所有的层
+一个包在一个名为 =<layer>/init-xxx= 的函数中初始化，其中：
+  - =<layer>= 是层的名称
+  - =xxx= 是包的名称
 
 ** Use-package
-- Always use =progn= when a code block requires multiple lines for =:init= or
-  =:config= keywords.
-- If there is only one line of code then try to keep =:init= or =:config=
-  keywords on the same line.
-- Don't nest multiple =use-package= calls unless you have a very good reason
-  to do it.
+- 当包含 =:init= 或 =:config= 关键字的代码块需要多个行时，请始终使用 =progn= 。
 
-* Key bindings conventions
-** Reserved prefix
-*** User prefix
-~SPC o~ and ~SPC m o~ must not be used by any layer. They are reserved for the
-user.
+- 如果只有一行代码，则尝试在同一行上保留 =:init= 或 =:config= 关键字。
 
-*** Major mode prefix
-~SPC m~ is reserved for the current major mode. Three keys bindings are not an
-issue (ie. ~SPC m h d~) since ~SPC m~ can be accessed via ~​,​~.
+- 不要嵌套多个 =use-package= 调用，除非你有一个非常好的理由来做到这一点。
 
-*** Transient-state
-Whenever possible a transient-state should be enabled with ~M-SPC~ and ~s-M-SPC~. We
-need the latter bindings on OS X since ~M-SPC~ is used by the OS for spotlight.
+* 键绑定约定
+** 保留的前缀
+*** 用户前缀
+~SPC o~ 和 ~SPC m o~ 不得被任何层使用。它们是为用户保留的。
 
-For instance transient-states dedicated to special buffers like =helm= or =ido=
-buffers are good candidates to be put on ~M-SPC~ and ~s-M-SPC~.
+*** 主模式前缀
+~SPC m~ 是为当前主模式保留的。三键绑定不是一个问题（如 ~SPC m h d~ ），因为可以通过 ~​,​~ 访问 ~SPC m~ 。
 
-It is recommended to add ~q~ to leave the transient-state.
+*** 瞬态状态
+只要有可能，应使用 ~M-SPC~ 和 ~s-M-SPC~ 启用瞬态。在 OS X 上我们需要后一个绑定，因为操作系统使用 ~M-SPC~ 作为 spotlight。
 
-** Evilified buffers
-/Evilifying/ a buffer is to set the =evilified state= as the default
-state for the major mode of the buffer.
+例如，专用于特殊缓冲区（如 =helm= 或 =ido= 缓冲区）的瞬态状态是绑定在 ~M-SPC~ 和 ~s-M-SPC~ 上的好候选者。
 
-The =evilified state= is derived from the =emacs state= and modify the
-map to:
-- add ~hjkl~ navigation
-- add scrolling feature on ~C-f~, ~C-b~, ~C-d~ and ~C-u~
-- ~G~ and ~gg~ to go to the end and beginning of the buffer
-- add incremental search with ~/~, ~n~ and ~N~
-- enabling =evil-ex= on ~:~
-- add =visual state= and =visual line state= on ~v~ and ~V~
-- add yank on ~y~ _in visual state only_
-- activate evil-leader key on ~SPC~
+建议添加 ~q~ 离开瞬态。
 
-Setting the =evilified state= to a mode is done by calling the macro
-=spacemacs|evilify-map=.
+** Evilified 缓冲区
+/Evilifying/ 一个缓冲区是将 =evilified 状态= 设置为缓冲区的主模式的缺省状态。
 
-/Evilification/ rebinds shadowed key bindings according to the following
-rules:
-- alphabetic key bindings: ~x~ -> ~X~ -> ~C-x~ -> ~C-X~
+=evilified 状态= 是从 =emacs 状态= 导出的，并将键映射修改为：
+- ~hjkl~ 导航
+- ~C-f~, ~C-b~, ~C-d~, ~C-u~ 滚动功能
+- ~G~ 和 ~gg~ 去缓冲区的最后和开始
+- ~/~, ~n~ 和 ~N~ 增量搜索
+- ~:~ 启用 =evil-ex= 
+- ~v~  =visual 状态= 和 ~V~  =visual line 状态= 
+- ~y~ 复制(_只在 visual 状态_)
+- ~SPC~ 激活 evil 前缀键
+
+将 =evilified 状态= 设置为模式是通过调用宏 =spacemacs|evilify-map= 完成的。
+
+/Evilification/ 根据以下规则重新绑定了 shadowed 键绑定：
+- 字母键绑定： ~x~ -> ~X~ -> ~C-x~ -> ~C-X~
 - ~SPC~ -> ~​'​~
 - ~/~ -> ~\~
 - ~:~ -> ~|~
-- ~C-g~ cannot be shadowed
+- ~C-g~ 不能被 shadowed
 
-If a key binding cannot be remapped then it is ignored and a warning message
-is displayed in =*Messages*=.
+如果无法重新映射键绑定，则会被忽略，并在 =*Messages*= 中显示警告消息。
 
-** Navigation
-*** n and N
-To be consistent with the Vim way, ~n~ and ~N~ are favored over Emacs ~n~ and
-~p~.
+** 导航
+*** n 和 N
+为了与 Vim 方式保持一致，用 ~n~ 和 ~N~ 代替 Emacs 的 ~n~ 和 ~p~ 上是有利的。
 
-Ideally a transient-state should be provided to smooth the navigation
-experience. A transient-state allows to repeat key bindings without entering
-each time the prefix commands. More info on transient-states in the
-[[file:DOCUMENTATION.org::Transient-states][documentation]].
+理想情况下，应提供瞬态状态以使导航体验平滑。瞬态状态允许重复键绑定，而不用每次输入前缀命令。有关瞬态的更多信息在 [[file:DOCUMENTATION.org::Transient-states][文档]] 里。
 
-*** Code Navigation
-The prefix for going to something is ~SPC m g~.
+*** 代码导航
+跳转到某处的前缀是 ~SPC m g~ ：
 
-| Key     | Description                                     |
-|---------+-------------------------------------------------|
-| ~m g a~ | go to alternate file (i.e. =.h <--> .cpp=)      |
-| ~m g b~ | go back to previous location (before last jump) |
-| ~m g g~ | go to things under point                        |
-| ~m g G~ | go to things under point in other window        |
-| ~m g t~ | go to corresponding test file if any            |
+| 键      | 描述                                 |
+|---------+--------------------------------------|
+| ~m g a~ | 跳转到备用文件（如 =.h <--> .cpp= ） |
+| ~m g b~ | 跳转回上一个位置（在最后一跳之前）   |
+| ~m g g~ | 跳转到光标处的东西                   |
+| ~m g G~ | 跳转到其他窗口中的光标处的东西       |
+| ~m g t~ | 跳转到相应的测试文件，如果有的话     |
 
-*** =insert state= buffers
-Navigation in buffers like =Helm= and =ido= which are in =insert state=
-should be performed with ~C-j~ and ~C-k~ bindings for vertical movements.
+*** =插入状态= 缓冲区
+应使用 ~C-j~ and ~C-k~ 绑定进行垂直移动，执行处于 =插入状态= 的缓冲区（如 =Helm= 和 =ido= ）中的导航。
 
-| Key   | Description |
-|-------+-------------|
-| ~C-j~ | go down     |
-| ~C-k~ | go up       |
+| 键    | 描述 |
+|-------+------|
+| ~C-j~ | 向下 |
+| ~C-k~ | 向上 |
 
-** Confirm and Abort
-Confirming and aborting actions which are bound to ~C-c C-c~ and ~C-c C-k~
-in raw Emacs are mirrored in Spacemacs to:
+** 确认和放弃
+在原始 Emacs 中确定和放弃与 ~C-c C-c~ 和 ~C-c C-k~ 绑定的操作在 Spacemacs 中被镜像到：
 
-| Key                     | Description               |
-|-------------------------+---------------------------|
-| ~SPC m ​,​~ and ~SPC m c~ | Valid/Confirm the message |
-| ~SPC m a~ and ~SPC m k~ | Abort/Discard the message |
+| 键                     | 描述     |
+|------------------------+----------|
+| ~SPC m ​,​~ 和 ~SPC m c~ | 确认信息 |
+| ~SPC m a~ 和 ~SPC m k~ | 丢弃信息 |
 
-Some example of these modes are =magit= commit messages, =message-mode= for
-mails or =org-mode= notes.
+这些模式的一些示例是 =magit= 提交信息，邮件 =message-mode= 或 =org-mode= 注释。
 
-** Evaluation
-Live evaluation of code is under the prefix ~SPC m e~.
+** 评估
+代码的实时评估前缀是 ~SPC m e~ 。
 
-| Key     | Description                                   |
-|---------+-----------------------------------------------|
-| ~m e $~ | put point at the end of the line and evaluate |
-| ~m e b~ | evaluate buffer                               |
-| ~m e e~ | evaluate last expression                      |
-| ~m e f~ | evaluate function                             |
-| ~m e l~ | evaluate line                                 |
-| ~m e r~ | evaluate region                               |
+| 键      | 描述                 |
+|---------+----------------------|
+| ~m e $~ | 把光标放在行尾并评估 |
+| ~m e b~ | 评估缓冲区           |
+| ~m e e~ | 评估最后一个表达式   |
+| ~m e f~ | 评估函数             |
+| ~m e l~ | 评估行               |
+| ~m e r~ | 评估区域             |
 
 ** REPLs
-*** Send code
-A lot of languages can interact with a REPL. To help keeping a
-consistent behavior between those languages the following conventions
-should be followed:
-  - ~SPC m s~ is the prefix for sending code. This allows fast interaction with
-    the REPL whenever it is possible
-  - lower case key bindings keep the focus on the current buffer
-  - upper case key bindings move the focus to the REPL buffer
+*** 发送代码
+很多语言可以与 REPL 进行交互。为了在这些语言之间保持一致的行为，应遵循以下约定：
+  - ~SPC m s~ 是用于发送代码的前缀。这样就可以在任何可能的时候快速与 REPL 进行交互
+  - 小写字母键绑定将焦点保留在当前缓冲区上
+  - 大写字母键绑定将焦点移动到 REPL 缓冲区
 
-| Key     | Description                                                  |
-|---------+--------------------------------------------------------------|
-| ~m s b~ | send buffer                                                  |
-| ~m s B~ | send buffer and switch to REPL                               |
-| ~m s d~ | first key to send buffer and switch to REPL to debug (step)  |
-| ~m s D~ | second key to send buffer and switch to REPL to debug (step) |
-| ~m s f~ | send function                                                |
-| ~m s F~ | send function and switch to REPL                             |
-| ~m s i~ | start/switch to REPL inferior process                        |
-| ~m s l~ | send line                                                    |
-| ~m s L~ | send line and switch to REPL                                 |
-| ~m s r~ | send region                                                  |
-| ~m s R~ | send region and switch to REPL                               |
-
-Note: we don't distinguish between the file and the buffer.
-
-*** In terminal
-History navigation in shells or REPLs buffers should be bound as well to
-~C-j~ and ~C-k~.
-
-    | Key   | Description                |
-    |-------+----------------------------|
-    | ~C-j~ | next item in history       |
-    | ~C-k~ | previous item in  history  |
-    | ~C-l~ | clear screen               |
-    | ~C-r~ | search backward in history |
-
-** Building and Compilation
-The base prefix for major mode specific compilation is ~SPC m c~.
-
-    | Key Binding | Description       |
-    |-------------+-------------------|
-    | ~m c b~     | compile buffer    |
-    | ~m c c~     | compile           |
-    | ~m c C~     | clean             |
-    | ~m c r~     | clean and compile |
-
-Note: we don't distinguish between the file and the buffer. We can
-implement an auto-save of the buffer before compiling the buffer.
-
-** Debugging
-The base prefix for debugging commands is ~SPC d~.
-
-| Key Binding | Description             |
-|-------------+-------------------------|
-| ~m d a~     | abandon current process |
-| ~m d b~     | toggle a breakpoint     |
-| ~m d B~     | clear all breakpoints   |
-| ~m d c~     | continue                |
-| ~m d d~     | start debug session     |
-| ~m d i~     | step in                 |
-| ~m d l~     | local variables         |
-| ~m d o~     | step out                |
-| ~m d r~     | run                     |
-| ~m d s~     | next step               |
-| ~m d v~     | inspect value at point  |
-
-Notes:
-  - Ideally a transient-state for breakpoint navigation should be provided.
-  - If there is no toggle breakpoint function, then it should be implemented at
-    the spacemacs level and ideally the function should be proposed as a patch
-    upstream (major mode repository).
-
-** Plain Text Markup Languages
-For layers supporting markup languages please follow the following
-keybindings whenever applicable.
-
-*** Headers
-All header functionality should be grouped under ~SPC m h~
-
-| Key Binding | Description                                      |
-|-------------+--------------------------------------------------|
-| ~m h i~     | Insert a header                                  |
-| ~m h I~     | Insert a header alternative method (if existing) |
-| ~m h 1..10~ | Insert a header of level 1..10 (if possible)     |
-
-*** Insertion of common elements
-Insertion of common elements like links or footnotes should be grouped
-under ~SPC m i~
-
-| Key Binding | Description      |
-|-------------+------------------|
-| ~m i f~     | Insert footnote  |
-| ~m i i~     | Insert image     |
-| ~m i l~     | Insert link      |
-| ~m i u~     | Insert url       |
-| ~m i w~     | Insert wiki-link |
-
-*** Text manipulation
-Manipulation of text regions should be grouped under ~SPC m x~
-
-| Key Binding | Description                   |
-|-------------+-------------------------------|
-| ~m x b~     | Make region bold              |
-| ~m x c~     | Make region code              |
-| ~m x i~     | Make region italic            |
-| ~m x q~     | Quote a region                |
-| ~m x r~     | Remove formatting from region |
-| ~m x s~     | Make region strike-through    |
-| ~m x u~     | Make region underlined        |
-| ~m x v~     | Make region verbose           |
-
-*** Movement in normal mode
-In normal mode Vim style movement should be enabled with these keybindings:
-
-| Key Binding | Description                            |
-|-------------+----------------------------------------|
-| ~g h~       | Move up one level in headings          |
-| ~g j~       | Move to next heading on same level     |
-| ~g k~       | Move to previous heading on same level |
-| ~g l~       | Move down one level in headings        |
-
-*** Promotion, Demotion and element movement
-Promotion, demotion and movement of headings or list elements (whatever is
-possible) should be enabled with the following keys in any mode
-
-| Key Binding | Description                  |
-|-------------+------------------------------|
-| ~M-h~       | Promote heading by one level |
-| ~M-j~       | Move element down            |
-| ~M-k~       | Move element up              |
-| ~M-l~       | Demote heading by one level  |
-
-*** Table editing
-If table specific commands are available the they are grouped under the
-~SPC m t~ group.
-
-** Tests
-A lot of languages have their own test frameworks. These frameworks
-share common actions that we can unite under the same key bindings:
- - ~SPC m t~ is the prefix for test execution.
- - ~SPC m t X~ is used to execute ~SPC m t x~ but in debug mode (if supported).
-
-*** All languages
-
-| Key     | Description                                                  |
-|---------+--------------------------------------------------------------|
-| ~m t a~ | execute all the tests of the current project                 |
-| ~m t A~ | execute all the tests of the current project in debug        |
-| ~m t b~ | execute all the tests of the current buffer                  |
-| ~m t B~ | execute all the tests of the current buffer in debug         |
-| ~m t t~ | execute the current test (thing at point, function)          |
-| ~m t T~ | execute the current test in debug (thing at point, function) |
-
-Note: we don't distinguish between the file and the buffer. We can
-implement an auto-save of the buffer before executing the tests of
-buffer.
-
-*** Language specific
-
-| Key     | Description                                      |
+| 键      | 描述                                             |
 |---------+--------------------------------------------------|
-| ~m t m~ | execute the tests of the current module          |
-| ~m t M~ | execute the tests of the current module in debug |
-| ~m t s~ | execute the tests of the current suite           |
-| ~m t S~ | execute the tests of the current suite in debug  |
+| ~m s b~ | 发送缓冲区                                       |
+| ~m s B~ | 发送缓冲区并切换到 REPL                          |
+| ~m s d~ | 第一个键发送缓冲区并切换到 REPL 进行调试（步骤） |
+| ~m s D~ | 第二个键发送缓冲区并切换到 REPL 进行调试（步骤） |
+| ~m s f~ | 发送函数                                         |
+| ~m s F~ | 发送函数并切换到 REPL                            |
+| ~m s i~ | 启动/切换到 REPL 较差的进程                      |
+| ~m s l~ | 发送行                                           |
+| ~m s L~ | 发送行并切换到 REPL                              |
+| ~m s r~ | 发送区域                                         |
+| ~m s R~ | 发送区域并切换到 REPL                            |
 
-Note that there are overlaps, depending on the language we will choose
-one or more bindings for the same thing
+注意：我们不区分文件和缓冲区。
 
-** Toggles
-- Global toggles are under ~SPC t~, ~SPC T~ and ~SPC C-t~
-- Major mode toggles are only under ~SPC m T~
+*** 在终端里
+在 shell 或 REPLs 缓冲区中的历史导航也应与 ~C-j~ 和 ~C-k~ 绑定。
 
-** Refactoring
-Refactoring prefix is ~SPC m r~.
+    | 键    | 描述               |
+    |-------+--------------------|
+    | ~C-j~ | 历史里的下一个项目 |
+    | ~C-k~ | 历史里的上一个项目 |
+    | ~C-l~ | 清除屏幕           |
+    | ~C-r~ | 在历史里搜索       |
 
-** Code Formatting
-Major-mode code formatting is under prefix ~SPC m =~.
+** 编译与汇编
+主模式特定编译的基础前缀是 ~SPC m c~ 。
 
-| Key Binding | Description              |
-|-------------+--------------------------|
-| ~m = =~     | format thing under point |
-| ~m = b~     | format current buffer    |
-| ~m = f~     | format current function  |
+    | 键      | 描述       |
+    |---------+------------|
+    | ~m c b~ | 编译缓冲区 |
+    | ~m c c~ | 编译       |
+    | ~m c C~ | 清理       |
+    | ~m c r~ | 清理和编译 |
 
-** Help or Documentation
-The base prefix for help commands is ~SPC h~. Documentation is considered
-as an help command.
+注意：我们不区分文件和缓冲区。在编译缓冲区之前，我们可以实现缓冲区的自动保存。
 
-| Key     | Description                        |
-|---------+------------------------------------|
-| ~m h h~ | documentation of thing under point |
-| ~m h r~ | documentation of selected region   |
+** 调试
+调试命令的基础前缀是 ~SPC d~ 。
 
-* Writing documentation
-Spacemacs provides an example layer =README.org= file in
-=~/.emacs.d/core/templates/README.org.template=.
+    | 键      | 描述           |
+    |---------+----------------|
+    | ~m d a~ | 放弃当前流程   |
+    | ~m d b~ | 切换断点       |
+    | ~m d B~ | 清除所有断点   |
+    | ~m d c~ | 继续           |
+    | ~m d d~ | 启动调试会话   |
+    | ~m d i~ | step in        |
+    | ~m d l~ | 局部变量       |
+    | ~m d o~ | step out       |
+    | ~m d r~ | 运行           |
+    | ~m d s~ | 下一步         |
+    | ~m d v~ | 在光标处检查值 |
 
-** Spacing in documentation
-- Spacemacs tries to keep the documentation consistent between all layers by
-  providing some rules for spacing:
-  - After each header, you should not add an empty line
-    - *Exception*: If the first item under the header is a table, add an empty
-      line after it
-  - At the end of each header node, there should be an empty line
-  - Note: Many layer =READMEs= do not follow this convention yet. Please fix
-    them if you can.
+注意：
+  - 理想情况下，应提供断点导航的瞬态状态。
+  - 如果没有切换断点功能，那么它应该在 spacemacs 级别实现，理想情况下该函数应该被提议为一个向上游的补丁（主模式存储库）。
 
-- To keep things readable only mention the prefix ~SPC~ when documenting
-  key bindings, you don't need to mention ~M-m~.
+** 纯文本标记语言
+对于支持标记语言的层，请在适用时按照以下键绑定。
+
+*** 标题
+所有标题功能应该被分组在 ~SPC m h~ 下。
+
+| 键          | 描述                               |
+|-------------+------------------------------------|
+| ~m h i~     | 插入一个标题                       |
+| ~m h I~     | 插入一个标题的替代方法（如果存在） |
+| ~m h 1..10~ | 插入级别为 1..10 的标题（如果可能）|
+
+*** 插入普通元素
+插入常见的元素，如链接或脚注，应该被分组在 ~SPC m i~ 下。
+
+| 键      | 描述           |
+|---------+----------------|
+| ~m i f~ | 插入脚注       |
+| ~m i i~ | 插入图片       |
+| ~m i l~ | 插入链接       |
+| ~m i u~ | 插入 url       |
+| ~m i w~ | 插入 wiki 链接 |
+
+*** 文本操纵
+文本区域的操纵应该被分组在 ~SPC m x~ 下。
+
+| 键      | 描述                 |
+|---------+----------------------|
+| ~m x b~ | 使区域文本成为粗体   |
+| ~m x c~ | 使区域文本成为代码块 |
+| ~m x i~ | 使区域文本成为斜体   |
+| ~m x q~ | 给区域文本加引号     |
+| ~m x r~ | 取消区域中的格式     |
+| ~m x s~ | 给区域文本加删除线   |
+| ~m x u~ | 给区域文本加下划线   |
+| ~m x v~ | Make region verbose  |
+
+*** 普通模式下移动
+在普通模式下，应使用以下键绑定启用 Vim 风格移动：
+
+| 键    | 描述                       |
+|-------+----------------------------|
+| ~g h~ | 在标题中上移一级           |
+| ~g j~ | 移动到同一级别的下一个标题 |
+| ~g k~ | 移动到同一级别的上一个标题 |
+| ~g l~ | 在标题中下移一级           |
+
+*** 升级，降级和元素移动
+应在任何模式下使用以下键启用标题或列表元素的升级，降级和移动（任何可能的情况）
+
+| 键    | 描述         |
+|-------+--------------|
+| ~M-h~ | 升级一级     |
+| ~M-j~ | 向下移动元素 |
+| ~M-k~ | 向上移动元素 |
+| ~M-l~ | 降级一级     |
+
+*** 表格编辑
+如果表格具体命令可用，则它们被分组在 ~SPC m t~ 组下。
+
+** 测试
+很多语言都有自己的测试框架。这些框架共享共同的动作，我们可以在相同的键绑定下联合起来：
+ - ~SPC m t~ 是测试执行的前缀。
+ - ~SPC m t X~ 用于执行 ~SPC m t x~ ，但是在调试模式下（如果支持）。
+
+*** 所有语言
+
+| 键      | 描述                                             |
+|---------+--------------------------------------------------|
+| ~m t a~ | 执行当前工程的所有测试                           |
+| ~m t A~ | 在调试模式中执行当前工程的所有测试               |
+| ~m t b~ | 执行当前缓冲区的所有测试                         |
+| ~m t B~ | 在调试模式中执行当前缓冲区的所有测试             |
+| ~m t t~ | 执行当前的测试（光标处的东西，函数）             |
+| ~m t T~ | 在调试模式中执行当前的测试（光标处的东西，函数） |
+
+注意：我们不区分文件和缓冲区。在执行缓冲区测试之前，我们可以实现缓冲区的自动保存。
+
+*** 特定语言
+
+| 键      | 描述                           |
+|---------+--------------------------------|
+| ~m t m~ | 执行当前模块的测试             |
+| ~m t M~ | 在调试模式中执行当前模块的测试 |
+| ~m t s~ | 执行当前套件的测试             |
+| ~m t S~ | 在调试模式中执行当前套件的测试 |
+
+请注意，有重叠，根据语言，我们将为同一件事选择一个或多个绑定
+
+** 切换
+- 全局切换在 ~SPC t~, ~SPC T~ 和 ~SPC C-t~ 下
+- 主模式切换在 ~SPC m T~ 下
+
+** 重构
+重构前缀是 ~SPC m r~.
+
+** 代码格式化
+主模式的代码格式化在前缀 ~SPC m =~ 下。
+
+| 键      | 描述               |
+|---------+--------------------|
+| ~m = =~ | 格式化光标下的东西 |
+| ~m = b~ | 格式化当前缓冲区   |
+| ~m = f~ | 格式化当前函数     |
+
+** 帮助或文档
+帮助命令的基础前缀是 ~SPC h~ 。文档被视为帮助命令。
+
+| 键      | 描述               |
+|---------+--------------------|
+| ~m h h~ | 光标下的东西的文档 |
+| ~m h r~ | 所选区域的文档     |
+
+* 写文档
+Spacemacs 在 =~/.emacs.d/core/templates/README.org.template= 中提供了一个示例层 =README.org= 文件。
+
+** 文档中的间距
+- Spacemacs 尝试通过为间距提供一些规则来保持所有层之间的文档一致：
+  - 每个标题之后，您不应该添加一个空行
+    - 例外：如果标题下的第一个项目是一个表格，则在其后面添加一个空行
+  - 每个标题节点的最后，应该有一个空行
+  - 注意：许多层 =Readmes= 文件不遵循这个约定。如果可以，请修复它们。
+
+- 为了保持可读性，在记录键绑定时只提及 ~SPC~ 前缀，您不需要提及 ~M-m~ 。
