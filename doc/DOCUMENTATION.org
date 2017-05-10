@@ -1,346 +1,300 @@
 #+TITLE: Spacemacs documentation
 
 * Spacemacs documentation                                   :TOC_4_gh:noexport:
- - [[#core-pillars][Core Pillars]]
-   - [[#mnemonic][Mnemonic]]
-   - [[#discoverable][Discoverable]]
-   - [[#consistent][Consistent]]
-   - [[#crowd-configured][Crowd-Configured]]
- - [[#highlighted-feature][Highlighted feature]]
- - [[#screenshots][Screenshots]]
- - [[#who-can-benefit-from-this][Who can benefit from this?]]
- - [[#update-and-rollback][Update and Rollback]]
-   - [[#update-spacemacs-repository][Update Spacemacs repository]]
-     - [[#automatic-updates][Automatic Updates]]
-     - [[#updating-from-the-spacemacs-buffer][Updating from the Spacemacs Buffer]]
-     - [[#updating-manually-with-git][Updating Manually with git]]
-   - [[#update-packages][Update packages]]
- - [[#configuration-layers][Configuration layers]]
-   - [[#purpose][Purpose]]
-   - [[#structure][Structure]]
-   - [[#configure-packages][Configure packages]]
-     - [[#with-a-layer][With a layer]]
-       - [[#declaration][Declaration]]
-       - [[#initialization][Initialization]]
-       - [[#exclusion][Exclusion]]
-     - [[#without-a-layer][Without a layer]]
-   - [[#packages-synchronization][Packages synchronization]]
-   - [[#types-of-configuration-layers][Types of configuration layers]]
-   - [[#submitting-a-configuration-layer-upstream][Submitting a configuration layer upstream]]
-   - [[#example-themes-megapack-example][Example: Themes Megapack example]]
-   - [[#managing-private-configuration-layers][Managing private configuration layers]]
-     - [[#using-the-private-directory][Using the private directory]]
-     - [[#using-an-external-git-repository][Using an external Git repository]]
-     - [[#using-a-personal-branch][Using a personal branch]]
-   - [[#tips-for-writing-layers][Tips for writing layers]]
- - [[#dotfile-configuration][Dotfile Configuration]]
-   - [[#dotfile-installation][Dotfile Installation]]
-   - [[#alternative-dotdirectory][Alternative dotdirectory]]
-   - [[#synchronization-of-dotfile-changes][Synchronization of dotfile changes]]
-   - [[#testing-the-dotfile][Testing the dotfile]]
-   - [[#dotfile-contents][Dotfile Contents]]
-     - [[#configuration-functions][Configuration functions]]
-     - [[#custom-variables][Custom variables]]
-   - [[#declaring-configuration-layers][Declaring Configuration layers]]
-     - [[#setting-configuration-layers-variables][Setting configuration layers variables]]
-     - [[#disabling-layer-services-in-other-layers][Disabling layer services in other layers]]
-     - [[#selectingignoring-packages-of-a-layer][Selecting/Ignoring packages of a layer]]
-     - [[#excluding-packages][Excluding packages]]
- - [[#concepts][Concepts]]
-   - [[#editing-styles][Editing Styles]]
-     - [[#vim][Vim]]
-     - [[#emacs][Emacs]]
-     - [[#hybrid][Hybrid]]
-   - [[#states][States]]
-   - [[#evilified-modes][Evilified modes]]
-   - [[#evil-leader][Evil leader]]
-   - [[#universal-argument][Universal argument]]
-   - [[#transient-states][Transient-states]]
- - [[#differences-between-vim-evil-and-spacemacs][Differences between Vim, Evil and Spacemacs]]
-   - [[#the-vim-surround-case][The vim-surround case]]
- - [[#evil-plugins][Evil plugins]]
- - [[#binding-keys][Binding keys]]
- - [[#gui-elements][GUI Elements]]
-   - [[#color-themes][Color themes]]
-   - [[#font][Font]]
-   - [[#gui-toggles][GUI Toggles]]
-       - [[#global-line-numbers][Global line numbers]]
-   - [[#mode-line][Mode-line]]
-       - [[#powerline-font-installation-for-terminal-mode-users][Powerline font installation for terminal-mode users]]
-       - [[#flycheck-integration][Flycheck integration]]
-       - [[#anzu-integration][Anzu integration]]
-       - [[#battery-status-integration][Battery status integration]]
-       - [[#powerline-separators][Powerline separators]]
-       - [[#minor-modes][Minor Modes]]
-       - [[#customizing-the-mode-line][Customizing the mode-line]]
- - [[#layouts-and-workspaces][Layouts and workspaces]]
-   - [[#layouts][Layouts]]
-     - [[#the-default-layout][The default layout]]
-     - [[#project-layouts][Project layouts]]
-     - [[#custom-layouts][Custom Layouts]]
-     - [[#saveload-layouts-into-a-file][Save/Load layouts into a file]]
-     - [[#layout-key-bindings][Layout key bindings]]
-   - [[#workspaces][Workspaces]]
-     - [[#workspace-key-bindings][Workspace key bindings]]
- - [[#commands][Commands]]
-   - [[#vim-key-bindings][Vim key bindings]]
-     - [[#escaping][Escaping]]
-     - [[#executing-vim-and-emacs-exm-x-commands][Executing Vim and Emacs ex/M-x commands]]
-     - [[#leader-key][Leader key]]
-     - [[#additional-text-objects][Additional text objects]]
-   - [[#reserved-prefix-command-for-user][Reserved prefix command for user]]
-   - [[#completion][Completion]]
-     - [[#helm][Helm]]
-       - [[#c-z-and-tab-switch][C-z and Tab switch]]
-       - [[#helm-focus][Helm focus]]
-       - [[#helm-transient-state][Helm transient state]]
-     - [[#ivy][Ivy]]
-   - [[#discovering][Discovering]]
-     - [[#key-bindings][Key bindings]]
-       - [[#which-key][Which-key]]
-       - [[#helm-describe-key-bindings][Helm describe key bindings]]
-     - [[#getting-help][Getting help]]
-     - [[#available-layers][Available layers]]
-       - [[#available-packages-in-spacemacs][Available packages in Spacemacs]]
-       - [[#new-packages-from-elpa-repositories][New packages from ELPA repositories]]
-     - [[#toggles][Toggles]]
-   - [[#navigating][Navigating]]
-     - [[#pointcursor][Point/Cursor]]
-       - [[#smooth-scrolling][Smooth scrolling]]
-     - [[#vim-motions-with-avy][Vim motions with avy]]
-       - [[#ace-link-mode][ace-link mode]]
-     - [[#unimpaired-bindings][Unimpaired bindings]]
-     - [[#jumping-joining-and-splitting][Jumping, Joining and Splitting]]
-       - [[#jumping][Jumping]]
-       - [[#joining-and-splitting][Joining and splitting]]
-     - [[#window-manipulation][Window manipulation]]
-       - [[#window-manipulation-key-bindings][Window manipulation key bindings]]
-       - [[#window-manipulation-transient-state][Window manipulation transient state]]
-       - [[#golden-ratio][Golden ratio]]
-     - [[#buffers-and-files][Buffers and Files]]
-       - [[#buffers-manipulation-key-bindings][Buffers manipulation key bindings]]
-       - [[#buffers-manipulation-transient-state][Buffers manipulation transient state]]
-       - [[#special-buffers][Special Buffers]]
-       - [[#files-manipulations-key-bindings][Files manipulations key bindings]]
-       - [[#emacs-and-spacemacs-files][Emacs and Spacemacs files]]
-       - [[#browsing-files-with-helm][Browsing files with Helm]]
-     - [[#ido][Ido]]
-     - [[#ido-transient-state][Ido transient state]]
-     - [[#neotree-file-tree][NeoTree file tree]]
-       - [[#neotree-navigation][NeoTree navigation]]
-       - [[#opening-files-with-neotree][Opening files with NeoTree]]
-       - [[#other-neotree-key-bindings][Other NeoTree key bindings]]
-       - [[#neotree-mode-line][NeoTree mode-line]]
-       - [[#neotree-source-control-integration][NeoTree Source Control Integration]]
-       - [[#neotree-theme][NeoTree Theme]]
-     - [[#bookmarks][Bookmarks]]
-     - [[#docview-mode][DocView mode]]
-   - [[#auto-saving][Auto-saving]]
-     - [[#frequency-of-auto-saving][Frequency of auto-saving]]
-     - [[#location-of-auto-saved-files][Location of auto-saved files]]
-     - [[#disable-auto-save][Disable auto-save]]
-   - [[#searching][Searching]]
-     - [[#with-an-external-tool][With an external tool]]
-       - [[#useful-key-bindings][Useful key bindings]]
-       - [[#searching-in-current-file][Searching in current file]]
-       - [[#searching-in-all-open-buffers-visiting-files][Searching in all open buffers visiting files]]
-       - [[#searching-in-files-in-an-arbitrary-directory][Searching in files in an arbitrary directory]]
-       - [[#searching-in-a-project][Searching in a project]]
-       - [[#searching-the-web][Searching the web]]
-     - [[#persistent-highlighting][Persistent highlighting]]
-     - [[#highlight-current-symbol][Highlight current symbol]]
-     - [[#visual-star][Visual Star]]
-     - [[#listing-symbols-by-semantic][Listing symbols by semantic]]
-     - [[#helm-swoop][Helm-swoop]]
-   - [[#editing][Editing]]
-     - [[#paste-text][Paste text]]
-       - [[#paste-transient-state][Paste Transient-state]]
-       - [[#auto-indent-pasted-text][Auto-indent pasted text]]
-     - [[#text-manipulation-commands][Text manipulation commands]]
-     - [[#text-insertion-commands][Text insertion commands]]
-     - [[#smartparens-strict-mode][Smartparens Strict mode]]
-     - [[#zooming][Zooming]]
-       - [[#text][Text]]
-       - [[#frame][Frame]]
-     - [[#increasedecrease-numbers][Increase/Decrease numbers]]
-     - [[#spell-checking][Spell checking]]
-     - [[#region-selection][Region selection]]
-       - [[#expand-region][Expand-region]]
-       - [[#indent-text-object][Indent text object]]
-     - [[#region-narrowing][Region narrowing]]
-     - [[#replacing-text-with-iedit][Replacing text with iedit]]
-       - [[#iedit-states-key-bindings][iedit states key bindings]]
-       - [[#examples][Examples]]
-     - [[#replacing-text-in-several-files][Replacing text in several files]]
-     - [[#renaming-files-in-a-directory][Renaming files in a directory]]
-     - [[#commenting][Commenting]]
-     - [[#regular-expressions][Regular expressions]]
-     - [[#deleting-files][Deleting files]]
-     - [[#editing-lisp-code][Editing Lisp code]]
-       - [[#lisp-key-bindings][Lisp Key Bindings]]
-     - [[#mouse-usage][Mouse usage]]
-   - [[#managing-projects][Managing projects]]
-   - [[#registers][Registers]]
-   - [[#errors-handling][Errors handling]]
-   - [[#compiling][Compiling]]
-   - [[#modes][Modes]]
-     - [[#major-mode-leader-key][Major Mode leader key]]
-     - [[#helm-1][Helm]]
-   - [[#emacs-server][Emacs Server]]
-     - [[#connecting-to-the-emacs-server][Connecting to the Emacs server]]
-   - [[#keeping-the-server-alive][Keeping the server alive]]
-   - [[#troubleshoot][Troubleshoot]]
-     - [[#loading-fails][Loading fails]]
-     - [[#upgradingdowngrading-emacs-version][Upgrading/Downgrading Emacs version]]
- - [[#achievements][Achievements]]
-   - [[#issues][Issues]]
-   - [[#merged-pull-requests][Merged Pull Requests]]
-   - [[#stars-forks-and-watchers][Stars, forks and watchers]]
-   - [[#gitter-chat][Gitter chat]]
-   - [[#first-times][First times]]
-   - [[#special-mentions][Special Mentions]]
-   - [[#special-titles][Special Titles]]
- - [[#thank-you][Thank you]]
+- [[#核心支柱][核心支柱]]
+  - [[#mnemonic][Mnemonic]]
+  - [[#discoverable][Discoverable]]
+  - [[#consistent][Consistent]]
+  - [[#crowd-configured][Crowd-Configured]]
+- [[#突出的功能][突出的功能]]
+- [[#截图][截图]]
+- [[#谁能从中受益][谁能从中受益？]]
+- [[#更新和回滚][更新和回滚]]
+  - [[#更新-spacemacs-存储库][更新 Spacemacs 存储库]]
+    - [[#自动更新][自动更新]]
+    - [[#从-spacemacs-缓冲区更新][从 Spacemacs 缓冲区更新]]
+    - [[#用-git-手动更新][用 git 手动更新]]
+  - [[#更新包][更新包]]
+- [[#配置层][配置层]]
+  - [[#目的][目的]]
+  - [[#结构][结构]]
+  - [[#配置包][配置包]]
+    - [[#with-a-layer][With a layer]]
+      - [[#声明][声明]]
+      - [[#初始化][初始化]]
+      - [[#排除][排除]]
+    - [[#without-a-layer][Without a layer]]
+  - [[#软件包同步][软件包同步]]
+  - [[#配置层的类型][配置层的类型]]
+  - [[#向上游提交配置层][向上游提交配置层]]
+  - [[#示例主题-megapack-示例][示例：主题 Megapack 示例]]
+  - [[#管理私有配置层][管理私有配置层]]
+    - [[#使用私有目录][使用私有目录]]
+    - [[#使用外部-git-仓库][使用外部 Git 仓库]]
+    - [[#使用个人分支][使用个人分支]]
+  - [[#写层的提示][写层的提示]]
+- [[#dotfile-配置][Dotfile 配置]]
+  - [[#dotfile-安装][Dotfile 安装]]
+  - [[#替代的-dotdirectory][替代的 dotdirectory]]
+  - [[#dotfile-更改的同步][dotfile 更改的同步]]
+  - [[#测试-dotfile][测试 dotfile]]
+  - [[#dotfile-内容][Dotfile 内容]]
+    - [[#配置函数][配置函数]]
+    - [[#自定义变量][自定义变量]]
+  - [[#声明配置层][声明配置层]]
+    - [[#设置配置层变量][设置配置层变量]]
+    - [[#禁用其他层中的层服务][禁用其他层中的层服务]]
+    - [[#选择忽略层的包][选择/忽略层的包]]
+    - [[#排除包][排除包]]
+- [[#概念][概念]]
+  - [[#编辑风格][编辑风格]]
+    - [[#vim][Vim]]
+    - [[#emacs][Emacs]]
+    - [[#hybrid][Hybrid]]
+  - [[#状态][状态]]
+  - [[#evilified-状态][Evilified 状态]]
+  - [[#evil-前缀][Evil 前缀]]
+  - [[#通用参数][通用参数]]
+  - [[#瞬态状态][瞬态状态]]
+- [[#vimevil-和-spacemacs-之间的差异][Vim，Evil 和 Spacemacs 之间的差异]]
+  - [[#vim-surround-案例][vim-surround 案例]]
+- [[#evil-插件][Evil 插件]]
+- [[#绑定键][绑定键]]
+- [[#gui-elements][GUI Elements]]
+  - [[#color-themes][Color themes]]
+  - [[#font][Font]]
+  - [[#gui-toggles][GUI Toggles]]
+      - [[#global-line-numbers][Global line numbers]]
+  - [[#mode-line][Mode-line]]
+      - [[#powerline-font-installation-for-terminal-mode-users][Powerline font installation for terminal-mode users]]
+      - [[#flycheck-integration][Flycheck integration]]
+      - [[#anzu-integration][Anzu integration]]
+      - [[#battery-status-integration][Battery status integration]]
+      - [[#powerline-separators][Powerline separators]]
+      - [[#minor-modes][Minor Modes]]
+      - [[#customizing-the-mode-line][Customizing the mode-line]]
+- [[#layouts-and-workspaces][Layouts and workspaces]]
+  - [[#layouts][Layouts]]
+    - [[#the-default-layout][The default layout]]
+    - [[#project-layouts][Project layouts]]
+    - [[#custom-layouts][Custom Layouts]]
+    - [[#saveload-layouts-into-a-file][Save/Load layouts into a file]]
+    - [[#layout-key-bindings][Layout key bindings]]
+  - [[#workspaces][Workspaces]]
+    - [[#workspace-key-bindings][Workspace key bindings]]
+- [[#commands][Commands]]
+  - [[#vim-key-bindings][Vim key bindings]]
+    - [[#escaping][Escaping]]
+    - [[#executing-vim-and-emacs-exm-x-commands][Executing Vim and Emacs ex/M-x commands]]
+    - [[#leader-key][Leader key]]
+    - [[#additional-text-objects][Additional text objects]]
+  - [[#reserved-prefix-command-for-user][Reserved prefix command for user]]
+  - [[#completion][Completion]]
+    - [[#helm][Helm]]
+      - [[#c-z-and-tab-switch][C-z and Tab switch]]
+      - [[#helm-focus][Helm focus]]
+      - [[#helm-transient-state][Helm transient state]]
+    - [[#ivy][Ivy]]
+  - [[#discovering][Discovering]]
+    - [[#key-bindings][Key bindings]]
+      - [[#which-key][Which-key]]
+      - [[#helm-describe-key-bindings][Helm describe key bindings]]
+    - [[#getting-help][Getting help]]
+    - [[#available-layers][Available layers]]
+      - [[#available-packages-in-spacemacs][Available packages in Spacemacs]]
+      - [[#new-packages-from-elpa-repositories][New packages from ELPA repositories]]
+    - [[#toggles][Toggles]]
+  - [[#navigating][Navigating]]
+    - [[#pointcursor][Point/Cursor]]
+      - [[#smooth-scrolling][Smooth scrolling]]
+    - [[#vim-motions-with-avy][Vim motions with avy]]
+      - [[#ace-link-mode][ace-link mode]]
+    - [[#unimpaired-bindings][Unimpaired bindings]]
+    - [[#jumping-joining-and-splitting][Jumping, Joining and Splitting]]
+      - [[#jumping][Jumping]]
+      - [[#joining-and-splitting][Joining and splitting]]
+    - [[#window-manipulation][Window manipulation]]
+      - [[#window-manipulation-key-bindings][Window manipulation key bindings]]
+      - [[#window-manipulation-transient-state][Window manipulation transient state]]
+      - [[#golden-ratio][Golden ratio]]
+    - [[#buffers-and-files][Buffers and Files]]
+      - [[#buffers-manipulation-key-bindings][Buffers manipulation key bindings]]
+      - [[#buffers-manipulation-transient-state][Buffers manipulation transient state]]
+      - [[#special-buffers][Special Buffers]]
+      - [[#files-manipulations-key-bindings][Files manipulations key bindings]]
+      - [[#emacs-and-spacemacs-files][Emacs and Spacemacs files]]
+      - [[#browsing-files-with-helm][Browsing files with Helm]]
+    - [[#ido][Ido]]
+    - [[#ido-transient-state][Ido transient state]]
+    - [[#neotree-file-tree][NeoTree file tree]]
+      - [[#neotree-navigation][NeoTree navigation]]
+      - [[#opening-files-with-neotree][Opening files with NeoTree]]
+      - [[#other-neotree-key-bindings][Other NeoTree key bindings]]
+      - [[#neotree-mode-line][NeoTree mode-line]]
+      - [[#neotree-source-control-integration][NeoTree Source Control Integration]]
+      - [[#neotree-theme][NeoTree Theme]]
+    - [[#bookmarks][Bookmarks]]
+    - [[#docview-mode][DocView mode]]
+  - [[#auto-saving][Auto-saving]]
+    - [[#frequency-of-auto-saving][Frequency of auto-saving]]
+    - [[#location-of-auto-saved-files][Location of auto-saved files]]
+    - [[#disable-auto-save][Disable auto-save]]
+  - [[#searching][Searching]]
+    - [[#with-an-external-tool][With an external tool]]
+      - [[#useful-key-bindings][Useful key bindings]]
+      - [[#searching-in-current-file][Searching in current file]]
+      - [[#searching-in-all-open-buffers-visiting-files][Searching in all open buffers visiting files]]
+      - [[#searching-in-files-in-an-arbitrary-directory][Searching in files in an arbitrary directory]]
+      - [[#searching-in-a-project][Searching in a project]]
+      - [[#searching-the-web][Searching the web]]
+    - [[#persistent-highlighting][Persistent highlighting]]
+    - [[#highlight-current-symbol][Highlight current symbol]]
+    - [[#visual-star][Visual Star]]
+    - [[#listing-symbols-by-semantic][Listing symbols by semantic]]
+    - [[#helm-swoop][Helm-swoop]]
+  - [[#editing][Editing]]
+    - [[#paste-text][Paste text]]
+      - [[#paste-transient-state][Paste Transient-state]]
+      - [[#auto-indent-pasted-text][Auto-indent pasted text]]
+    - [[#text-manipulation-commands][Text manipulation commands]]
+    - [[#text-insertion-commands][Text insertion commands]]
+    - [[#smartparens-strict-mode][Smartparens Strict mode]]
+    - [[#zooming][Zooming]]
+      - [[#text][Text]]
+      - [[#frame][Frame]]
+    - [[#increasedecrease-numbers][Increase/Decrease numbers]]
+    - [[#spell-checking][Spell checking]]
+    - [[#region-selection][Region selection]]
+      - [[#expand-region][Expand-region]]
+      - [[#indent-text-object][Indent text object]]
+    - [[#region-narrowing][Region narrowing]]
+    - [[#replacing-text-with-iedit][Replacing text with iedit]]
+      - [[#iedit-states-key-bindings][iedit states key bindings]]
+      - [[#examples][Examples]]
+    - [[#replacing-text-in-several-files][Replacing text in several files]]
+    - [[#renaming-files-in-a-directory][Renaming files in a directory]]
+    - [[#commenting][Commenting]]
+    - [[#regular-expressions][Regular expressions]]
+    - [[#deleting-files][Deleting files]]
+    - [[#editing-lisp-code][Editing Lisp code]]
+      - [[#lisp-key-bindings][Lisp Key Bindings]]
+    - [[#mouse-usage][Mouse usage]]
+  - [[#managing-projects][Managing projects]]
+  - [[#registers][Registers]]
+  - [[#errors-handling][Errors handling]]
+  - [[#compiling][Compiling]]
+  - [[#modes][Modes]]
+    - [[#major-mode-leader-key][Major Mode leader key]]
+    - [[#helm-1][Helm]]
+  - [[#emacs-server][Emacs Server]]
+    - [[#connecting-to-the-emacs-server][Connecting to the Emacs server]]
+  - [[#keeping-the-server-alive][Keeping the server alive]]
+  - [[#troubleshoot][Troubleshoot]]
+    - [[#loading-fails][Loading fails]]
+    - [[#upgradingdowngrading-emacs-version][Upgrading/Downgrading Emacs version]]
+- [[#achievements][Achievements]]
+  - [[#issues][Issues]]
+  - [[#merged-pull-requests][Merged Pull Requests]]
+  - [[#stars-forks-and-watchers][Stars, forks and watchers]]
+  - [[#gitter-chat][Gitter chat]]
+  - [[#first-times][First times]]
+  - [[#special-mentions][Special Mentions]]
+  - [[#special-titles][Special Titles]]
+- [[#thank-you][Thank you]]
 
-* Core Pillars
-Four core pillars: Mnemonic, Discoverable, Consistent and "Crowd-Configured".
+* 核心支柱
+四个核心支柱：Mnemonic, Discoverable, Consistent and "Crowd-Configured".
 
-If any of these core pillars is violated open an issue and we'll try our best
-to fix it.
+如果违反了这些核心支柱中的任何一个，开一个 issue，我们会尽力解决它。
 
 ** Mnemonic
-Key bindings are organized using mnemonic prefixes like ~b~ for buffer, ~p~ for
-project, ~s~ for search, ~h~ for help, etc...
+键绑定使用有助于记忆的前缀组织，like ~b~ for buffer, ~p~ for project, ~s~ for search, ~h~ for help, etc...
 
 ** Discoverable
-Innovative real-time display of available key bindings. Simple query
-system to quickly find available layers, packages, and more.
+创新的实时显示可用的键绑定。简单的查询系统可以快速找到可用的层，包等。
 
 ** Consistent
-Similar functionalities have the same key binding everywhere thanks to a
-clearly defined set of conventions. Documentation is mandatory for any layer
-that ships with Spacemacs.
+多亏了明确定义的一组约定，类似的功能在每个地方具有相同的键绑定。对于 Spacemacs 附带的任何图层，文档是强制性的。
 
 ** Crowd-Configured
-Community-driven configuration provides curated packages tuned by power users
-and bugs are fixed quickly.
+社区驱动的配置提供了由高级用户调整的策划的包，并且错误被快速修复。
 
-* Highlighted feature
-- *Bring the efficiency of modal editing* to the powerful Emacs lisp platform.
-  Modal UX is optional and Spacemacs can be used with only Emacs key bindings.
+* 突出的功能
+- 将 *模式化编辑的效率* 带给强大的 Emacs lisp 平台。Modal UX 是可选的，Spacemacs 可以只用 Emacs 的键绑定。
 
-- Integrate nicely with =Evil= states (=Vim= modes).
+- 与 =Evil= 状态（ =Vim= 模式）完美结合。
 
-- *Keep your fingers on the home row* for quicker editing with support for
-  QWERTY and BEPO layouts.
+- *将手指放在主行上* ，以便更快地进行编辑，并支持 QWERTY 和 BEPO 布局。
 
-- *Minimalistic and nice graphical UI* keeps your available screen space for
-  what matters: your text files.
+- *简约而漂亮的图形界面* 可以为更为重要的东西：您的文本文件 保留您的可用屏幕空间。
 
-- *Fast boot time*: packages and configuration are lazy-loaded as much as
-  possible.
+- *快速的启动时间* ：软件包和配置尽可能地延迟加载。
 
-- *Lower the risk of RSI* by heavily using the space bar instead of modifiers.
-  If you have issues with your thumbs you can still use Spacemacs using
-  modifiers.
+- 通过大量使用空格键而不是修饰键 *降低 RSI 的风险* 。如果您的拇指有问题，您仍然可以用修饰符来用 Spacemacs。
 
-- Contribute easily your improvements and new configuration layers.
+- 有助于您轻松完成改进和新的配置层。
 
-- *Very active and helpful community* on =Gitter= and =IRC=
-  (via Gitter IRC bridge)
+- 在 =Gitter= 和 =IRC= 上（通过 Gitter IRC bridge） *非常活跃和有帮助的社区*
 
-* Screenshots
+* 截图
 
 [[file:img/spacemacs-python.png]]
 /Python/
 
-*Note*: Even though screenshots are updated frequently, Spacemacs is evolving
-quickly and the screenshots may not reflect exactly the current state of the
-project.
+*注意* ：尽管截图频繁更新，但 Spacemacs 正在快速发展，屏幕截图可能无法正确反映项目的当前状态。
 
-* Who can benefit from this?
-- Spacemacs was initially intended to be used by *Vim users* who want to go to
-  the next level by using Emacs (see [[file:VIMUSERS.org][guide]] for Vimmers). But it is now
-  perfectly *usable by non Vim users* by choosing the =emacs= editing style.
+* 谁能从中受益？
+- Spacemacs 最初是打算被 *Vim 用户* 使用，他们希望通过使用 Emacs 进入下一个级别（参见 Vimmers [[file:VIMUSERS.org][指南]] ）。但是现在， *非 Vim 用户* 可以通过选择 =emacs= 编辑风格来完美使用它。
 
-- It is also a good fit for people wanting to *lower the [[http://en.wikipedia.org/wiki/Repetitive_strain_injury][risk of RSI]]* induced by
-  the default Emacs key bindings. (This is an assumption, there are no official
-  studies to prove this!) If you have issues using your thumbs you can still
-  use the =emacs= editing style which puts the leader key on a modifier
-  combination.
+- 它也适合想要降低由默认 Emacs 键绑定引起的 *[[http://en.wikipedia.org/wiki/Repetitive_strain_injury][RSI 风险]]* 的人。（这是一个假设，没有官方的研究来证明这一点！）如果您使用拇指有问题，您仍然可以使用 =emacs= 编辑风格，将前缀键放在修饰键组合上。
 
-- Emacs users wanting to learn *a different way to edit files* or wanting to
-  learn Vim key bindings or even wanting to mix both editing styles by setting
-  their style to =hybrid=.
+- Emacs 用户想要学习 *不同的方式来编辑文件* 或想要学习 Vim 键绑定，甚至想通过将其风格设置为 =hybrid= 来混合两种编辑风格。
 
-- Emacs users wanting a simple but deep configuration system that greatly
-  *lower the risk of .emacs bankruptcy*.
+- Emacs 用户想要一个简单但深入的配置系统，大大 *降低了.emacs 破产的风险* 。
 
-- *Pair-programming* users thanks to out of the box support for dynamic
-  switching of editing style. A Vim user and an Emacs user can use the same
-  Spacemacs comfortably.
+- *结对编程* 用户感谢开箱即用的支持动态切换编辑风格。Vim 用户和 Emacs 用户可以舒适地使用相同的 Spacemac。
 
-* Update and Rollback
-** Update Spacemacs repository
-There are several methods of updating the core files and layer information for
-Spacemacs. It is recommended to update the packages first; see the next section.
+* 更新和回滚
+** 更新 Spacemacs 存储库
+有几种更新 Spacemacs 的核心文件和层信息的方法。建议先更新包；请参阅下一节。
 
-*** Automatic Updates
-Spacemacs will automatically check for a new version every startup. When it
-detects that a new version is available an arrow will appear in the modeline.
-Click it to update Spacemacs. You must restart Emacs after updating.
+*** 自动更新
+每次启动时 Spacemacs 会自动检查新版本。当它检测到新版本可用时，箭头将出现在状态栏中。点击它来更新 Spacemacs。您必须在更新后重新启动 Emacs。
 [[file:img/powerline-update.png]]
 /Update Button/
 
-*Note*: If you use the =develop= branch of Spacemacs, automatic update is
-disabled---you have to update manually using git.
+*注意* ：如果使用 Spacemacs 的 =develop= 分支，则自动更新被禁用 －－ 您必须使用 git 手动更新。
 
-*** Updating from the Spacemacs Buffer
-Use the button labeled "Update Spacemacs" in the Spacemacs buffer. You will be
-prompted for the version you would like to use.
+*** 从 Spacemacs 缓冲区更新
+使用 Spacemacs 缓冲区中标有“Update Spacemacs”的按钮。系统将提示您输入要使用的版本。
 
-*Note*: If you use the =develop= branch of Spacemacs, you cannot use this method.
+*注意* ：如果您使用 Spacemacs 的 =develop= 分支，则无法使用此方法。
 
-*** Updating Manually with git
-To update manually close Emacs and update the git repository:
+*** 用 git 手动更新
+要手动更新，关闭 Emacs 并更新 git 存储库：
 
 #+BEGIN_SRC sh
 $ git pull origin master
 #+END_SRC
 
-*Note*: The master branch is considered to be immutable in the sense that you
-must not modify it by adding your own commit. If you do so you will break the
-automatic update of Spacemacs on the master branch. To fork Spacemacs code you
-have to use a custom branch that you manage manually.
+*注意* ：主分支被认为是不可变的，因为您不能通过添加自己的提交来修改它。如果这样做，您将会破坏主分支上的 Spacemacs 的自动更新。要 fork Spacemacs 代码，您必须使用您手动管理的自定义分支。
 
-** Update packages
-To update the Emacs packages used by Spacemacs press RET (enter) or click on the
-link =[Update Packages]= in the startup page under the banner then restart
-Emacs. If you prefer, you can use the command
-=configuration-layer/update-packages= instead of the button.
+** 更新包
+要更新 Spacemacs 使用的 Emacs 软件包，请按 RET（enter）或单击 banner 下的启动页面中的链接 =[Update Packages]= ，然后重新启动 Emacs。如果您愿意，可以使用命令 =configuration-layer/update-packages= 而不是按钮。
 
-If anything goes wrong you should be able to rollback the update by pressing
-~RET~ or clicking on the =[Rollback Package Update]= link in the startup page
-and choosing a rollback slot (sorted by date). This button uses the command
-=configuration-layer/rollback=.
+如果出现任何问题，您应该能够通过按 ~RET~ 或单击启动页面中的 =[Rollback Package Update]= 链接来回滚更新，并选择回滚位置（按日期排序）。 此按钮使用命令 =configuration-layer/rollback= 。
 
-* Configuration layers
+* 配置层
   :PROPERTIES:
   :CUSTOM_ID: configuration-layers
   :END:
-This section is an overview of layers. A more extensive introduction to writing
-configuration layers can be found [[file:LAYERS.org][here]] (recommended reading!).
+本节是层的概述。编写配置层的更广泛的介绍可以在 [[file:LAYERS.org][这里]] 找到（推荐阅读！）。
 
-** Purpose
-Layers help collect related packages together to provide features. For example,
-the =python= layer provides auto-completion, syntax checking, and REPL support
-for python files. This approach helps keep configuration organized and reduces
-overhead for the user by keeping them from having to think about what packages
-to install. To install all the =python= features the user has just to add the
-=python= layer to their dotfile.
+** 目的
+层帮助收集相关的软件包以提供功能。例如， =python= 层为 python 文件提供自动完成，语法检查和 REPL 支持。这种方法有助于保持配置的有序性，并减少用户的开销，使他们不必考虑要安装的软件包。要安装所有 =python= 功能，用户只需将 =python= 层添加到它们的 dotfile。
 
-** Structure
-Configuration is organized in layers. Each layer has the following structure:
+** 结构
+配置按层组织。每一个层都有如下结构：
 
 #+BEGIN_EXAMPLE
     [layer_name]
@@ -359,76 +313,64 @@ Configuration is organized in layers. Each layer has the following structure:
 
 Where:
 
-| File           | Usage                                                                                            |
-|----------------+--------------------------------------------------------------------------------------------------|
-| layers.el      | The place to declare additional layers                                                           |
-| packages.el    | The list of packages and their configuration functions (init, post-init, etc...)                 |
-| funcs.el       | All functions defined in the layer (used in package configuration for instance)                  |
-| config.el      | Layer configuration (defines the layer variables default values and setup some config variables) |
-| keybindings.el | General key bindings no tied to a specific package configuration                                 |
+| 文件           | 作用                                         |
+|----------------+----------------------------------------------|
+| layers.el      | 声明额外层的地方                             |
+| packages.el    | 包的列表及其配置函数（init，post-init 等）   |
+| funcs.el       | 层中定义的所有函数（例如在包配置中使用）     |
+| config.el      | 层配置（定义层变量默认值并设置一些配置变量） |
+| keybindings.el | 普通键绑定没有绑定到的特定的包配置           |
 
-=Packages= can be:
-- =ELPA= packages installed from an =ELPA= compliant repository
-- local packages in a layer's =local= folder
-- installed from an online source using [[https://github.com/quelpa/quelpa][quelpa]].
+=Packages= 可以是：
+- 从 =ELPA= 兼容的存储库安装的 =ELPA= 软件包
+- =本地= 文件夹中的本地包
+- 使用 [[https://github.com/quelpa/quelpa][quelpa ]]从在线源安装的。
 
-** Configure packages
+** 配置包
 *** With a layer
-**** Declaration
-=Packages= are declared in a variable called =<layer>-packages= where =<layer>=
-is the name of the layer.
+**** 声明
+=软件包= 在称为 =<layer>-packages= 的变量中声明，其中 =<layer>= 是层的名称。
 
-Example:
+例子：
 
 #+BEGIN_SRC emacs-lisp
 (setq <layer>-packages '(package1 package2 ...)
 #+END_SRC
 
-All packages from all layers are processed in alphabetical order so sometimes
-you'll have to use some =with-eval-after-load= black magic to configure them
-properly. For instance if package =A= depends on =B= then you can configure
-=A= with:
+来自所有图层的所有软件包都按字母顺序处理，因此有时您必须使用一些 =with-eval-after-load= 黑魔法来正确配置它们。例如，如果包 =A= 依赖于 =B= ，则可以使用以下配置 =A= ：
 
 #+BEGIN_SRC emacs-lisp
 (with-eval-after-load 'B ...)
 #+END_SRC
 
-For details on installing packages using quelpa or local packages see [[file:LAYERS.org::packages.el][LAYERS]].
+有关使用 quelpa 或本地软件包安装软件包的详细信息，请参阅 [[file:LAYERS.org::packages.el][LAYERS]]。
 
-**** Initialization
-To initialize a package =xxx=, define a function with this format in
-=packages.el=:
+**** 初始化
+要初始化包 =xxx= ，请在 =packages.el= 中定义具有此格式的函数：
 
 #+BEGIN_SRC emacs-lisp
 (defun <layer>/init-xxx () ...body )
 #+END_SRC
 
-It is common to define the body with the [[https://github.com/jwiegley/use-package][use-package]] macro.
+通常使用 [[https://github.com/jwiegley/use-package][use-package]] 宏来定义 body。
 
-**** Exclusion
-It is possible to exclude some packages from Spacemacs on a per-layer basis.
-This is useful when a configuration layer aims to replace a stock package
-declared in the Spacemacs layer.
+**** 排除
+可以在每个层的基础上从 Spacemacs 中排除一些包。当配置层旨在替换在 Spacemacs 层中声明的存储包时，这是有用的。
 
-To do so add the package names to exclude to the variable
-=<layer>-excluded-packages=.
+为此，添加要排除的包名称到变量 =<layer>-excluded-packages= 。
 
-Example:
+例子：
 
 #+BEGIN_SRC emacs-lisp
 (setq <layer>-excluded-packages '(package1 package2 ...)
 #+END_SRC
 
 *** Without a layer
-Sometimes a layer can be an unnecessary overhead, this is the case if you just
-want to install a package with very few configuration associated to it. A good
-example is some niche language where you are only interested in syntax
-highlighting.
+有时一个层可能是一个不必要的开销，如果你只想安装一个与它相关的配置很少的包，那就是这种情况。一个很好的例子是一些 niche 语言，您只对语法高亮感兴趣。
 
-You can install such packages by adding them to the variable
-=dotspacemacs-additional-packages= under the =dotspacemacs/layers= function in your dotfile.
+您可以通过将其添加到 dotfile 中的在 =dotspacemacs/layers= 函数下的变量 =dotspacemacs-additional-packages= 中来安装。
 
-For example, to install =llvm-mode= and =dts-mode=:
+例如，要安装 =llvm-mode= 和 =dts-mode= ：
 #+BEGIN_SRC emacs-lisp
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration..."
@@ -439,148 +381,96 @@ For example, to install =llvm-mode= and =dts-mode=:
    ))
 #+END_SRC
 
-If you want to add some configuration for them then put the configuration in
-the =dotspacemacs/user-config= function or consider creating a layer.
+如果要为其添加一些配置，请将配置放在 =dotspacemacs/user-config= 函数中，或者考虑创建一个图层。
 
-** Packages synchronization
-Spacemacs will only install the packages that are explicitly used by the user.
-A package is considered to be used if its layer is used (i.e. listed in
-=dotspacemacs-configuration-layers=).
-Any packages that are not used is considered to be orphan and is deleted at
-the next startup of Emacs.
+** 软件包同步
+Spacemacs 将仅安装用户明确使用的包。如果使用层（即在 =dotspacemacs-configuration-layers= 列出的），则认为使用包。
 
-** Types of configuration layers
-There are two types of configuration layers:
-  - distributed layers (in the =layers= directory, those layers are contributions shared
-    by the community and merged upstream)
-  - private (in the =private= directory, they are ignored by Git)
+未使用的任何软件包都被认为是孤立的，并在下次启动 Emacs 时被删除。
 
-** Submitting a configuration layer upstream
-If you decide to provide a configuration layer, please check the contribution
-guidelines first in [[file:../CONTRIBUTING.org][CONTRIBUTING]].
+** 配置层的类型
+有两种类型的配置层：
+  - 发行的层（在 =layers= 目录中，这些层是由社区共享并在上游合并的贡献）
+  - 私有的（在 =private= 目录中，它们被 Git 忽略）
 
-** Example: Themes Megapack example
-This is a simple configuration layer listing a bunch of themes which you can
-find [[file:../layers/+themes/themes-megapack/README.org][here]].
+** 向上游提交配置层
+如果您决定提供一个配置层，请先在 [[file:../CONTRIBUTING.org][CONTRIBUTING]] 中查看贡献准则。
 
-To install it, just add =themes-megapack= to your =~/.spacemacs= like so:
+** 示例：主题 Megapack 示例
+这是一个简单的配置层，列出了一堆主题，您可以在 [[file:../layers/+themes/themes-megapack/README.org][这里]] 找到。
+
+要安装它，只需添加 =themes-megapack= 到你的 =~/.spacemacs= 像这样：
 
 #+BEGIN_SRC emacs-lisp
 (setq-default dotspacemacs-configuration-layers '(themes-megapack))
 #+END_SRC
 
-Adding this layer will install around 100 themes; to uninstall them remove the
-layer from the =dotspacemacs-configuration-layers= and press ~SPC f e R~.
+添加此图层将安装大约 100 个主题;要卸载它们，请从 =dotspacemacs-configuration-layers= 中删除该层，然后按 ~SPC f e R~ .
 
-** Managing private configuration layers
-Spacemacs's configuration system is flexible enough to let you manage your
-private layers in different ways.
+** 管理私有配置层
+Spacemacs 的配置系统具有足够的灵活性，可以让您以不同的方式管理您的私有层。
 
-*** Using the private directory
-Everything in the private directory is ignored by Git so it is a good place to
-store private layers. There is a huge drawback to this approach though: /your
-layers are not source controlled/.
+*** 使用私有目录
+Git 忽略了私有目录中的所有内容，因此它是存储私有层的好地方。这种方法有一个很大的缺点： /你的层不被源码控制/ 。
 
-*** Using an external Git repository
-This is the recommended way to manage your private layers.
+*** 使用外部 Git 仓库
+这是管理私有层的推荐方法。
 
-The best approach is to store all your private layers into an external Git
-repository. It is especially a good practice to store them in your =dotfiles=
-repository if you have one. Put also your =~/.spacemacs= file in it.
+最好的方法是将所有的私有层存储到外部 Git 仓库中。如果你有一个 =dotfiles= 存储库，将它们存储在您的 =dotfiles= 存储库中是一个很好的做法。把你的 =~/.spacemacs= 文件也放在里面。
 
-Then you are free to symlink your layers into =~/emacs.d/private= /or/ let them
-anywhere you want and reference the parent directory in the variable
-=dotspacemacs-configuration-layer-path= of your =~/.spacemacs=.
+然后，您可以自由地将层链接到 =~/emacs.d/private= ， /或者/ 让它们在任何地方，并引用到 =~/.spacemacs= 的变量 =dotspacemacs-configuration-layer-path= 中的父目录。
 
-Note that you could also have a dedicated repository for all your private layers
-and then directly clone this repository in =~/.emacs.d/private=.
+请注意，您还可以为所有私有层创建一个专用存储库，然后直接在 =~/.emacs.d/private= 中克隆该存储库。
 
-*** Using a personal branch
-The final main way to manage your private layers is to push them in a personal
-branch that you keep up to date with upstream =master= or =develop=.
+*** 使用个人分支
+管理私有层的最后一个主要方法就是将它们推送到一个个人分支中，与上游 =master= 或 =develop= 保持最新。
 
-** Tips for writing layers
-Please refer to [[file:LAYERS.org][this]] introduction for some tips on writing layers, and how to
-best make them fit with the Spacemacs philosophy and loading strategy.
+** 写层的提示
+请参考本介绍了解 [[file:LAYERS.org][层]] 的一些技巧，以及如何使其符合 Spacemacs 的理念和加载策略。
 
-* Dotfile Configuration
+* Dotfile 配置
 :PROPERTIES:
 :CUSTOM_ID: dotfile-configuration
 :END:
-User configuration can be stored in your =~/.spacemacs= file.
+用户配置可以存储在 =~/.spacemacs= 文件中。
 
-** Dotfile Installation
-The very first time Spacemacs starts up, it will ask you several questions
-and then install the =.spacemacs= in your =HOME= directory.
+** Dotfile 安装
+Spacemacs 第一次启动，它会询问几个问题，然后将 =.spacemacs= 安装在 =HOME= 目录中。
 
-** Alternative dotdirectory
-A dotdirectory =~/.spacemacs.d/= can be used instead of a dotfile.
-If you want to use this option, move =~/.spacemacs= to =~/.spacemacs.d/init.el=.
+** 替代的 dotdirectory
+可以使用 dotdirectory =~/.spacemacs.d/= 代替点文件。如果要使用此选项，请将 =~/.spacemacs= 移动到 =~/.spacemacs.d/init.el= 。
 
-It is also possible to override the location of =~/.spacemacs.d/= using the
-environment variable =SPACEMACSDIR=. Of course you can also use symlinks to
-change the location of this directory.
+也可以使用环境变量 =SPACEMACSDIR= 覆盖 =~/.spacemacs.d/= 的位置。当然，您也可以使用符号链接来更改此目录的位置。
 
-*Note:* =~/.spacemacs= will always take priority over =~/.spacemacs.d/init.el=,
-so =~/.spacemacs= must not exist for =~/.spacemacs.d/init.el= to be used by
-Spacemacs.
+*注意：* =~/.spacemacs= 将始终优先于 =~/.spacemacs.d/init.el= ，所以为了 =~/.spacemacs.d/init.el= 被 Spacemacs 使用， =~/.spacemacs= 不能存在。
 
-** Synchronization of dotfile changes
-To apply the modifications made in =~/.spacemacs= press ~SPC f e R~. It will
-re-execute the Spacemacs initialization process.
+** dotfile 更改的同步
+要应用 =~/.spacemacs= 中所做的修改，按 ~SPC f e R~ 。它将重新执行 Spacemacs 初始化过程。
 
-*Note*: A synchronization re-executes the functions =dotspacemacs/init=,
-=dotspacemacs/user-init= and =dotspacemacs/user-config=.
-Depending on the content of this functions you may encounter some unwanted side
-effects. For instance if you use a toggle in =dotspacemac/user-config= to enable
-some behavior, this behavior will be turned off whenever the dotfile is
-re-synchronized. To avoid these side-effects it is recommended to either use
-=setq= expressions instead of toggle functions, or to use the =on= or =off=
-versions instead (i.e. instead of =spacemacs/toggle-<thing>=, use
-=spacemacs/toggle-<thing>-on= or =spacemacs/toggle-<thing>-off=).
+*注意* ：同步重新执行函数 =dotspacemacs/init= ， =dotspacemacs/user-init= 和 =dotspacemacs/user-config= 。根据此函数的内容，您可能会遇到一些不必要的副作用。例如，如果您使用 =dotspacemac/user-config= 中的切换来启用某些行为，则当 dotfile 重新同步时，此行为将被关闭。为了避免这些副作用，建议使用 =setq= 表达式而不是切换函数，或者使用 =on= 或 =off= 版本（而不是  =spacemacs/toggle-<thing>= ，使用 =spacemacs/toggle-<thing>-on= 或 =spacemacs/toggle-<thing>-off= ）。
 
-It is possible to /skip/ the execution of =dotspacemacs/user-config= with the
-universal argument (~SPC u SPC f e R~).
+可以使用通用参数（ ~SPC u SPC f e R~ ） /跳过/ =dotspacemacs/user-config= 的执行。
 
-** Testing the dotfile
-You can use the command =SPC SPC dotspacemacs/test-dotfile= to check if your
-=~/.spacemacs= looks correct. This will check, among other things, whether the
-declared layers can be found and that the variables have sensible values. These
-tests are also run automatically when you synchronize with ~SPC f e R~.
+** 测试 dotfile
+您可以使用命令 =SPC SPC dotspacemacs/test-dotfile= 来检查您的 =~/.spacemacs= 是否正确。除此之外，这将检查是否可以找到声明的层，并且变量具有合理的值。当您用 ~spc f e r~ 同步时，这些测试也会自动运行。
 
-** Dotfile Contents
-*** Configuration functions
-Three special functions in the =~/.spacemacs= file can be used to perform
-configuration at the beginning and end of Spacemacs loading process:
+** Dotfile 内容
+*** 配置函数
+ =~/.spacemacs= 文件中的三个特殊功能可用于在 Spacemacs 加载过程的开始和结束时执行配置：
+- =dotspacemacs/layers= 在 Spacemacs 初始化的启动时被调用，这是您设置 Spacemacs 发行版和声明用于您的配置的层的位置。您还可以添加或排除您选择的包，并调整 Spacemacs 加载的一些行为。
+- =dotspacemacs/init= 在 Spacemacs 初始化的启动时，在层配置之前被调用。除了修改以前缀为 =dotspacemacs-= 的 Spacemacs 变量值之外， *您不应将任何用户代码放在其中。*
+- =dotspacemacs/user-init= 在 =dotspacemacs/init= 之后，在层配置之前，会被立即调用。此函数对于在加载包之前需要设置的变量非常有用。
+- =dotspacemacs/user-config= 在层配置后的 Spacemacs 初始化结束时被调用。这是您的大多数配置应该完成的地方。除非明确指定一个变量在加载程序包之前应该被设置，否则应该将代码放在这里。
 
-- =dotspacemacs/layers= is called at the very startup of Spacemacs initilialization,
-  this is where you set the Spacemacs distribution and declare layers to be used
-  in your configuration. You can also add or excluded packages of your choice
-  and tweak some behavior of Spacemacs loading.
-- =dotspacemacs/init= is called at the very startup of Spacemacs initialization
-  before layers configuration. *You should not put any user code* in there
-  besides modifying the Spacemacs variable values prefixed with =dotspacemacs-=.
-- =dotspacemacs/user-init= is called immediately after =dotspacemacs/init=,
-  before layer configuration. This function is mostly useful for variables
-  that need to be set before packages are loaded.
-- =dotspacemacs/user-config= is called at the very end of Spacemacs
-  initialization after layers configuration. This is the place where most of
-  your configurations should be done. Unless it is explicitly specified that a
-  variable should be set before a package is loaded, you should place your code
-  here.
+*** 自定义变量
+来自 =M-x customize-group= Emacs 内置功能的自定义变量配置由 Emacs 自动保存在 =~/.spacemacs= 文件的末尾。
 
-*** Custom variables
-Custom variables configuration from =M-x customize-group= built-in Emacs feature
-are automatically saved by Emacs at the end of your =~/.spacemacs= file.
+** 声明配置层
+要使用配置层，请通过将其添加到 =~/.spacemacs= 的 =dotspacemacs-configuration-layers= 变量中，在您的 dotfile 中声明它。
 
-** Declaring Configuration layers
-To use a configuration layer, declare it in your dotfile by adding it to the
-=dotspacemacs-configuration-layers= variable of your =~/.spacemacs=.
+*注意：* 在本文档中， =已使用的层= 与 =已声明的层= 相当。
 
-*Note:* In this documentation a =used layer= is equivalent to a =declared
-layer=.
-
-For instance, [[Thank you][RMS]] can add his private configuration layer like this:
+例如， [[Thank you][RMS]] 可以添加他的私有配置层：
 
 #+BEGIN_SRC emacs-lisp
 (setq-default dotspacemacs-configuration-layers
@@ -591,21 +481,14 @@ For instance, [[Thank you][RMS]] can add his private configuration layer like th
   ))
 #+END_SRC
 
-Official layers shipped with Spacemacs are stored in =~/.emacs.d/layers=. The
-directory =~/.emacs.d/private= is a drop-in location for your private layers.
-It is possible to put layers at the location of your choice provided you tell
-Spacemacs where to look for them. This is done by setting the list
-=dotspacemacs-configuration-layer-path= in your =~/.spacemacs=. For instance
-to add some layers in =~/.myconfig=, set the variable like this:
+Spacemacs 附带的官方层存储在 =~/.emacs.d/layers= 中。目录 =~/.emacs.d/private= 是您的私有层的插入位置。如果您告诉 Spacemacs 在哪里寻找层，可以在您选择的位置放置它们。这通过在 =~/.spacemacs= 中设置 list =dotspacemacs-configuration-layer-path= 来完成。例如在 =~/.myconfig= 中添加一些层，设置如下变量：
 
 #+BEGIN_SRC emacs-lisp
 (setq-default dotspacemacs-configuration-layer-path '("~/.myconfig/"))
 #+END_SRC
 
-*** Setting configuration layers variables
-Some configuration layers have configuration variables to enable specific
-feature. For instance the [[file:../layers/+source-control/git/README.org][git layer]] has several configuration variables, they
-can be set directly in the =dotspacemacs-configuration-layers= like this:
+*** 设置配置层变量
+一些配置层具有启用特定功能的配置变量。例如， [[file:../layers/+source-control/git/README.org][git 层]] 有几个配置变量，可以直接在 =dotspacemacs-configuration-layers= 中设置，如下所示：
 
 #+BEGIN_SRC emacs-lisp
 (defun dotspacemacs/layers ()
@@ -618,18 +501,12 @@ can be set directly in the =dotspacemacs-configuration-layers= like this:
       smex)))
 #+END_SRC
 
-The =:variables= keyword is a convenience to keep layer configuration close to
-their declaration. Setting layer variables in the =dotspacemacs/user-init=
-function of your dotfile is also a perfectly valid way to configure a layer.
+ =:variables= 关键字是方便保持层配置接近他们的声明。在 dotfile 的 =dotspacemacs/user-init= 函数中设置层变量也是配置层的完美的有效的方式。
 
-*** Disabling layer services in other layers
-Often layers enable services that other layers can use. For instance if you use
-the layer =auto-completion= then every other layers supporting =auto-completion=
-will have this feature enabled.
+*** 禁用其他层中的层服务
+通常层启用其他层可以使用的服务。例如，如果您使用层 =auto-completion= ，则支持 =auto-completion= 的每个其他层都将启用此功能。
 
-Sometimes you may want to disable a service added by a layer in some specific
-layers. Say you want to disable =auto-completion= in =org= and =git= layers,
-you can do it with the following layer declaration.
+有时您可能想要禁用某些特定层中的层所添加的服务。假设要禁用 =org= 和 =git= 层中的 =auto-completion= ，可以使用以下层声明来执行。
 
 #+BEGIN_SRC emacs-lisp
 (defun dotspacemacs/layers ()
@@ -639,8 +516,7 @@ you can do it with the following layer declaration.
       (auto-completion :disabled-for org git))))
 #+END_SRC
 
-You can also use the =:enabled-for= construct to disable it for /all/ layers
-/except/ those explicitly identified.
+您还可以使用 =:enabled-for= 构造来禁止 /除了/ 明确标识之外的 /所有/ 层。
 
 #+BEGIN_SRC emacs-lisp
 (defun dotspacemacs/layers ()
@@ -650,7 +526,7 @@ You can also use the =:enabled-for= construct to disable it for /all/ layers
       (auto-completion :enabled-for java python))))
 #+END_SRC
 
-Note that =:enabled-for= may be an empty list.
+注意 =:enabled-for= 可能是一个空列表。
 
 #+BEGIN_SRC emacs-lisp
 (defun dotspacemacs/layers ()
@@ -660,15 +536,12 @@ Note that =:enabled-for= may be an empty list.
       (auto-completion :enabled-for))))
 #+END_SRC
 
-=:enabled-for= takes precedence over =:disabled-for= if both are present.
+如果两者都存在， =:enabled-for= 优先于 =:disabled-for= 。
 
-*** Selecting/Ignoring packages of a layer
-By default a declared layer installs/configures all its associated packages. You
-may want to select only some of them or ignoring some of them. This is possible
-with the =:packages= keyword.
+*** 选择/忽略层的包
+默认情况下，声明的层安装/配置所有相关的软件包。您可能只想选择其中一些或忽略其中的一些。可以使用 =:packages= 关键字。
 
-For instance to ignore the =neotree= and =fancy-battery= packages from
-=spacemacs-ui-visual= layer:
+例如，忽略来自 =spacemacs-ui-visual= 层的 =neotree= 和 =fancy-battery= 包：
 
 #+BEGIN_SRC emacs-lisp
 (defun dotspacemacs/layers ()
@@ -678,8 +551,7 @@ For instance to ignore the =neotree= and =fancy-battery= packages from
       (spacemacs-ui-visual :packages (not neotree fancy-battery))))
 #+END_SRC
 
-The opposite would be to ignore all packages except =neotree= and
-=fancy-battery=:
+相反的是忽略除了 =neotree= 和 =fancy-battery= 之外的所有包：
 
 #+BEGIN_SRC emacs-lisp
 (defun dotspacemacs/layers ()
@@ -689,96 +561,66 @@ The opposite would be to ignore all packages except =neotree= and
       (spacemacs-ui-visual :packages neotree fancy-battery)))
 #+END_SRC
 
-*Note:* Ignoring a package from a layer is different than excluding a package.
-An excluded packages is completely removed from your configuration whereas an
-ignored package is ignored only for a given layer but it can remain on your
-system. It happens that if the given layer is the owner of the package then
-ignoring this package is the same as excluding it (because the package becomes
-orphan so it is considered unused by Spacemacs).
+*注意：* 从图层中忽略软件包与排除软件包不同。排除的包从配置中完全删除，而忽略的包仅在给定层被忽略，但它可以保留在您的系统上。如果给定的层是包的所有者，则忽略该包与排除它相同（因为包变为孤儿包，因此被 Spacemacs 认为是未使用的）。
 
-*** Excluding packages
-You can exclude packages you don't want to install with the variable
-=dotspacemacs-excluded-packages= (see [[#configuration-layers][Configuration layers]] for more info
-on packages).
+*** 排除包
+您可以使用变量 =dotspacemacs-excluded-packages= 排除不想安装的软件包（有关软件包的更多信息，请参阅 [[#配置层][配置层]]）。
 
-For instance, to disable the =rainbow-delimiters= package:
+例如，要禁用 =rainbow-delimiters= 包：
 
 #+BEGIN_SRC emacs-lisp
 (setq-default dotspacemacs-excluded-packages '(rainbow-delimiters))
 #+END_SRC
 
-When you exclude a package, Spacemacs will automatically delete it for you the
-next time you launch Emacs or at the next dotfile synchronization. All the
-orphan dependencies are also deleted automatically. Excluding a package
-effectively remove _all_ references to it in Spacemacs without breaking the rest
-of the configuration, this is a powerful feature which allows you to quickly
-remove any feature from Spacemacs.
+当您排除软件包时，Spacemacs 会在下次启动 Emacs 或下一次 dotfile 同步时自动移除它。所有的孤立依赖也会自动移除。排除一个包有效地删除在 Spacemacs 中的 _所有_ 引用，而不会破坏其余的配置，这是一个强大的功能，可以让您快速从 Spacemacs 中删除任何功能。
 
-*Note:* A few packages are essential for Spacemacs to correctly operate, those
-packages are protected and cannot be excluded or uninstalled even if they become
-orphans or are excluded. =use-package= is an example of a protected package that
-cannot be removed from Spacemacs.
+*注意：* 几个软件包对于 Spacemacs 的正确运行至关重要，这些软件包是受保护的，即使成为孤儿包或被排除，它们也不能被排除或卸载。 =use-package= 是不能从 Spacemacs 中移除的受保护的包的示例。
 
-* Concepts
-** Editing Styles
-Spacemacs comes with several editing styles which can be switched dynamically
-providing an easier way to do pair programming, for instance between a Vim user
-and an Emacs user.
+* 概念
+** 编辑风格
+Spacemacs 具有多种编辑风格，可以动态切换，提供更简单的方式进行结对编程，例如 Vim 用户和 Emacs 用户之间。
 
-Three styles are available:
+有三种风格：
 - Vim,
 - Emacs,
 - Hybrid (a mix between Vim and Emacs).
 
 *** Vim
-Spacemacs behaves like in Vim using [[https://gitorious.org/evil/pages/Home][Evil]] mode package to emulate Vim key bindings.
-This is the default style of Spacemacs; it can be set explicitly by setting
-the =dotspacemacs-editing-style= variable to =vim= in the dotfile.
+Spacemacs 在 Vim 编辑风格中使用 [[https://gitorious.org/evil/pages/Home][Evil]] 模式包来模拟 Vim 键绑定。这是 Spacemacs 的默认风格; 可以通过将 =dotspacemacs-editing-style= 变量设置为 =vim= 来显式设置。
 
-To bind keys in Vim editing style (=insert state=):
+在 Vim 编辑风格（ =插入状态= ）中绑定键：
 
 #+BEGIN_SRC emacs-lisp
 (define-key evil-insert-state-map (kbd "C-]") 'forward-char)
 #+END_SRC
 
 *** Emacs
-Spacemacs behaves like in raw Emacs using the Holy mode which configures Evil to
-make the =emacs state= the default state everywhere.
-Set the =dotspacemacs-editing-style= variable to =emacs= in the dotfile.
+Spacemacs 的行为就像在原始 Emacs 中使用配置 Evil 的 Holy 模式，使默认状态为 =emacs 状态= 。将 dotfile 中的 =dotspacemacs-editing-style= 变量设置为 =emacs= 。
 
-In Emacs style the leader is available on ~M-m~. It is possible to toggle it on
-and off with ~SPC t E e~ and ~M-m t E e~. When off the =vim= style is enabled.
+在 Emacs 风格中，前缀键 ~M-m~ 可以使用。可以使用 ~SPC t E e~ 和 ~M-m t E e~ 来打开和关闭它。当关闭 =vim= 样式时启用。
 
-To bind keys in Emacs editing style (=emacs state=):
+在 Emacs 编辑风格（ =emacs 状态= ）中绑定键：
 
 #+BEGIN_SRC emacs-lisp
 (define-key evil-emacs-state-map (kbd "C-]") 'forward-char)
 #+END_SRC
 
 *** Hybrid
-The hybrid editing style is like the Vim style except that =insert state= is
-replaced by a new state called =hybrid state=. In =hybrid state= all the Emacs
-key bindings are available; this is like replacing the =insert state= with the
-=emacs state= but provides an isolated key map =evil-hybrid-state-map=.
+混合编辑风格类似于 Vim 风格，除了 =插入状态= 被称为 =混合状态= 的新状态替换。在 =混合状态= 下，所有的 Emacs 密钥绑定都可用；这就像用 =emacs 状态= 替换 =插入状态= ，但提供了一个孤立的键映射 =evil-hybrid-state-map= 。
 
-To bind keys in Hybrid editing style (=hybrid state=):
+以混合编辑风格（ =混合状态= ）绑定键：
 
 #+BEGIN_SRC emacs-lisp
 (define-key evil-hybrid-state-map (kbd "C-]") 'forward-char)
 #+END_SRC
 
-This style can be tweaked to be more like Emacs or more like Vim depending
-on the user preferences. The following variables are available to change the
-style configuration:
+根据用户喜好，此风格可以调整为更像 Emacs 或更像 Vim。以下变量可用于更改样式配置：
 
-- =hybrid-mode-default-state= The default state when opening a new buffer,
-  default is =normal=. Set it to =emacs= for a more emacsy style.
-- =hybrid-mode-enable-hjkl-bindings= If non nil then packages will configure
-  =h j k l= key bindings for navigation.
-- =hybrid-mode-enable-evilified-state= If non nil buffer are =evilified= when
-  supported, if nil then =emacs= state is enabled in those buffers instead.
+ - =hybrid-mode-default-state= 打开新缓冲区时的默认状态，默认为 =normal= 。将它设置为 =emacs= 更加 emacsy 风格。
+ - =hybrid-mode-enable-hjkl-bindings= 如果不是 nil，那么包将配置 =h j k l= 键绑定用于导航。
+ - =hybrid-mode-enable-evilified-state= 如果不是 nil，缓冲区被支持时被 =evilified= ，如果是 nil，那么在这些缓冲区中启用 =emacs= 状态。
 
-Default configuration is:
+默认配置为：
 
 #+BEGIN_SRC emacs-lisp
 (setq-default dotspacemacs-editing-style '(hybrid :variables
@@ -787,198 +629,142 @@ Default configuration is:
                                            hybrid-mode-default-state 'normal)
 #+END_SRC
 
-To toggle the hybrid style on and off use ~SPC t E h~ and ~M-m t E h~. When
-off the =vim= style is enabled.
+要打开和关闭混合风格，请使用 ~SPC t E h~ 和 ~M-m t E h~ 。当关闭 =vim= 风格时启用。
 
-** States
+** 状态
 :PROPERTIES:
 :CUSTOM_ID: states
 :END:
-Spacemacs has 10 states:
+Spacemacs 有 10 个状态：
 
-| State        | Default Color | Description                                                                                                |
-|--------------+---------------+------------------------------------------------------------------------------------------------------------|
-| normal       | orange        | like the =normal mode of Vim=, used to execute and combine commands                                        |
-| insert       | green         | like the =insert mode of Vim=, used to actually insert text                                                |
-| visual       | gray          | like the =visual mode of Vim=, used to make text selection                                                 |
-| motion       | purple        | exclusive to =Evil=, used to navigate read only buffers                                                    |
-| emacs        | blue          | exclusive to =Evil=, using this state is like using a regular Emacs without Vim                            |
-| replace      | chocolate     | exclusive to =Evil=, overwrites the character under point instead of inserting a new one                   |
-| hybrid       | blue          | exclusive to Spacemacs, this is like the insert state except that all the emacs key bindings are available |
-| evilified    | light brown   | exclusive to Spacemacs, this is an =emacs state= modified to bring Vim navigation, selection and search.   |
-| lisp         | pink          | exclusive to Spacemacs, used to navigate Lisp code and modify it (more [[#editing-lisp-code][info]])                               |
-| iedit        | red           | exclusive to Spacemacs, used to navigate between multiple regions of text using =iedit= (more [[#replacing-text-with-iedit][info]])        |
-| iedit-insert | red           | exclusive to Spacemacs, used to replace multiple regions of text using =iedit= (more [[#replacing-text-with-iedit][info]])                 |
+| 状态         | 默认颜色    | 描述                                                                      |
+|--------------+-------------+---------------------------------------------------------------------------|
+| normal       | orange      | 类似 =Vim 的 normal 模式= ，用于执行和组合命令                            |
+| insert       | green       | 类似 =Vim 的 insert 模式= ，用于实际插入文本                              |
+| visual       | gray        | 类似 =Vim 的 visual 模式= ，用于进行文本选择                              |
+| motion       | purple      | =Evil= 独有，用于浏览只读缓冲区                                           |
+| emacs        | blue        | =Evil= 独有，使用这种状态就像使用没有 Vim 的常规 Emacs                    |
+| replace      | chocolate   | =Evil= 独有，覆盖光标下的字符，而不是插入新的字符                         |
+| hybrid       | blue        | Spacemacs 独有，这就像插入状态，除了所有的 emacs 键绑定可用               |
+| evilified    | light brown | Spacemacs 独有，这是一个修改过的 =emacs 状态= ，带来 Vim 导航，选择和搜索 |
+| lisp         | pink        | Spacemacs 独有，用于导航 Lisp 代码并进行修改（更多[[#editing-lisp-code][信息]]）                  |
+| iedit        | red         | Spacemacs 独有，用于使用 =iedit= 在多个文本区域之间导航（更多[[#replacing-text-with-iedit][信息]])        |
+| iedit-insert | red         | Spacemacs 独有，用于使用 =iedit= 替换多个文本区域（更多[[#replacing-text-with-iedit][信息]])              |
 
-Note: Technically speaking there is also the =operator= evil state.
+注意：技术上讲还有 =operator= evil 状态。
 
-** Evilified modes
-Some buffers are not for editing text and provide their own keybindings for
-certain operations. These often conflict with Vim bindings. To make such buffers
-behave more like Vim in a consistent manner, they use a special state called
-/evilified/ state. In evilified state, a handful of keys work as in Evil, namely
-=/=, =:=, =h=, =j=, =k=, =l=, =n=, =N=, =v=, =V=, =gg=, =G=, =C-f=, =C-b=,
-=C-d=, =C-e=, =C-u=, =C-y= and =C-z=. All other keys work as intended by the
-underlying mode.
+** Evilified 状态
+一些缓冲区不用于编辑文本，并为某些操作提供自己的键绑定。这些经常与 Vim 绑定冲突。为了使这样的缓冲区以一致的方式表现得更像 Vim，它们使用一种称为 /evilified/ 状态的特殊状态。在 evilified 状态下，少量的键像在 Evil 里一样工作，即 =/=, =:=, =h=, =j=, =k=, =l=, =n=, =N=, =v=, =V=, =gg=, =G=, =C-f=, =C-b=, =C-d=, =C-e=, =C-u=, =C-y= 和 =C-z= 。所有其他键按底层模式的预期工作。
 
-Shadowed keys are moved according to the pattern: =a= → =A= → =C-a= → =C-A=
+Shadowed 键根据模式移动： =a= → =A= → =C-a= → =C-A=
 
-For example, if the mode binds a function to =n=, that is found under =C-n= in
-evilified state, since both =n= and =N= are reserved, but =C-n= is not. On the
-other hand, anything originally bound to =k= will be found on =K=, since =k= is
-reserved but =K= is not. If there is a binding on =K=, that will be moved to
-=C-k=.
+例如，如果模式将函数绑定到 =n= ，那么在 =C-n= 处于 evilified 状态下发现，因为 =n= 和 =N= 都是保留的，而 =C-n= 不是。另一方面，原来绑定到 =k= 的任何东西都会在 =K= 上找到，因为 =k= 是保留的但 =K= 不是。如果在 =K= 上有绑定，那将被移动到 =C-k= 。
 
-In addition to this, =C-g=, being an important escape key in Emacs, is skipped.
-So anything bound to =g= originally will be found on =C-G=, since =g=, =G= and
-=C-g= are all reserved.
+除此之外， =C-g= 作为 Emacs 中的一个重要转义键被跳过。因此，任何绑定到 =g= 的内容都将被发现在 =C-G= 上，因为 =g= ， =G= 和 =C-g= 都被保留。
 
-** Evil leader
-Spacemacs uses a leader key to bind almost all its key bindings.
+** Evil 前缀
+Spacemacs 使用一个前缀键绑定几乎所有的键绑定。
 
-This leader key is commonly set to ~​,​~ by Vim users, in Spacemacs the leader
-key is set on ~SPC~ (the space bar, hence the name =spacemacs=). This key is the
-most accessible key on a keyboard and it is pressed with the thumb which is a
-good choice to lower the risk of [[http://en.wikipedia.org/wiki/Repetitive_strain_injury][RSI]]. It can be customized to any other key
-using the variable =dotspacemacs-leader-key= and =dotspacemacs-emacs-leader-key=.
+这个前缀键通常被 Vim 用户设置为 ~​,​~ ，在 Spacemacs 中前缀键设置为 SPC（空格键，因此称为 spacemacs）。这个键是键盘上最易摸到的键，用拇指按压它是降低 [[http://en.wikipedia.org/wiki/Repetitive_strain_injury][RSI]] 风险的好选择。可以使用变量 =dotspacemacs-leader-key= 和 =dotspacemacs-emacs-leader-key= 对任何其他键进行自定义。
 
-With Spacemacs there is no need to remap your keyboard modifiers to attempt
-to reduce the risk of RSI, every command can be executed very easily while you
-are in =normal= mode by pressing the ~SPC~ leader key, here are a few examples:
+使用 Spacemacs 不需要重新映射您的键盘修改器以尝试降低 RSI 的风险，在 =normal= 模式下通过按 ~SPC~ 前缀键，您可以非常容易地执行每个命令，这里有几个示例：
 
--  Save a buffer: ~SPC f s~
--  Save all opened buffers: ~SPC f S~
--  Open (switch) to a buffer with =helm=: ~SPC b b~
+：SPC fs 保存所有打开的缓冲区：SPC f S 打开（切换）到具有舵位置的缓冲区：SPC bb
+-  保存缓冲区： ~SPC f s~
+-  保存所有打开的缓冲区： ~SPC f S~
+-  打开（切换）到有 =helm= 的缓冲区： ~SPC b b~
 
-** Universal argument
-The universal argument ~C-u~ is an important command in Emacs but it is also a
-very handy Vim key binding to scroll up.
+** 通用参数
+通用参数 ~C-u~ 是 Emacs 中的重要命令，但它也是非常方便的绑定到向上滚动的 Vim 键。
 
-Spacemacs binds ~C-u~ to =scroll-up= and changes the universal argument binding
-to ~SPC u~.
+Spacemacs 绑定 ~C-u~ 为 =向上滚动= ，并将通用参数绑定到 ~SPC u~ 。
 
-*Note*: ~SPC u~ is not working before =helm-M-x= (~SPC SPC~). Instead, call
-=helm-M-x= first, select the command you want to run, and press ~C-u~ before
-pressing ~RETURN~. For instance: ~SPC SPC org-reload C-u RET~
+*注意* ： ~SPC u~ 在 =helm-M-x= （ ~SPC SPC~ ）之前不工作。相反，首先调用 =helm-M-x= ，选择要运行的命令，然后按 ~C-u~ 键，然后按 ~RETURN~ 。例如： ~SPC SPC org-reload C-u RET~
 
-** Transient-states
+** 瞬态状态
    :PROPERTIES:
    :CUSTOM_ID: transient-states
    :END:
-Spacemacs defines a wide variety of =transient states= (temporary overlay maps)
-where it makes sense. This prevents one from doing repetitive and tedious
-presses on the ~SPC~ key.
+Spacemacs 定义了有意义的各种各样的 =瞬态状态=（临时叠加映射）。这样可以防止在 ~SPC~ 键上重复和繁琐的按压。
 
-When a =transient state= is active, a documentation is displayed in the
-minibuffer. Additional information may as well be displayed in the minibuffer.
+当 =瞬态状态= 活跃时，文档将显示在微型缓冲区中。附加信息也可能显示在 minibuffer 中。
 
-Auto-highlight-symbol transient state:
+Auto-highlight-symbol 瞬态状态：
 [[file:img/spacemacs-ahs-transient-state.png]]
 [[#text][Text scale transient state]]:
 
 [[file:img/spacemacs-scale-transient-state.png]]
 
-* Differences between Vim, Evil and Spacemacs
-- The ~​,​~ key does "repeat last ~f~, ~t~, ~F~, or ~T~ command in
-  opposite direction in =Vim=, but in Spacemacs it is the major mode specific
-  leader key by default (which can be set on another key binding in the
-  dotfile).
+* Vim，Evil 和 Spacemacs 之间的差异
+- ~​,​~ 键在 Vim 中以相反方向重复上一个 ~f~, ~t~, ~F~ 或 ~T~ 指令，但在 Spacemacs 中，默认情况下是主模式特定的前缀键（可以在 dotfile 中的另一个键绑定中设置）。
 
-Send a PR to add the differences you found in this section.
+发送 PR，以在本节中增加您发现的差异。
 
-** The vim-surround case
-There is one obvious visible difference though. It is not between =Evil= and
-=Vim= but between Spacemacs and [[https://github.com/tpope/vim-surround][vim-surround]]: in visual mode the =surround= command is on ~S~
-in =vim-surround= whereas it is on ~s~ in Spacemacs.
+** vim-surround 案例
+有一个明显的可见差异。它不是在 =Evil= 和 =Vim= 之间，而是 Spacemacs 和 [[https://github.com/tpope/vim-surround][vim-surround]] 之间：在 visual 模式中，在 =vim-surround= 中 =surround= 命令为 ~S~ ，而在 Spacemacs 中则为 ~s~ 。
 
-This is something that can surprise some Vim users so here are some motivations
-behind this change:
-  - ~s~ and ~c~ do the same thing in =visual state=,
-  - ~s~ is only useful to delete /one/ character and add more than one character
-    which is a /very/ narrow use case
-  - ~c~ accept motions and can do everything ~s~ can do in =normal state=
-    (note that this is also true for ~r~ but ~r~ is more useful because it
-    stays in =normal state=)
-  - =surround= command is just a more powerful command than ~s~.
+这是一些可以让一些 Vim 用户感到惊讶的事情，所以这里有这个变化背后的一些动机：
+  - ~s~ 和 ~c~ 在 =visual 模式= 中做同样的事
+  - ~s~ 只能删除 /一个/ 字符并添加多个字符，这是一个 /非常/ 狭窄的用例
+  - ~c~ 接受移动，能做在 =normal 状态= 下 ~s~ 能做的所有事情（注意，这对于 ~r~ 也是如此，但是 ~r~ 更有用，因为它保持在 =normal 状态= ）
+  - =surround= 环绕命令只是一个比 ~s~ 更强大的命令。
 
-If you are not convinced, then here is the snippet to revert back to the default
-=Vim + vim-surround= setup (add it to your =dotspacemacs/user-config= function or
-your =~/.spacemacs=):
+如果您不确信，那么这里的代码段将恢复到默认的 =Vim + vim-surround= 设置（将其添加到您的 =dotspacemacs/user-config= 函数或您的 =~/.spacemacs= ）：
 
 #+BEGIN_SRC emacs-lisp
 (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
 (evil-define-key 'visual evil-surround-mode-map "S" 'evil-surround-region)
 #+END_SRC
 
-* Evil plugins
-Spacemacs ships with the following evil plugins:
+* Evil 插件
+Spacemacs 附带以下 evil 插件：
 
-| Mode                          | Description                                |
-|-------------------------------+--------------------------------------------|
-| [[https://github.com/wcsmith/evil-args][evil-args]]                     | motions and text objects for arguments     |
-| [[https://github.com/Dewdrops/evil-exchange][evil-exchange]]                 | port of [[https://github.com/tommcdo/vim-exchange][vim-exchange]]                       |
-| [[https://github.com/cofi/evil-indent-textobject][evil-indent-textobject]]        | add text object based on indentation level |
-| [[https://github.com/redguardtoo/evil-matchit][evil-matchit]]                  | port of [[http://www.vim.org/scripts/script.php?script_id=39][matchit.vim]]                        |
-| [[https://github.com/redguardtoo/evil-nerd-commenter][evil-nerd-commenter]]           | port of [[https://github.com/scrooloose/nerdcommenter][nerdcommenter]]                      |
-| [[https://github.com/cofi/evil-numbers][evil-numbers]]                  | like ~C-a~ and ~C-x~ in vim                |
-| [[https://github.com/juanjux/evil-search-highlight-persist][evil-search-highlight-persist]] | emulation of hlsearch behavior             |
-| [[https://github.com/timcharper/evil-surround][evil-surround]]                 | port of [[https://github.com/tpope/vim-surround][vim-surround]]                       |
-| [[https://github.com/bling/evil-visualstar][evil-visualstar]]               | search for current selection with ~*~      |
-| [[https://github.com/jaypei/emacs-neotree][NeoTree]]                       | mimic [[https://github.com/scrooloose/nerdtree][NERD Tree]]                            |
+| 模式                          | 描述                                   |
+|-------------------------------+----------------------------------------|
+| [[https://github.com/wcsmith/evil-args][evil-args]]                     | motions and text objects for arguments |
+| [[https://github.com/Dewdrops/evil-exchange][evil-exchange]]                 | [[https://github.com/tommcdo/vim-exchange][vim-exchange]] 的移植                    |
+| [[https://github.com/cofi/evil-indent-textobject][evil-indent-textobject]]        | 添加基于缩进级别的文本对象             |
+| [[https://github.com/redguardtoo/evil-matchit][evil-matchit]]                  | [[http://www.vim.org/scripts/script.php?script_id=39][matchit.vim]] 的移植                     |
+| [[https://github.com/redguardtoo/evil-nerd-commenter][evil-nerd-commenter]]           | [[https://github.com/scrooloose/nerdcommenter][nerdcommenter]] 的移植                   |
+| [[https://github.com/cofi/evil-numbers][evil-numbers]]                  | 类似 vim 中的 ~C-a~ 和 ~C-x~           |
+| [[https://github.com/juanjux/evil-search-highlight-persist][evil-search-highlight-persist]] | 模拟 hlsearch 的行为                   |
+| [[https://github.com/timcharper/evil-surround][evil-surround]]                 | [[https://github.com/tpope/vim-surround][vim-surround]] 的移植                    |
+| [[https://github.com/bling/evil-visualstar][evil-visualstar]]               | 用 ~*~ 搜索当前选中部分                |
+| [[https://github.com/jaypei/emacs-neotree][NeoTree]]                       | 模仿 [[https://github.com/scrooloose/nerdtree][NERD Tree]]                         |
 
-* Binding keys
-Key sequences are bound to commands in Emacs in various keymaps. The most basic
-map is the =global-map=. Setting a key binding in the =global-map= is achieved
-with the function =global-set-key=. Example to bind a key to the command
-=forward-char=:
+* 绑定键
+键序列与各种键盘映射中的 Emacs 命令绑定。最基本的映射是 =全局映射= 。在 =全局映射= 中设置键绑定是通过 =global-set-key= 函数实现的。将键绑定到命令 =forward-char= 的示例：
 
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-]") 'forward-char)
 #+END_SRC
 
-The =kbd= macro accepts a string describing a key sequence. The =global-map= is
-often shadowed by other maps. For example, =evil-mode= defines keymaps that
-target states (or modes in vim terminology). Here is an example that creates the
-same binding as above but only in =insert state= (=define-key= is a built-in
-function. =Evil-mode= has its own functions for defining keys).
+=kbd= 宏接受描述键序列的字符串。 =全局映射= 经常被其他映射覆盖。例如， =evil 模式= 定义了目标状态（或 vim 术语中的模式）的键映射。这是一个创建与上述相同的绑定的示例，但只能在 =插入状态= （ =define-key= 是一个内置函数）。 =Evil 模式= 有自己的用来定义键的函数。
 
 #+BEGIN_SRC emacs-lisp
 (define-key evil-insert-state-map (kbd "C-]") 'forward-char)
 #+END_SRC
 
-Perhaps most importantly for Spacemacs is the use of the bind-map package to
-bind keys behind a leader key.
-This is where most of the Spacemacs bindings live. Binding keys behind the
-leader key is achieved with the functions =spacemacs/set-leader-keys= and
-=spacemacs/set-leader-keys-for-major-mode=, example:
+也许最重要的是 Spacemacs 是使用 bind-map 包来绑定前缀键后面的键。
+这是 Spacemacs 绑定的绝大部分。前缀键后面的绑定键是通过函数 =spacemacs/set-leader-keys= 和 =spacemacs/set-leader-keys-for-major-mode= 实现的，例如：
 
 #+BEGIN_SRC emacs-lisp
 (spacemacs/set-leader-keys "C-]" 'forward-char)
 (spacemacs/set-leader-keys-for-major-mode 'emacs-lisp-mode "C-]" 'forward-char)
 #+END_SRC
 
-These functions use a macro like =kbd= to translate the key sequences for you.
-The second function, =spacemacs/set-leader-keys-for-major-mode=, binds the key
-only in the specified mode. The second key binding is active only when the
-major mode is =emacs-lisp=.
+这些函数使用像 =kbd= 这样的宏来为您翻译键序列。第二个函数， =spacemacs/set-leader-keys-for-major-mode= 仅在指定的模式下绑定键。第二个键绑定只有当主模式是 =emacs-lisp= 时才是活跃的。
 
-Finally, one should be aware of prefix keys. Essentially, all keymaps can be
-nested. Nested keymaps are used extensively in spacemacs, and in vanilla Emacs
-for that matter. For example, ~SPC a~ points to key bindings for "applications",
-like ~SPC a c~ for =calc-dispatch=. Nesting bindings is easy.
+最后，应该知道前缀键。基本上，所有的键盘映射都可以嵌套。嵌套的键盘映射广泛用于 spacemacs，而在 vanilla Emacs 中也是这样。例如， ~SPC a~ 指向“应用程序”的密钥绑定，例如用于 =calc-dispatch= 的 ~SPC a c~ 。嵌套绑定很容易。
 
 #+BEGIN_SRC emacs-lisp
 (spacemacs/declare-prefix "]" "bracket-prefix")
 (spacemacs/set-leader-keys "]]" 'double-bracket-command)
 #+END_SRC
 
-The first line declares ~SPC ]~ to be a prefix and the second binds the key
-sequence ~SPC ]]~ to the corresponding command. The first line is actually
-unnecessary to create the prefix, but it will give your new prefix a name that
-key-discovery tools can use (e.g., which-key).
+第一行声明 ~SPC ]~ 作为前缀，第二行将键序列 ~SPC ]]~ 绑定到相应的命令。要创建前缀，第一行实际上不必要，但它会给您的新前缀一个键探测工具可以使用的名称（例如，which-key）。
 
-There is much more to say about bindings keys, but these are the basics. Keys
-can be bound in your =~/.spacemacs= file or in individual layers.
+还有更多关于绑定键要说的，但这些是基础知识。键可以绑定到你的 =~/.spacemacs= 文件或单独的图层中。
 
 * GUI Elements
 Spacemacs has a minimalistic and distraction free graphical UI:
