@@ -1,0 +1,32 @@
+* 关于 spacemacs
+既然有文档，就不废话了。就一句：
+*The best editor is neither Emacs nor Vim, it's Emacs and Vim!*\\
+不了解 VIM 和 EMACS 的，请预习 [[https://linuxtoy.org/archives/why-emacs-vim-good.html][Emacs 和 Vim：神的编辑器和编辑器之神]]
+
+* 参与项目
+- 安装 emacs 和 spacemacs 并做好基本配置（新手可以参考我的 [[https://github.com/philosophos/spacemacs-private][spacemacs-private]]）。
+- 克隆项目到本地：
+#+BEGIN_SRC shell
+git clone git@github.com:philosophos/spacemacs-doc-zh-cn.git
+#+END_SRC
+- 确认你将要翻译的部分别人没有正在做。
+- 每个提交至少翻译一个一级标题下的所有内容，否则在 push request 前应该用 rebase 合并自己本地的提交。
+
+* 项目进度
+目前只有主文档 DOCUMENTATION.org 尚未翻译完成。\\
+目前尚未打算翻译 [[http://spacemacs.org/layers/LAYERS.html][layers list]] 部分。
+
+* 翻译规则
+- 强烈建议使用 Google 翻译，然后在此基础上加以修改。
+- 为保证显示效果，应该用 spacemacs 编辑。
+- 不硬性换行，用 ~space t l~ 在显示时换行，保留原有空行。
+- 用 `~' （半角）包围起来的是键绑定，应保留原样。
+- 用 `=' （半角）包围起来的，层名、软件包名、函数名、变量名应保留原样，有些术语应翻译，但 `=' 应保留。
+术语标准翻译：\\
+layer 层
+package 包、软件包
+dotfile 点文件
+dotdirectory 点目录
+
+鉴于 Google 翻译尚未翻译 dotfile 和 dotdirectory，这两个词可以不翻译。
+ 
